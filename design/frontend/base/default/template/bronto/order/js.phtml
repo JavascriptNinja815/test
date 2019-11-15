@@ -1,0 +1,25 @@
+<?php /* @var $this Bronto_Emailcapture_Block_Emailcapture */ ?>
+
+<?php if (Mage::helper('bronto_order')->isModuleEnabled()): ?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var scrProtocol  = (document.location.protocol == "https:") ? "https:" : "http:";
+    var scriptString = '%3Cscript src="' + scrProtocol + '//p.bm23.com/bta.js" type="text/javascript"%3E%3C/script%3E';
+    document.write(unescape(scriptString));
+    //]]>
+</script>
+<script type="text/javascript">
+    //<![CDATA[
+	var bta = {};
+	if(typeof __bta != "undefined") {
+    		bta = new __bta('<?php echo $this->getKey() ?>');
+	}
+    //]]>
+</script>
+
+<script type="text/javascript">
+    !function(o,t){var e=window.bronto=function(){"string"==typeof arguments[0]&&e.q.push(arguments),e.go&&e.go()};e.q=e.q||[];var n=o.createElement(t),s=o.getElementsByTagName(t)[0];s.parentNode.insertBefore(n,s),n.async=!0,n.onload=e,n.src="https://snip.bronto.com/v2/sites/eyJ0eXBlIjoic2l0ZWhhc2giLCJpZCI6ImJkOWZmZjJlODkzNzE4OGY0M2RkZTM5OTViMTljZWFiMjllMjBhZWNkOWM3M2Y4NzU5NmZkNDRmNzgzOTI1NTgifQ==/assets/bundle.js"}(document,"script");
+</script>
+
+<?php endif; ?>

@@ -1,0 +1,18 @@
+<?php
+/**
+ * @var $this Mage_Adminhtml_Block_Template
+ */
+?>
+<?php 
+if (Mage::helper('rewards')->storeHasRewardRules()): ?>
+    <?php echo $this->getChildHtml('tracking_code'); ?>
+    <div class="tbtreports-dashboard">
+        <div class="dashboard-left">
+            <?php echo $this->getChildHtml('metrics_area'); ?>
+        </div>
+        <div class="dashboard-right">
+            <?php echo $this->getChildHtml('feeds_area'); ?>
+        </div>
+    </div>
+<?php endif; ?>
+

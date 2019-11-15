@@ -1,0 +1,555 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <TBT_RewardsReferral>
+            <version>3.2.3</version>
+        </TBT_RewardsReferral>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <rewardsref after="Mage_Adminhtml">TBT_RewardsReferral</rewardsref>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <routers>
+            <rewardsref>
+                <use>standard</use>
+                <args>
+                    <module>TBT_RewardsReferral</module>
+                    <frontName>rewardsref</frontName>
+                </args>
+            </rewardsref>
+        </routers>
+        <secure_url>
+            <rewardsref>/rewardsref/</rewardsref>
+        </secure_url>
+        <layout>
+            <updates>
+                <rewardsref>
+                    <file>rewardsref.xml</file>
+                </rewardsref>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <TBT_RewardsReferral>
+                    <files>
+                        <default>TBT_RewardsReferral.csv</default>
+                    </files>
+                </TBT_RewardsReferral>
+            </modules>
+        </translate>
+
+        <events>
+            <rewards_new_customer_create>
+                <observers>
+                    <rewardsref_recordRegisterPoints>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_refer</class>
+                        <method>recordPointsUponRegistration</method>
+                    </rewardsref_recordRegisterPoints>
+                </observers>
+            </rewards_new_customer_create>
+
+            <customer_save_before>
+                <observers>
+                    <rewardsref_before_createaccount>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>beforeCreate</method>
+                    </rewardsref_before_createaccount>
+                    <tbt_rewardsref_model_observer_customer_save_before>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>setReferredCustomerGroup</method>
+                    </tbt_rewardsref_model_observer_customer_save_before>
+                    <validate_customer_save_before>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>validateReferral</method>
+                    </validate_customer_save_before>
+                </observers>
+            </customer_save_before>
+            
+            <rewards_update_catalog_points>
+                <observers>
+                    <tbt_rewardsref_update_catalog_points>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>setQuoteRefCustomerGroup</method>
+                    </tbt_rewardsref_update_catalog_points>
+                </observers>
+            </rewards_update_catalog_points>
+            
+            <controller_action_predispatch>
+                <observers>
+                    <tbt_rewardsref_bindreferrer>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_controller</class>
+                        <method>bindReferrerOnActionPreDispatch</method>
+                    </tbt_rewardsref_bindreferrer>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </frontend>
+    <global>
+        <events>
+            <sales_quote_save_before>
+                <observers>
+                    <tbt_rewardsreferral_sales_quote_save_before>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>setQuoteRefCustomerGroup</method>
+                    </tbt_rewardsreferral_sales_quote_save_before>
+                </observers>
+            </sales_quote_save_before>
+            <sales_order_save_before>
+                <observers>
+                    <tbt_rewardsreferral_sales_order_save_before>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>setOrderRefCustomerGroup</method>
+                    </tbt_rewardsreferral_sales_order_save_before>
+                </observers>
+            </sales_order_save_before>
+            <controller_action_predispatch_checkout_onepage_saveMethod>
+                <observers>
+                    <rewardsref_controller_action_predispatch_checkout_onepage_saveMethod>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>onepageSaveMethod</method>
+                    </rewardsref_controller_action_predispatch_checkout_onepage_saveMethod>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_saveMethod>
+            <sales_order_invoice_pay>
+                <observers>
+                    <tbt_rewardsreferral_model_observer_sales_order_invoice_pay>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_sales_order_invoice_pay</class>
+                        <method>approvePoints</method>
+                    </tbt_rewardsreferral_model_observer_sales_order_invoice_pay>
+                </observers>
+            </sales_order_invoice_pay>
+            <sales_order_shipment_save_commit_after>
+                <observers>
+                    <tbt_rewardsreferral_model_observer_sales_order_save_after_approve>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_sales_order_save_after_approve</class>
+                        <method>approveAssociatedPendingTransfersOnShipment</method>
+                    </tbt_rewardsreferral_model_observer_sales_order_save_after_approve>
+                </observers>
+            </sales_order_shipment_save_commit_after>
+            <sales_order_save_after>
+                <observers>
+                    <tbt_rewardsreferral_model_observer_sales_order_save_after_approve_complete>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_sales_order_save_after_approve</class>
+                        <method>approveAssociatedPendingTransfersOnOrderComplete</method>
+                    </tbt_rewardsreferral_model_observer_sales_order_save_after_approve_complete>
+                </observers>
+            </sales_order_save_after>
+
+            <controller_action_predispatch_checkout_onepage_saveBilling>
+                <observers>
+                    <rewardsref_before_onepage_billingsave>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>beforeSaveBilling</method>
+                    </rewardsref_before_onepage_billingsave>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_saveBilling>
+            <controller_action_postdispatch_checkout_onepage_saveBilling>
+                <observers>
+                    <rewardsref_before_onepage_billingsave>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>afterSaveBilling</method>
+                    </rewardsref_before_onepage_billingsave>
+                </observers>
+            </controller_action_postdispatch_checkout_onepage_saveBilling>
+            
+            <!-- BEGIN IWD Onepage Checkout -->
+            <controller_action_predispatch_opc_json_saveBilling>
+                <observers>
+                    <rewardsref_before_opc_billingsave>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>beforeSaveBilling</method>
+                    </rewardsref_before_opc_billingsave>
+                </observers>
+            </controller_action_predispatch_opc_json_saveBilling>
+            <controller_action_postdispatch_opc_json_saveBilling>
+                <observers>
+                    <rewardsref_before_opc_billingsave>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_createaccount</class>
+                        <method>afterSaveBilling</method>
+                    </rewardsref_before_opc_billingsave>
+                </observers>
+            </controller_action_postdispatch_opc_json_saveBilling>
+            <!-- END IWD Onepage Checkout -->
+            
+            <customer_save_before>
+                <observers>
+                    <rewardsref_before_onestepcheckout_new_customer>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_onestepcheckout</class>
+                        <method>beforeOnestepcheckout</method>
+                    </rewardsref_before_onestepcheckout_new_customer>
+                </observers>
+            </customer_save_before>
+            <checkout_controller_onepage_save_shipping_method>
+                <observers>
+                    <rewardsref_shipping_onestepcheckout_guest_customer>
+                        <class>rewardsref/observer_onestepcheckout</class>
+                        <method>beforeOnestepcheckout</method>
+                    </rewardsref_shipping_onestepcheckout_guest_customer>    
+                </observers>
+            </checkout_controller_onepage_save_shipping_method>
+
+            <st_rewards_manage_diagnostics_reinstalldb_before>
+                <observers>
+                    <rewardsref_before_rewards_manage_diagnostics_reinstalldb>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_rewards_diagnostics</class>
+                        <method>reinstallDb</method>
+                    </rewardsref_before_rewards_manage_diagnostics_reinstalldb>
+                </observers>
+            </st_rewards_manage_diagnostics_reinstalldb_before>
+
+            <!-- This observer  -->
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <tbt_rewardsref_model_observer_block_register>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_block_register</class>
+                        <method>afterOutput</method>
+                    </tbt_rewardsref_model_observer_block_register>
+                </observers>
+            </core_block_abstract_to_html_after>
+
+            <rewards_sales_order_transfer_ajuster_init>
+                <observers>
+                    <tbt_rewardsref_model_observer_sales_order_transfer_observer>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_sales_order_transfer_observer</class>
+                        <method>initAffiliate</method>
+                    </tbt_rewardsref_model_observer_sales_order_transfer_observer>
+                </observers>
+            </rewards_sales_order_transfer_ajuster_init>
+
+            <rewards_sales_order_transfer_ajuster_execute>
+                <observers>
+                    <tbt_rewardsref_model_observer_sales_order_transfer_observer>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_sales_order_transfer_observer</class>
+                        <method>executeAffiliate</method>
+                    </tbt_rewardsref_model_observer_sales_order_transfer_observer>
+                </observers>
+            </rewards_sales_order_transfer_ajuster_execute>
+
+            <rewards_adjust_points_init_before>
+                <observers>
+                    <tbt_rewardsref_model_observer_sales_order_transfer_observer>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_sales_order_transfer_observer</class>
+                        <method>beforeInit</method>
+                    </tbt_rewardsref_model_observer_sales_order_transfer_observer>
+                </observers>
+            </rewards_adjust_points_init_before>
+
+            <rewards_sales_order_payment_automatic_cancel>
+                <observers>
+                    <tbt_rewardsref_model_sales_order_payment_automatic_cancel>
+                        <type>singleton</type>
+                        <class>rewardsref/sales_order_payment_observer</class>
+                        <method>automaticCancelAffiliate</method>
+                    </tbt_rewardsref_model_sales_order_payment_automatic_cancel>
+                </observers>
+            </rewards_sales_order_payment_automatic_cancel>
+
+            <controller_action_postdispatch_adminhtml_sales_order_creditmemo_save>
+                <observers>
+                    <tbt_rewardsref_model_sales_order_creditmemo_automatic_cancel>
+                        <type>singleton</type>
+                        <class>rewardsref/sales_order_creditmemo_observer</class>
+                        <method>automaticCancelAffiliate</method>
+                    </tbt_rewardsref_model_sales_order_creditmemo_automatic_cancel>
+                </observers>
+            </controller_action_postdispatch_adminhtml_sales_order_creditmemo_save>
+
+            <controller_action_postdispatch_adminhtml_sales_order_cancel>
+                <observers>
+                    <tbt_rewardsref_model_admin_sales_order_cancel>
+                        <type>singleton</type>
+                        <class>rewardsref/sales_order_payment_observer</class>
+                        <method>automaticCancelAffiliate</method>
+                    </tbt_rewardsref_model_admin_sales_order_cancel>
+                </observers>
+            </controller_action_postdispatch_adminhtml_sales_order_cancel>
+            
+            <sales_order_save_commit_after>
+                <observers>
+                    <rewardsref_recordOrderPoints>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_refer</class>
+                        <method>recordPointsForOrderEvent</method>
+                    </rewardsref_recordOrderPoints>
+                </observers>
+            </sales_order_save_commit_after>
+            
+            <rewardsref_bind_referral>
+                <observers>
+                    <rewardsref_bind_referral_to_referrer>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_customer</class>
+                        <method>bindReferral</method>
+                    </rewardsref_bind_referral_to_referrer>
+                </observers>
+            </rewardsref_bind_referral>
+        </events>
+    </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <TBT_RewardsReferral>
+                    <files>
+                        <default>TBT_RewardsReferral.csv</default>
+                    </files>
+                </TBT_RewardsReferral>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <rewardsref>
+                    <file>rewardsref.xml</file>
+                </rewardsref>
+            </updates>
+        </layout>
+        <events>
+            <adminhtml_customer_save_after>
+                <observers>
+                    <rewardsref_save_referral_after_customer_save>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_customer</class>
+                        <method>saveAdminReferralOnCustomerSaveAfter</method>
+                    </rewardsref_save_referral_after_customer_save>
+                </observers>
+            </adminhtml_customer_save_after>
+            
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <tbt_rewardsref_model_observer_block_output>
+                        <type>singleton</type>
+                        <class>rewardsref/observer_adminhtml_block_output</class>
+                        <method>afterOutput</method>
+                    </tbt_rewardsref_model_observer_block_output>
+                </observers>
+            </core_block_abstract_to_html_after>
+        </events>
+        <menu>
+            <rewards translate="title" module="rewardsref">
+                <children>
+                    <referrals translate="title" module="rewardsref">
+                        <title>Customer Referrals</title>
+                        <sort_order>50</sort_order>
+                        <action>adminhtml/manage_referrals</action>
+                    </referrals>
+                </children>
+            </rewards>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <rewards module="rewardsref" translate="title">
+                            <children>
+                                <referrals module="rewardsref" translate="title">
+                                    <title>Customer Referrals</title>
+                                    <sort_order>50</sort_order>
+                                </referrals>
+                            </children>
+                        </rewards>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <global>
+        <models>
+            <rewardsref>
+                <class>TBT_RewardsReferral_Model</class>
+                <resourceModel>rewardsref_mysql4</resourceModel>
+            </rewardsref>
+            <rewardsref_mysql4>
+                <class>TBT_RewardsReferral_Model_Mysql4</class>
+                <entities>
+                    <rewardsref_referral>
+                        <table>rewardsref_referral</table><!-- AVOID using this method! -->
+                    </rewardsref_referral>
+                    <referral>
+                        <table>rewardsref_referral</table>
+                    </referral>
+                </entities>
+            </rewardsref_mysql4>
+        </models>
+
+        <resources>
+            <rewardsref_setup>
+                <setup>
+                    <module>TBT_RewardsReferral</module>
+                    <class>TBT_RewardsReferral_Model_Mysql4_Setup</class>
+                </setup>
+            </rewardsref_setup>
+            <rewardsref_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </rewardsref_write>
+            <rewardsref_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </rewardsref_read>
+        </resources>
+        <blocks>
+            <rewardsref>
+                <class>TBT_RewardsReferral_Block</class>
+            </rewardsref>
+        </blocks>
+        <helpers>
+            <rewardsref>
+                <class>TBT_RewardsReferral_Helper</class>
+            </rewardsref>
+        </helpers>
+
+        <template>
+            <email>
+                <rewards_referral_subscription_email_template translate="label"	module="rewardsref">
+                    <label>MageRewards - Customer Referral - Invitation</label>
+                    <file>rewardsref/referral_subscribe.html</file>
+                    <type>html</type>
+                </rewards_referral_subscription_email_template>
+                <rewards_referral_confirmation_email_template translate="label"	module="rewardsref">
+                    <label>MageRewards - Customer Referral - New Earnings Notification</label>
+                    <file>rewardsref/referral_confirm.html</file>
+                    <type>html</type>
+                </rewards_referral_confirmation_email_template>
+            </email>
+        </template>
+        
+        <rewrite>
+            <rewardsref_index_refer>
+                <from><![CDATA[/^\/refer\/(.*)/]]></from>
+                <to><![CDATA[/rewardsref/index/refer/$1]]></to>
+                <complete>1</complete>
+            </rewardsref_index_refer>
+        </rewrite>
+
+    </global>
+
+    <rewards>
+        <special>
+            <referral_signup>
+                <config>rewardsref/special_signup</config>
+            </referral_signup>
+            <referral_firstorder>
+                <config>rewardsref/special_firstorder</config>
+            </referral_firstorder>
+            <referral_order>
+                <config>rewardsref/special_order</config>
+            </referral_order>
+        </special>
+        <transfer>
+            <reason>
+                <referral_signup>
+                    <reason_id>20</reason_id>
+                    <label>Referral Signup</label>
+                    <reference_model>customer/customer</reference_model>
+                </referral_signup>
+                <referral_order_first>
+                    <reason_id>21</reason_id>
+                    <label>Referral's First Order</label>
+                    <reference_model>sales/order</reference_model>
+                </referral_order_first>
+                <referral_order>
+                    <reason_id>22</reason_id>
+                    <label>Referral's Order</label>
+                    <reference_model>sales/order</reference_model>
+                </referral_order>
+                <referral_order_guest>
+                    <reason_id>23</reason_id>
+                    <label>Referral's Guest Order</label>
+                    <reference_model>sales/order</reference_model>
+                </referral_order_guest>
+            </reason>
+        </transfer>
+        <probational_behaviors>
+            <customer_referral_signup/>
+        </probational_behaviors>
+    </rewards>
+
+
+    <frontend>
+        <enterprise>
+            <websiterestriction>
+                <full_action_names>
+                    <generic>
+                        <rewardsref_index_refer/>
+                        <rewardsref_index_getCurrentRefEmail/>
+                    </generic>
+                </full_action_names>
+            </websiterestriction>
+        </enterprise>
+    </frontend>
+
+    <default>
+        <rewards>
+            <autointegration>
+                <customer_register_referral_field>1</customer_register_referral_field>
+                <onepage_billing_register_referral_field>1</onepage_billing_register_referral_field>
+            </autointegration>
+            <referral>
+                <warning>1</warning>
+                <referral_show>1</referral_show>
+                <!-- @kadukia, changed this to blank So that Magento default customer group will be used. -->
+                <customer_group></customer_group>
+                <subscription_email_template>rewards_referral_subscription_email_template</subscription_email_template>
+                <subscription_email_identity>support</subscription_email_identity>
+                <subscription_email_use_sender_email>1</subscription_email_use_sender_email>
+                <confirmation_email_template>rewards_referral_confirmation_email_template</confirmation_email_template>
+                <confirmation_email_identity>support</confirmation_email_identity>
+                <show_in_onepage_checkout>1</show_in_onepage_checkout>
+                <show_in_register>1</show_in_register>
+                <show_referral_email>1</show_referral_email>
+                <show_referral_code>1</show_referral_code>
+                <show_referral_url>1</show_referral_url>
+                <show_invite_form>1</show_invite_form>
+                <show_history>1</show_history>
+                <affiliate_redirect_url></affiliate_redirect_url>
+            </referral>
+            <transferComments>
+                <referralSignup>A referred customer signed up to the site.</referralSignup>
+                <referralFirstOrder>A referred customer made a first order.</referralFirstOrder>
+                <referralOrder>Commission received from an order that a referred customer made.</referralOrder>
+                <referralGuestOrder>Commission received from a guest order that a referred customer made.</referralGuestOrder>
+            </transferComments>
+            <InitialTransferStatus>
+                <ReferralSignup>5</ReferralSignup>
+                <ReferralFirstOrder>4</ReferralFirstOrder>
+                <ReferralOrder>4</ReferralOrder>
+            </InitialTransferStatus>
+        </rewards>
+    </default>
+</config>

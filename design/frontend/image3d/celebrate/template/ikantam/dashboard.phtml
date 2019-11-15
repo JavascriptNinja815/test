@@ -1,0 +1,45 @@
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<div class="dashboard">
+    <div class="page-title">
+        <h1><?php echo $this->__('My Account') ?></h1>
+    </div>
+    <?php echo $this->getChildHtml('hello') ?>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('create-new-reel-dashboard')->toHtml(); ?>
+    <?php echo $this->getChildHtml('top') ?>
+<!--    <div class="box-account box-info">
+        <div class="box-head">
+            <h2><?php echo $this->__('Account Information') ?></h2>
+        </div>
+-->
+        <?php /* Extensions placeholder */ ?>
+        <?php echo $this->getChildHtml('customer.account.dashboard.extra') ?>
+        <?php echo $this->getChildHtml('info') ?>
+    </div>
+    <?php echo $this->getChildHtml('address') ?>
+    <?php echo $this->getChildHtml('info1') ?>
+    <?php echo $this->getChildHtml('info2') ?>
+</div>
+
+<script>
+
+    jQuery(document).ready(function() {
+        jQuery('ul.messages').prependTo('div.col2-left-layout');
+	var ua = window.navigator.userAgent;
+	var uav = 0;
+        var browserNeedsUpgrade = false;
+	var msie = ua.indexOf("MSIE");
+	if (msie > 0) {    // If Internet Explorer, return version number
+        	uav = parseInt (ua.substring (msie+5, ua.indexOf (".", msie )));
+	}
+	if(uav > 0 && uav < 9) {
+		browserNeedsUpgrade = true;
+	}
+
+        if(browserNeedsUpgrade) {
+            jQuery('.create-new-container').hide();
+            jQuery('.upgrade-browser-note').show();
+        }
+    });
+
+</script>

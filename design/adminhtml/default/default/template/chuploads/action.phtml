@@ -1,0 +1,88 @@
+<?php $uploads = $this->getFileUploads();
+
+if(!$uploads):
+?>
+<div>Nothing here.</div>
+<?php echo $this->getOrderId();  ?>
+<?php echo get_class($this);  ?>
+<?php else: ?>
+<br />
+    <script>
+        var confirmDelete = function(id)
+        {
+            var test = confirm("<?php echo $this->__('Are you sure you would like to delete this file?'); ?>");
+            if(test) {
+                // ajax. /update id =X action = delete
+            }
+        };
+    </script>
+    <div class="clear"></div>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-sales-statistics"><?php echo Mage::helper('customer')->__('Customer Uploads') ?></h4></div>
+    <div class="grid">
+        <table cellspacing="0" class="data">
+            <thead>
+                <tr class="headings">
+
+                    <th><?php echo Mage::helper('customer')->__(' ') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('Orders') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('Quotes') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('filename') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('Created') ?></th>
+                    <th><?php echo Mage::helper('customer')->__('') ?></th>
+                </tr>
+            </thead>
+         <!--   <tfoot>
+                <tr>
+                    <td colspan="6" class="label"><strong><big><?php echo Mage::helper('customer')->__('All uploads on file') ?></big></strong></td>
+                </tr>
+            </tfoot> -->
+			<tbody>
+				<?php foreach($uploads as $item):
+                //$item = new Varien_Object($item);
+                    ?>
+				<tr><?php //Zend_Debug::dump($payment);?>
+					<td>
+<a href="<?php echo str_replace('index.php/', '', Mage::getBaseUrl()) .  str_replace('customer_uploads','customer_download', $item->GetData('filepath'));?>" download>
+
+<img src="<?php echo mage::helper('collinsharper_chcustomeruploads')->getThumbnailPath($item->getEntityId());?>" style="erinhasfun" />
+</a>
+
+</td>
+					<td><?php echo $item->getOrderIds();?></td>
+					<td><?php echo $item->getQuoteIds();?></td>
+                    <td class="ship"><?php echo $item->getFilename();?></td>
+                    <td class="date"><?php echo $item->getCreatedAt();?></td>
+                    <td class="a-center view last">
+         <!--       <span class="nobr"><a href="javascript:confirmDelete(<?php echo $item->getEntityId(); ?>);"><?php echo $this->__('Delete');?></a> -->
+                <span class="nobr"><a href="<?php echo str_replace('index.php/', '', Mage::getBaseUrl()) .  str_replace('customer_uploads','customer_download', $item->GetData('filepath'));?>" download><?php echo $this->__('Download');?></a>
+                                                         <!--   <span class="separator">|</span> -->
+                                </span>
+                    </td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+        </table>
+    </div>
+</div>
+<div class="clear"></div>
+<br/>
+
+<?php endif; ?>
+<script>
+    try {
+        // TODO issue with tabs on inquiry view.
+        $('chinquiry_tabs_image_section').down().observe('click', function() {
+            console.log("click chinquiry_tabs_image_section");
+            $$('.entry-edit')[0].hide();
+        });
+        $('chinquiry_tabs_form_section').down().observe('click', function() {
+            console.log("click chinquiry_tabs_form_section");
+            $$('.entry-edit')[0].show();
+        });
+    } catch(Err) {
+       // console.log(Err);
+        //console.log(Err.getStackTrace());
+    }
+
+</script>

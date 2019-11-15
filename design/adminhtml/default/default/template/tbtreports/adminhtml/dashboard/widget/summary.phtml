@@ -1,0 +1,37 @@
+<?php if (Mage::helper('rewards')->storeHasRewardRules()): ?>
+    <?php
+        /**
+         * @var $this TBT_Reports_Block_Adminhtml_Dashboard_Summary
+         */
+
+        $firstMetric = $this->getFirstMetric();
+        $secondMetric = $this->getSecondMetric();
+
+        $calculationStartDate = $this->getDateTimeHelper()->xDaysAgo(30, false, true); // 30 days ago
+        $periodLabel = $this->__('in the past 30 days');
+    ?>
+
+    <?php if ($this->isSummaryReady()): ?>
+        <div class="box">
+            <table cellspacing="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td class="a-center first">
+                            <div class="bold"><?php echo $firstMetric->getMetricName(); ?></div>
+                            <div class="bold amount"><?php echo $firstMetric->getFormattedValue($calculationStartDate); ?></div>
+                            <div class="period"><?php echo $periodLabel; ?></div>
+                        </td>
+                        <td class="a-center last">
+                            <div class="bold"><?php echo $secondMetric->getMetricName(); ?></div>
+                            <div class="bold amount"><?php echo $secondMetric->getFormattedValue($calculationStartDate); ?></div>
+                            <div class="period"><?php echo $periodLabel; ?></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="more-metrics a-right">
+                <a href="<?php echo $this->getDashboardUrl(); ?>">see more</a>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

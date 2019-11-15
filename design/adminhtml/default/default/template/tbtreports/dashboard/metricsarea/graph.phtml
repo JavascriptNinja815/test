@@ -1,0 +1,84 @@
+<p class="switcher">
+    <span class="a-left bold"><?php echo $this->getReportLabel();?></span>
+    <?php if ($this->hasMetricInfo()) : ?>
+    <img src="<?php echo $this->getSkinUrl('rewards/images/wikiHint.png');?>" width="16" height="16" id="metric-info-<?php echo $this->getReportCode();?>" class="metric-info"/>
+    <?php endif; ?>
+    <select onchange="javascript:sweettooth.Dashboard.Metrics.updateReport(this,'<?php echo $this->getReportCode();?>', '<?php echo $this->getMetricsUpdateUrl();?>', 'rewards-dashboard-metrics-report_wrapper');" id="<?php echo $this->getReportCode();?>-period" name="period" class="f-right">
+        <option value="30d" <?php echo ($this->isSelectedPeriod('30d')) ? 'selected' : '';?>><?php echo $this->__('Last 30 Days');?></option>
+        <option value="90d" <?php echo ($this->isSelectedPeriod('90d')) ? 'selected' : '';?>><?php echo $this->__('Last 90 Days');?></option>
+        <option value="365d" <?php echo ($this->isSelectedPeriod('365d')) ? 'selected' : '';?>><?php echo $this->__('Last 365 Days');?></option>
+    </select>
+    <span class="f-right"><?php echo Mage::helper('tbtreports')->__('Select Range');?>:</span>
+</p>
+<div class="rewards-dashboard-metrics-report_wrapper">
+    <?php if ($this->hasMetricInfo()) : ?>
+    <div id="metric-info-content-<?php echo $this->getReportCode();?>" class="metric-info-content"><?php echo $this->getMetricInfo();?></div>
+    <?php endif; ?>
+    <br/>
+    <p class="chart_wrapper" style="">
+        <img title="<?php echo $this->getReportLabel();?>" alt="<?php echo $this->__('Report is loading, please wait!');?>" src="<?php echo $this->getChartUrl();?>">
+    </p>
+    
+    <?php if ($this->hasNoticeMessage()) : ?>
+    <div class="report-notice-messages">
+        <ul class="messages">
+            <li class="notice-msg">
+                <ul>
+                    <li><span><?php echo $this->getNoticeMessage();?></span></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <?php endif; ?>
+    
+    <div class="box rewards-dashboard-metrics-report_totals">
+        <div class="entry-edit">
+            <table width="80%" cellspacing="10" cellpadding="5" style="margin: auto;">
+                <tbody>
+                    <tr>
+                        <td class="bold">
+                            <span class="chart-text_f12"><?php echo $this->getDifferenceLabel();?></span>
+                        </td>
+                        <td class="a-right bold middle-container">
+                            <span class="nowrap chart-text_f12 chart-text-cEA7601"><span class="price"><?php echo $this->getTotalDifference();?></span><span class="chart-text_f14 chart-text-cDE8946"></span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bold middle-container">
+                            <span class="chart-text_f15"><?php echo $this->getTotalLabel();?></span>
+                        </td>
+                        <td class="a-right bold middle-container">
+                            <span class="nowrap chart-text_f15 chart-text-cEA7601"><span class="price"><?php echo $this->getTotalValue();?></span><span class="chart-text_f14 chart-text-cDE8946"></span></span>
+                        </td>
+                    </tr>
+                    <?php foreach ($this->getAllAdditionalLinks() as $link): ?>
+                        <tr>
+                            <td class="a-center" colspan="2">
+                                <a href="<?php echo $link['link']; ?>"><?php echo $link['text']; ?></a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var metricInfoObj = $('metric-info-<?php echo $this->getReportCode();?>');
+    var metricInfoContentObj = $('metric-info-content-<?php echo $this->getReportCode();?>');
+    if (metricInfoObj) {
+        new Opentip(metricInfoObj, metricInfoContentObj.innerHTML, {
+            style:          'dark',
+            tipJoint:       'top',
+            targetJoint:    'bottom',
+            background:     'black',
+            borderColor:    'white',
+            borderWidth:    2,
+            shadow:         false,
+            fixed:          true,
+            offset:         [0, 15],
+            escapeContent:  false
+        });
+    }
+</script>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <chmfeed translate="label" module="chmfeed">
+            <label>Collins Harper - Modules</label>
+            <sort_order>300</sort_order>
+        </chmfeed>
+    </tabs>
+	<sections>
+		<chmfeed translate="label" module="chmfeed">
+			<label>Info</label>
+			<tab>chmfeed</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>99999</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<feed>
+					<label>Notifications</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>60</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<enabled translate="label">
+							<label>Enable </label>
+							<comment>Will check for Collins Harper Module updates</comment>
+							<frontend_type>select</frontend_type>
+							<sort_order>90</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+						</enabled>		
+					</fields>	
+				</feed>		
+			</groups>
+		</chmfeed>
+	</sections>
+</config>

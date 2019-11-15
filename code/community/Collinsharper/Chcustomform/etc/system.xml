@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <chcustomform translate="label" module="chcustomform">
+            <label>CH Extension</label>
+            <sort_order>100</sort_order>
+        </chcustomform>
+    </tabs>
+    <sections>
+        <chcustomform translate="label" module="chcustomform">
+            <label>Custom Form Extension</label>
+            <tab>chcustomform</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+ 
+            <groups>
+                <chcustomform_group translate="label" module="chcustomform">
+                    <label>Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_jquery_library translate="label">
+                            <label>Enable Jquery Library: </label>
+                            <comment>If enabled, then jQuery library version 3.2.1 will be used</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                        </enable_jquery_library>
+                        <grecaptcha_enable translate="label">
+                            <label>Enable Google reCAPTCHA: </label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                        </grecaptcha_enable>
+                        <grecaptcha_site_key translate="label">
+                            <label>Google reCAPTCHA Site Key: </label>
+                            <comment>Please enter site key provided by Google reCAPTCHA</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <grecaptcha_enable>1</grecaptcha_enable>
+                            </depends>
+                        </grecaptcha_site_key>
+                        <grecaptcha_secret_key translate="label">
+                            <label>Google reCAPTCHA Secret Key: </label>
+                            <comment>Please enter secret key provided by Google reCAPTCHA</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <grecaptcha_enable>1</grecaptcha_enable>
+                            </depends>
+                        </grecaptcha_secret_key>
+                        <mail_init_num translate="label">
+                            <label>Mail Auto Increment Number: </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mail_init_num>
+                    </fields>
+                </chcustomform_group>
+            </groups>
+        </chcustomform>
+    </sections>
+</config>

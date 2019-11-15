@@ -1,0 +1,6 @@
+<?php foreach ($this->getNotifications() as $notification): ?>
+    <?php if (!isset($notification['target'])) { $notification['target'] = '_blank'; } ?>
+    <div class="st-notify">
+        <strong>Note:</strong> <?php echo $notification['text'] ?>  <a href="<?php echo $notification['link'] ?>" target="<?php echo $notification['target']; ?>"><?php echo $notification['linkText'] ?></a>
+    </div>
+<?php endforeach; ?>

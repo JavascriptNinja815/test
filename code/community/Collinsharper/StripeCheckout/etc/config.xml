@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Collinsharper_StripeCheckout>
+            <version>0.1.0</version>
+        </Collinsharper_StripeCheckout>
+    </modules>
+    <frontend>
+        <routers>
+            <Collinsharper_StripeCheckout_Index>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_StripeCheckout</module>
+                    <frontName>stripecheckout</frontName>
+                </args>
+            </Collinsharper_StripeCheckout_Index>
+        </routers>
+    </frontend>
+</config>

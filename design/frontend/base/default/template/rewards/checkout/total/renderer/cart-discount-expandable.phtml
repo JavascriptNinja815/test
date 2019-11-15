@@ -1,0 +1,49 @@
+<?php
+$hasRewardsDiscounts = Mage::helper('rewards/sales_discount_summary')->hasRewardsDiscountMap($this->getQuote());
+$otherDiscountAmount = Mage::helper('rewards/sales_discount_summary')->getOtherDiscountAmount($this->getQuote());
+?>
+
+<?php if ($hasRewardsDiscounts) : ?>
+    <?php foreach (Mage::helper('rewards/sales_discount_summary')->getRewardsDiscountMap($this->getQuote()) as $rewardsDiscountRow) : ?>
+    <tr class="rewards-cart-discounts-summary" style="display: none;background-color: rgba(120, 120, 120, 0.1);">
+        <td class="a-right" colspan="<?php echo $this->getColspan(); ?>"><?php echo $this->__("Rewards") . ': ' . $rewardsDiscountRow['label'];?></td>
+        <td rowspan="1" class="a-right" style="">
+            <span class="price"><?php echo Mage::helper('core')->formatPrice($rewardsDiscountRow['discount_amount'] * (-1));?></span>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+
+    <?php
+    
+    ?>
+
+    <?php if ($otherDiscountAmount > 0) : ?>
+    <tr class="rewards-cart-discounts-summary" style="display: none;background-color: rgba(120, 120, 120, 0.1);">
+        <td class="a-right" colspan="<?php echo $this->getColspan(); ?>"><?php echo $this->__("Other");?></td>
+        <td class="a-right" style="">
+            <span class="price"><?php echo Mage::helper('core')->formatPrice($otherDiscountAmount * (-1));?></span>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <tr class="rewards-cart-discounts-summary" style="display: none;background-color: rgba(120, 120, 120, 0.1);">
+        <td colspan="<?php echo $this->getColspan()+1; ?>">&nbsp;</td>
+    </tr>
+<?php endif; ?>
+
+<?php if ((float) $otherDiscountAmount || $hasRewardsDiscounts) : ?>
+<tr <?php if ($hasRewardsDiscounts) : ?>class="rewards-cart-discounts-summary-header" onclick="expandDetails(this, '.rewards-cart-discounts-summary')"<?php endif;?>>
+    <td colspan="<?php echo $this->getColspan(); ?>" style="<?php echo $this->getTotal()->getStyle() ?>" class="a-right">
+        <div <?php if ($hasRewardsDiscounts) : ?>class="rewards-summary-collapse"<?php endif; ?>>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?><strong><?php endif; ?>
+                <?php echo $this->escapeHtml($this->getTotal()->getTitle()); ?>
+            <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?></strong><?php endif; ?>
+        </div>
+    </td>
+    <td style="<?php echo $this->getTotal()->getStyle() ?>" class="a-right">
+        <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?><strong><?php endif; ?>
+            <?php echo $this->helper('checkout')->formatPrice($this->getTotal()->getValue()) ?>
+        <?php if ($this->getRenderingArea() == $this->getTotal()->getArea()): ?></strong><?php endif; ?>
+    </td>
+</tr>
+<?php endif; ?>

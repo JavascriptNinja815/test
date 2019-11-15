@@ -1,0 +1,53 @@
+<?php
+
+$_product = Mage::getModel('catalog/product')->load($this->getdata('product_id'));
+
+$originalProduct  = false;
+
+if(Mage::registry('product')) {
+    $originalProduct = Mage::registry('product');
+    mage::unRegister('product');
+}
+mage::Register('product', $_product);
+?>
+
+
+<div class="list-list pricelist-list">
+
+    <img class="list-images" src="<?php echo (string)$this->helper('catalog/image')->init($_product, 'image');?>" alt="<?php echo $_product->getName(); ?>">
+
+    <div class="pricelist-info">
+        <h2 class="pricelist-prodtitle"><?php echo $_product->getName(); ?>:</h2>
+        <?php echo $_product->getPricelistDescription();?>
+        <?php
+        echo Mage::app()->getLayout()->createBlock('catalog/product_view')
+            ->setData('product', $_product)
+            ->setTemplate('catalog/product/view/tierprices.phtml')
+            ->toHtml();
+        ?>
+
+        <li class="tier-price tier-0 first_tier_price" id="tierprice-<?php echo $_product->getId(); ?>" style="display:none">
+            <?php echo $this->__('Buy 1 for');?> <span class="price"><?php echo $this->helper('core')->formatPrice($_product->getFinalPrice(), false) ?>
+</span> each
+        </li>
+
+<script>
+    jQuery(document).ready( function() {
+        jQuery('#tierprice-<?php echo $_product->getId(); ?>').insertBefore(jQuery(jQuery('#tierprice-<?php echo $_product->getId(); ?>').parent().find('ul > li')[0]));
+        jQuery('#tierprice-<?php echo $_product->getId(); ?>').show();
+    });
+</script>
+
+
+        <a class="build-reel-link" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>/build-a-reel"><?php echo $this->__('Click here to build your reel now!');?></a>
+    </div>
+</div>
+
+<?php
+
+
+mage::unRegister('product');
+if($originalProduct) {
+    mage::Register('product', $originalProduct);
+}
+

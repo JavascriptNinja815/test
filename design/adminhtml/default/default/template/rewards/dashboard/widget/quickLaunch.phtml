@@ -1,0 +1,9 @@
+<?php if (!Mage::helper('rewards')->storeHasRewardRules()): ?>
+    <div class="rewards-dashboard-quick-launch">
+        <span class="second-line left"><?php echo Mage::helper('rewards')->__('Use our Quick-Launch feature to publish a basic loyalty campaign in seconds.'); ?></span>
+        <a class="right" href="<?php echo Mage::helper("adminhtml")->getUrl('adminhtml/QuickLaunch/index'); ?>">
+            <button><?php echo Mage::helper('rewards')->__('Go to Quick-Launch'); ?></button>
+        </a>
+        <div class="clear"></div>
+    </div>
+<?php endif; ?>

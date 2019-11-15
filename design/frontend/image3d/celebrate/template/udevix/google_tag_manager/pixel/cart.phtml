@@ -1,0 +1,30 @@
+<?php
+/**
+ * Udevix
+ *
+ * @author     UdevixTeam <udevix@gmail.com>
+ * @copyright  Copyright (c) 2015-2016 Udevix
+ */
+?>
+
+<?php
+/**
+ * @var Udevix_GoogleTagManager_Block_Pixel_Cart $this
+ * @var Udevix_GoogleTagManager_Helper_Data $helper
+ */
+$helper = Mage::helper('udevix_google_tag_manager');
+if ($helper->isActive() && $helper->isActivePixel()):
+    $eventData = $this->getCartAddProductData();
+    ?>
+    <?php if ($eventData !== false) : ?>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            try {
+                dataLayer.push(<?php echo $eventData ?>);
+            }
+            catch (err) {
+            }
+        });
+    </script>
+<?php endif; ?>
+<?php endif; ?>

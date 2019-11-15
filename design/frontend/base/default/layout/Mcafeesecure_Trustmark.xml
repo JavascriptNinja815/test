@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="head">
+            <block type="core/template" name="Mcafeesecure_Trustmark" template="Mcafeesecure/Trustmark/trustmark.phtml" />
+        </reference>
+    </default>
+</layout>

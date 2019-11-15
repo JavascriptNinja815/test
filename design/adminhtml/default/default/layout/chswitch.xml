@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_switch_index>
+        <reference name="head">
+            <action method="addJs"><file>mage/adminhtml/sales.js</file></action>
+            <block type="adminhtml/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="adminhtml/sales_order_create_shipping_method" template="sales/order/create/abstract.phtml" name="shipping_method">
+                <block type="chswitch/adminhtml_sales_order_create_shipping_method_form" template="chswitch/sales/order/shipping/method/switch.phtml" name="form" />
+            </block>
+        </reference>
+    </adminhtml_switch_index>
+</layout>

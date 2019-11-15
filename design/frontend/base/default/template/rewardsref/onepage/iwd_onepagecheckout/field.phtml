@@ -1,0 +1,30 @@
+<?php if ($this->getShowReferralBlock()) : ?>
+
+<li class="wide">
+    <div class="input-box" id="rewards_referral_information">
+        <label for="rewards_referral"><?php echo $this->getLabel(); ?></label>
+        <input type="text" name="billing[rewards_referral]" id="rewards_referral" class="input-text" title="<?php echo $this->getLabel(); ?>" value="<?php echo $this->getCurrentAffiliate(); ?>"/>
+    </div>
+    <script type="text/javascript">
+        Event.observe(window, 'load', function() {
+            var showReferralFieldForGuests = '<?php echo json_encode($this->getShowGuestReferralField()); ?>' === 'true';
+            $('billing:create_account').up('li').insert({before: $('rewards_referral_information').up()});
+
+            if ($('billing:create_account').checked) {
+                $('rewards_referral_information').up().show();
+            } else if (!showReferralFieldForGuests) {
+                $('rewards_referral_information').up().hide();
+            }
+
+            Event.observe($('billing:create_account'), 'click', function(event) {
+                var element = event.element();
+                if (element.checked) {
+                    $('rewards_referral_information').up().show();
+                } else if (!showReferralFieldForGuests) {
+                    $('rewards_referral_information').up().hide();
+                }
+            });
+        });
+    </script>
+</li>
+<?php endif; ?>

@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Chcategoryforms>
+            <version>0.1.1</version>
+        </Collinsharper_Chcategoryforms>
+    </modules>
+    <global>
+        <models>
+            <collinsharper_chcategoryforms>
+                <class>Collinsharper_Chcategoryforms_Model</class>
+                <resourceModel>collinsharper_chcategoryforms_resource</resourceModel>
+            </collinsharper_chcategoryforms>
+            <collinsharper_chcategoryforms_resource>
+                <class>Collinsharper_Chcategoryforms_Model_Resource</class>
+                <entities>
+                    <catalog_category_entity_form>
+                        <table>catalog_category_entity_form</table>
+                    </catalog_category_entity_form>
+                </entities>
+            </collinsharper_chcategoryforms_resource>
+        </models>
+        <blocks>
+            <collinsharper_chcategoryforms>
+                <class>Collinsharper_Chcategoryforms_Block</class>
+            </collinsharper_chcategoryforms>
+        </blocks>
+        <helpers>
+            <collinsharper_chcategoryforms>
+                <class>Collinsharper_Chcategoryforms_Helper</class>
+            </collinsharper_chcategoryforms>
+        </helpers>
+        <resources>
+            <collinsharper_chcategoryforms_setup>
+                <setup>
+                    <module>Collinsharper_Chcategoryforms</module>
+                </setup>
+            </collinsharper_chcategoryforms_setup>
+        </resources>
+
+        <events>
+            <adminhtml_catalog_category_tabs>
+                <observers>
+                    <collinsharper_chcategoryforms_observer>
+                        <class>collinsharper_chcategoryforms/category_observer</class>
+                        <method>addCategoryTab</method>
+                    </collinsharper_chcategoryforms_observer>
+                </observers>
+            </adminhtml_catalog_category_tabs>
+
+              <catalog_category_prepare_save>
+                <observers>
+                    <collinsharper_chcategoryforms_observer_save>
+                        <class>collinsharper_chcategoryforms/category_observer</class>
+                        <method>categorySave</method>
+                    </collinsharper_chcategoryforms_observer_save>
+                </observers>
+            </catalog_category_prepare_save>
+
+            <sales_order_save_after>
+                <observers>
+                    <collinsharper_chcategoryforms_observer_save_order>
+                        <type>singleton</type>
+                        <class>collinsharper_chcategoryforms/order_observer</class>
+                        <method>saveOrder</method>
+                    </collinsharper_chcategoryforms_observer_save_order>
+                </observers>
+            </sales_order_save_after>
+
+        </events>
+
+    </global>
+
+    <frontend>
+        <routers>
+            <chcategoryforms>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Chcategoryforms</module>
+                    <frontName>chcategoryforms</frontName>
+                </args>
+            </chcategoryforms>
+        </routers>
+
+
+    </frontend>
+</config>

@@ -1,0 +1,11 @@
+<?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+<?php $customer_id = Mage::getSingleton('customer/session')->getCustomer()->getId(); ?>
+<div class="sweettooth-launcher"></div>
+<div class="sweettooth-init"
+    data-channel-api-key="<?php echo Mage::getStoreConfig('chsweettooth/chsweettooth_api_conf/api_public_key'); ?>"
+    data-external-customer-id="<?php echo $customer_id; ?>"
+    data-customer-auth-digest="<?php echo md5($customer_id.Mage::getStoreConfig('chsweettooth/chsweettooth_api_conf/api_key')); ?>">
+</div>
+<script async src="//cdn.sweettooth.io/assets/storefront.js" charset="utf-8"></script>
+<?php endif; ?>
+<h1>testing sweet tooth template</h1>

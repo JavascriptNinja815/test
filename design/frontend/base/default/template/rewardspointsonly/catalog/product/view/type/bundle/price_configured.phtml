@@ -1,0 +1,31 @@
+<?php
+    $isRwdTheme = (Mage::helper('rewards/theme')->getPackageName() === "rwd");
+    $pointsMinStr = $this->getPointsOnlySimpleCostMin();
+    $pointsMaxStr = $this->getPointsOnlySimpleCostMax();
+
+    $parentBlock = $this->getParentBlock();
+
+    $isBundleSummaryEE = ($parentBlock && $parentBlock->getNameInLayout() === 'bundle.summary') ? true : false;
+
+    $priceIsConfigurable = ($pointsMinStr !== $pointsMaxStr) || ($pointsMinStr === $pointsMaxStr && $isBundleSummaryEE);
+?>
+
+<?php if ($priceIsConfigurable) : ?>
+<div class="<?php echo ($isRwdTheme? "price-box":"regular-price"); ?>">
+    <div class="points-price regular-price" id="points-only-price-<?php echo $this->getProduct()->getId(); ?>" data-update-msg="<?php echo $this->__('Updating Price...');?>">
+        <p class="price-as-configured">
+            <span class="price-label"><?php echo $this->helper('bundle')->__('Price as configured') ?>:</span>
+            <span class="price"><?php echo $this->getPointsOnlySimpleCostConfigured(); ?></span>
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.observe("dom:loaded", function() {
+        if (typeof RewardsPointsOnly !== 'undefined') {
+            var mainProductJsonConfig = JSON.parse('<?php echo $this->getPointsOnlyJsonConfigMainProduct(); ?>');
+            var pointsOnlyOptionsConfigured = new RewardsPointsOnly.Bundle(bundle.config, mainProductJsonConfig);
+        }
+    });
+</script>
+<?php endif;?>

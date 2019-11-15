@@ -1,0 +1,52 @@
+<?php  $this->getSkinUrl('css/vivacity_tweets.css'); ?>
+<?php  $this->getSkinUrl('css/font-awesome.min.css'); ?>
+<?php if($this->isEnabled() && $tweets = $this->getLatestTweets()): ?>
+<?php $username = Mage::getStoreConfig('tweets/twittersettings/twitterid'); ?>
+<?php $theme = Mage::getStoreConfig('tweets/displaysettings/block_theme'); ?>
+<?php $avatar_image = Mage::getStoreConfig('tweets/displaysettings/circular_image'); ?>
+<?php $block_title = Mage::getStoreConfig('tweets/displaysettings/block_title'); ?>
+<div class="block latest-twitter-block">
+	<div class="block-title">
+        <strong>
+                        <span><i class="fa fa-twitter"></i><a class="latest-twitter-head" target="_blank" href="<?php echo 'https://twitter.com/'.$username; ?>">&nbsp;<?php if($block_title) { echo $block_title; } else { ?>Our Latest Tweets <?php } ?></a></span>
+        </strong>
+    </div>
+    <div class="block-content <?php if($theme=='light') { echo 'light'; } else { echo 'dark'; } ?>">
+    	<ul>
+		<?php
+//echo "<pre>";
+//print_r($tweets);
+ foreach($tweets as $tweet): ?>
+        	<li>
+<p>
+            <?php if(Mage::getStoreConfig('tweets/displaysettings/show_image')) { ?>
+<img src="<?php echo $tweet['user_image']; ?>" class="user-avatar <?php if($avatar_image){ echo 'circular'; } ?>" alt="<?php echo $tweet['user_name']; ?>" height="40" width="40" align="left">
+<?php } ?>  
+            <?php if(Mage::getStoreConfig('tweets/displaysettings/show_name')) { ?>
+<span style="float:left;padding-left:5px;"><?php echo (string) trim($tweet["user_name"]); ?><br/><?php echo $tweet["screen_name"]; ?></span>
+<?php } ?>  
+</p>
+
+<p class="tweet-data">
+				<?php echo (string) trim($tweet["tweet"]); ?></p>
+                                <?php   if(isset($tweet["url"]) && !empty($tweet["url"])){ ?>
+                                <img src="<?php echo $tweet["url"] ?>" >
+                                <?php } ?>
+				<span class="tweetSeprator"> - <?php echo date('H:i \o\n d/m/Y', strtotime($tweet["time"]));//echo (string) trim($tweet["time"]); ?></span>
+
+            	</li>
+        <?php endforeach; ?>
+</ul>
+        <?php if($this->showFollowButton()): ?>
+            <div class="actions footerVivatweets">		
+            	<a href="https://twitter.com/<?php echo $this->getTwitterId() ?>" class="twitter-follow-button" data-show-count="false">Follow @<?php echo $this->getTwitterId() ?></a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+        <?php endif; ?>
+        
+    </div>
+</div>
+
+
+
+<?php endif; ?>

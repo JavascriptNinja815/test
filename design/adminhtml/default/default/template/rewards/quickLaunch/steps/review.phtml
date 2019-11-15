@@ -1,0 +1,166 @@
+<?php $loyaltyProgramData = $this->getCustomizedLoyaltyProgramData(); ?>
+<?php $currencySymbol = $this->getCurrencySymbol(); ?>
+<section class="program-review">
+    <div class="section-header collapsed">
+        <span class="section-counter">1</span>
+        <span class="title">Connect to MageRewards</span>
+    </div>
+    <div class="section-header collapsed clickable">
+        <a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/resetSettings'); ?>">
+            <span class="section-counter">2</span>
+            <span class="title">Loyalty Program Goals & Settings</span>
+        </a>
+    </div>
+    <div class="section-header">
+        <span class="section-counter">3</span>
+        <span class="title">Review & Launch</span>
+    </div>
+    <div class="section-content">
+        <form id="rewards-review-form" action="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/index'); ?>">
+            <input type="hidden" name="step" value="review" />
+            <span>
+                The following Loyalty Reward Program was formulated by our top 
+                loyalty scientists and is designed to 
+                <strong><?php echo $loyaltyProgramData['program-type']; ?></strong>
+                Let's review your program and then launch it!
+            </span>
+            <div class="content-box program-details">
+                <h3>Program Details</h3>
+                <div class="earning content-box left">
+                    <h4>Earning Points</h4>
+                    <div class="field-content">
+                        For every <?php echo $this->getCurrencySymbol(); ?>1 spent, earn <input type="text" name="earning-points" value="<?php echo $loyaltyProgramData['earnings']; ?>" readonly /> point(s)
+                    </div>
+                </div>
+                <div class="spending content-box right">
+                    <h4>Spending Points</h4>
+                    <div class="field-content">
+                        Spend <input type="text" name="spending-points" value="<?php echo $loyaltyProgramData['spendings']; ?>" readonly /> points for <?php echo $this->getCurrencySymbol(); ?>0.01 discount
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="special content-box">
+                    <h4>Reward Customer Actions</h4>
+                    <div class="field-content">
+                        <?php if (isset($loyaltyProgramData['sign-up'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Earn <input type="text" name="sign-up" value="<?php echo $loyaltyProgramData['sign-up']; ?>" readonly /> points for <strong>Creating an Account</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['review'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Earn <input type="text" name="review" value="<?php echo $loyaltyProgramData['review']; ?>" readonly /> points for <strong>Writing a Product Review</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['newsletter'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Earn <input type="text" name="newsletter" value="<?php echo $loyaltyProgramData['newsletter']; ?>" readonly /> points for <strong>Subscribing to the Newsletter</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['social-actions'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Earn <input type="text" name="social-media" value="<?php echo $loyaltyProgramData['social-actions']; ?>" readonly /> points for <strong>Sharing on Social Media</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['referral-link'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Earn <input type="text" name="referral-link" value="<?php echo $loyaltyProgramData['referral-link']; ?>" readonly /> points for <strong>Sharing the Referral Link</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['referral-first-order'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Earn <input type="text" name="referral-first-order" value="<?php echo $loyaltyProgramData['referral-first-order']; ?>" readonly /> points on <strong>Referrals First Order</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['birthday'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Give <input type="text" name="customer-birthday" value="<?php echo $loyaltyProgramData['birthday']; ?>" readonly /> points on the <strong>Customer's Birthday</strong></label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['anniversary'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Give <input type="text" name="yearly-anniversary-points" value="<?php echo $loyaltyProgramData['anniversary']; ?>" readonly /> points on the <strong>Customer's Yearly Anniversary</strong> for a period of <input type="text" name="yearly-anniversary-cicles" value="3" readonly /> years</label>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($loyaltyProgramData['inactivity-points']) && isset($loyaltyProgramData['inactivity-period'])): ?>
+                            <div class="customer-action">
+                                <span class="marked"></span>
+                                <label>Give <input type="text" name="inactivity-points" value="<?php echo $loyaltyProgramData['inactivity-points']; ?>" readonly /> points after <input type="text" name="inactivity-days" value="<?php echo $loyaltyProgramData['inactivity-period']; ?>" readonly /> days of <strong>Inactivity</strong></label>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box customer-display">
+                <h3>What your customers will see</h4>
+                <div class="screenshot-overlay"></div>
+                <div class="field-content">
+                    <div class="screenshot first">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/step3.png'); ?>" width="185" />
+                        <span>Earning Points</span>
+                    </div>
+                    <div class="screenshot">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/step2.png'); ?>" width="185" />
+                        <span>Spending Points</span>
+                    </div>
+                    <div class="screenshot last">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/step1.png'); ?>" width="210" />
+                        <span>Customer Actions</span>
+                    </div>
+                </div>
+            </div>
+            <div class="confirm-modal hide" id="confirm-modal">
+                <div class="confirm-box">
+                    <span>All customers on this store will be able to earn and spend points once you launch. Continue?</span>
+                    <button type="submit">Yes</button>
+                    <button id="hide-confirm-box" type="button">No</button>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="info"></i>
+                <span class="info-content">Once you launch, you won't have access to this page but you can add more rules or make changes to your program at any time.</span>
+            </div>
+            <div class="submit-section">
+                <img id="busy" class="loading hide" src="<?php echo $this->getSkinUrl('rewards/images/opc-ajax-loader.gif'); ?>" alt="Loading" />
+                <button id="submit-action" type="button">Launch Now!</button>
+            </div>
+        </form>
+    </div>
+</section>
+<script type="text/javascript">
+    (function() {
+        var modal = $('confirm-modal');
+
+        $('submit-action').observe('click', function() {
+            modal.removeClassName('hide');
+        });
+
+        $('hide-confirm-box').observe('click', function() {
+            modal.addClassName('hide');
+        });
+        
+        var overlay = $$('.screenshot-overlay').first().hide();
+        
+        $$('.screenshot img').invoke('observe', 'click', function() {
+            var image = $(this).clone()
+                .addClassName('zoomed-screenshot')
+                .writeAttribute('width', false);
+        
+            $(document.body).insert(image);
+            overlay.show();
+            
+            $$('.screenshot-overlay, .zoomed-screenshot').invoke('observe', 'click', function() {
+                $$('.zoomed-screenshot').first().remove();
+                overlay.hide(); 
+            });
+        });
+    })();
+</script>

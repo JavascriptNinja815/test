@@ -1,0 +1,24 @@
+<!-- load Google SDK only once per page -->
+<?php if (!Mage::registry('is_google_sdk_loaded')): ?>
+    <script type="text/javascript">
+        (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(po, s);
+        })();
+    </script>
+    
+    <?php Mage::register('is_google_sdk_loaded', true); ?>
+<?php endif; ?>
+
+<!--Google +1 Button-->
+<div class="sweettooth-google-plus-one sweettooth-social-button">
+    <div class="google_plusone_wrapper">
+        <g:plusone
+            href="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>"
+            size="medium"
+            annotation="none"
+        </g:plusone>
+    </div>
+</div>

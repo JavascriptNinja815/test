@@ -1,0 +1,29 @@
+<config>
+
+    <sections>
+        <sales translate="label" module="sales">
+            <groups>
+                <reporting translate="label">
+                    <label>Reporting</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <reporting_tags_skip translate="label comment">
+                            <label>Order Tags to Exclude from Image 3D Specific Reports</label>
+                            <comment>Controls whether certain orders are omitted from the image 3D accounting reports.</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>chimage3d/system_config_source_ordertags</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reporting_tags_skip>
+
+                    </fields>
+                    </reporting>
+                </groups>
+            </sales>
+        </sections>
+    </config>

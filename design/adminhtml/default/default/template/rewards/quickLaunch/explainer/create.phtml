@@ -1,0 +1,81 @@
+<div class="explainer-page-create">
+    <div class="content-header">
+        <h3 class="icon-head head-manage-promo-quote">Create your explainer page</h3>
+    </div>
+    <section class="merchant-info">
+        <p>
+            Use our pre-built sample loyalty program explainer page to introduce your new MageRewards 
+            rewards campaign to your customers.
+        </p>
+        <p>
+            <strong>Whenever you make changes</strong> to your loyalty program <strong>remember to also 
+            update</strong> your explainer page so that your customers are always up to date.
+        </p>
+        <p>
+            Don't forget to <strong>make your explainer page visible</strong>. <strong>We recommend 
+            having multiple links</strong> pointing to your explainer page, especially on the homepage. 
+            The header, top menu or footer areas are good places to consider.
+        </p>
+        <p>
+            After you click on the "Create Explainer Page" button below, we will create a CMS Page
+            which <strong>you will be able to modify to your liking</strong> if you wish to do so. 
+        </p>
+        <p class="align-button">
+            <a id="action-button" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/launchExplainer', array('theme' => TBT_Rewards_Block_QuickLaunch::DEFAULT_THEME)); ?>" title="Create Explainer Page">
+                <button type="button">Create Explainer Page</button>
+            </a>
+        </p>
+    </section>
+    <section class="explainer-page-preview">
+        <div class="preview-header">
+            <span class="title-section">Preview</span>
+            <div class="themes">
+                <div class="theme gold selected" data-theme="gold">
+                    <span class="theme-box"></span>
+                    <span class="theme-text">Gold</span>
+                </div>
+                <div class="theme red" data-theme="red">
+                    <span class="theme-box"></span>
+                    <span class="theme-text">Red</span>
+                </div>
+                <div class="theme blue" data-theme="blue">
+                    <span class="theme-box"></span>
+                    <span class="theme-text">Blue</span>
+                </div>
+                <div class="theme green" data-theme="green">
+                    <span class="theme-box"></span>
+                    <span class="theme-text">Green</span>
+                </div>
+            </div>
+        </div>
+        <div class="overflown-content">
+            <?php echo $this->getChildHtml('preview'); ?>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+    $$('.theme').each(function(element) {
+        element.observe('click', function() {
+            var theme = $(Event.element(event)).up();
+            theme.addClassName('selected');
+            theme.siblings().each(function(e) {
+                e.removeClassName('selected');
+            });
+            
+            var color = theme.readAttribute('data-theme');
+            $$('.sweettooth-explainer').each(function(container) {
+                container.className = 'sweettooth-explainer ' + color;
+            });
+            
+            var action = $('action-button');
+            var url = action.readAttribute('href');
+            
+            var key = '';
+            if (url.lastIndexOf('/key') > 0) {
+                key = url.substring(url.lastIndexOf('/key'), url.length);
+            }
+            
+            action.href = url.substring(0, url.lastIndexOf('theme')) + 'theme/' + color + key;
+        });
+    });
+</script>

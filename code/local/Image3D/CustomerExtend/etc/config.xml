@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Image3D_CustomerExtend>
+			<version>0.1.0</version>
+		</Image3D_CustomerExtend>
+	</modules>
+	<global>
+		<blocks>
+			<cimage3d>
+				<class>Image3D_CustomerExtend_Block</class>
+			</cimage3d>
+		</blocks>
+		<helpers>
+			<image3d_customerextend>
+				<class>Image3D_CustomerExtend_Helper</class>
+			</image3d_customerextend>
+		</helpers>
+	</global>
+	<adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<chreel_options>
+											<title>Image3d Reels options</title>
+										</chreel_options>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<frontend>
+		<routers>
+			<customer>
+				<args>
+					<modules>
+						<Image3D_CustomerExtend before="Mage_Customer">Image3D_CustomerExtend</Image3D_CustomerExtend>
+					</modules>
+				</args>
+			</customer>
+		</routers>
+	</frontend>
+	<default>
+		<chreel_options>
+			<design>
+				<reel_only_title>Reel Only</reel_only_title>
+				<viewer_set_title>Reel &amp; Viewer Set</viewer_set_title>
+				<imprinted_set_title>Custom Imprinted Viewer &amp; Reel Set</imprinted_set_title>
+			</design>
+		</chreel_options>
+	</default>
+</config>

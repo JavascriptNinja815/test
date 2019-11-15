@@ -1,0 +1,29 @@
+<?php
+$category = Mage::registry('current_category');
+$category_id = $this->getData('category_id');
+if(!$category && $category_id) {
+	$category = Mage::getModel('catalog/category')->load($category_id);
+}
+if($category):
+$products = $category
+    ->getProductCollection()
+    ->addAttributeToSelect('name') // add all attributes - optional
+    ->addAttributeToSelect('product_url') // add all attributes - optional
+    ->addAttributeToSelect('small_image') // add all attributes - optional
+    ->addAttributeToFilter('status', 1) // enabled
+    ->addAttributeToFilter('visibility', 4); //visibility in catalog,search
+
+
+?>
+<?php $_imgSize = 148; ?>
+
+<div class="product-categories">
+    <ul>
+<?php foreach($products as $_product): ?>
+        <li><a href="<?php echo $_product->getProductUrl() ?>"><img class="category-image" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+            <p><a href="<?php echo $_product->getProductUrl() ?>"><?php echo $_product->getName(); //$this->stripTags($_product->getName(), null, true); ?></a></p>
+        </li>
+<?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>

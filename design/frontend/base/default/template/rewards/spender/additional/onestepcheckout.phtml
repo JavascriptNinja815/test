@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    window.sweettooth = window.sweettooth || {};
+    sweettooth.slider = sweettooth.slider || {};
+
+    (function() {
+        var oscSummary = $$('div.onestepcheckout-summary');
+        oscSummary = Element.extend(oscSummary.shift());
+        
+        var pointsSpender = $$('.onestepcheckout-points-spender');
+        pointsSpender = Element.extend(pointsSpender.shift());
+        
+        oscSummary.insert({before: pointsSpender});
+    })();
+    
+    sweettooth.slider.afterAjax = function(response) {
+        var result = response.responseJSON;
+        var isZeroGrandTotal = result.hasOwnProperty('is_zero_grand_total') ? result.is_zero_grand_total : false;
+        var fromZeroGrandTotal = result.hasOwnProperty('from_zero_grand_total') ? result.from_zero_grand_total : false;
+        
+        if (result.hasOwnProperty('error') && result.error === true) {
+            this.logMessage(result.message);
+        } else {
+            var rewards_trigger_url_save_billing = '<?php echo $this->getUrl('onestepcheckout/ajax/save_billing', array('_secure'=>true)); ?>';
+            var rewards_trigger_url_set_methods = '<?php echo $this->getUrl('onestepcheckout/ajax/set_methods_separate', array('_secure'=>true)); ?>';
+    	    var isUpdatePaymentMethodsConfig = <?php echo ((bool)Mage::getStoreConfig('onestepcheckout/ajax_update/enable_update_payment_on_shipping')) ? 'true' : 'false'; ?>;
+    	    var flagUpdatePaymentMethods = (isUpdatePaymentMethodsConfig || isZeroGrandTotal || fromZeroGrandTotal) ? true : false;
+            
+            get_save_billing_function(rewards_trigger_url_save_billing, rewards_trigger_url_set_methods, flagUpdatePaymentMethods, true)();
+        }
+    };
+</script>

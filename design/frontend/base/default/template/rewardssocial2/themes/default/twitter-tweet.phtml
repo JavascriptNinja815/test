@@ -1,0 +1,36 @@
+<!-- load Twitter SDK only once per page -->
+<?php if (!Mage::registry('is_twitter_sdk_loaded')): ?>
+    <script type="text/javascript">
+        Event.observe(document, "dom:loaded", function() {
+            if (typeof window.twttr == 'undefined') {
+                window.twttr = (function (d,s,id) {
+                    var t, js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+                    js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+                    return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+                } (document, "script", "twitter-wjs"));
+            }
+        });
+    </script>
+    
+    <?php Mage::register('is_twitter_sdk_loaded', true); ?>
+<?php endif; ?>
+
+<!--Twitter Tweet Button-->
+<?php $helper = Mage::helper('rewardssocial2'); ?>
+<?php $actionType = $this->getActionType(); ?>
+<div class="sweettooth-twitter-tweet sweettooth-social-button">
+    <div
+        <?php if ($actionType === 'twitter_tweet_purchase'): ?>
+            data-product="<?php echo $this->getProduct()->getId(); ?>"
+            data-order="<?php echo $this->getOrderId(); ?>"
+        <?php endif; ?>>
+            <a href="https://twitter.com/share"
+                class="twitter-share-button" 
+                data-count="none"
+                data-text="<?php echo addslashes($helper->getTweetMessage()); ?>"
+                data-url="<?php echo $helper->fetchTargetUrl($actionType, $this->getProduct()); ?>">
+                    <?php echo $this->__("Tweet") ?>
+            </a>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+<div class="pinterest-container">
+<h2 class="threedee-heading">Pinterest</h2>
+<?php
+$pram=$this->getPinterest();
+if($pram['showdate']==0)
+{
+	$date="none";
+}
+?>
+
+<div class="wk_containt">
+	
+			<div id="columns"></div>
+		<div id="pin-foot"><p style="text-align:center;">See On pinterest *
+				
+			</p>
+		</div>
+	<span class="wk_containt-button" id="wk_pintrest"></span>
+</div>
+</div>	
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="<?php echo $this->getSkinurl('js/jScrollPane-1.2.3.min.js')?>"></script>
+<script src="<?php echo $this->getSkinurl('js/jquery.mousewheel.js')?>"></script>
+<link rel="stylesheet" href="<?php echo $this->getSkinurl('css/jScrollPane.css')?>"></link>
+<script>
+//Pintrest//
+(function($wk_jq){
+$wk_jq(function(){					
+		var $pinurl='<?php echo $pram['pinterestid']?>'+'/feed.rss';
+		if('<?php echo $pram['pinterestboardid']?>'!='')
+		{
+			$pinurl='<?php echo $pram['pinterestid']?>'+'/'+'<?php echo $pram['pinterestboardid']?>'+'.rss';
+		}
+		
+		$wk_jq.ajax({
+		url:"http://ajax.googleapis.com/ajax/services/feed/load",
+		data:"v=1.0&num=<?php echo $pram['maxfeed']?>&q="+encodeURIComponent('http://www.pinterest.com/'+$pinurl),
+		type:"get",
+		cache: true,
+		dataType: 'jsonp',
+		success:function(a){
+			var error='';
+			if(a.responseStatus == 200)
+			{
+				a = a.responseData.feed.entries;
+			} 
+			else 
+			{
+				error = a.responseDetails;
+			}
+			if(error=='')
+			{
+				$wk_jq.each(a,function(i,item){
+					if(i < <?php echo $pram['maxfeed']?>)
+					{
+						var d = item.publishedDate,
+							$contant='',
+							$date='';
+							if(d)
+							{
+								$date=$('<span/>').addClass('date').text(nicetime(new Date(d).getTime()));
+							}
+							
+						if($wk_jq('img',item.content).attr('src'))
+						{
+							$contant=$('<div/>').addClass("orange-shift").addClass("pin").attr( "id", "pin-" + i )
+										.append($('<div/>').addClass("green-shift")
+										.append($('<div/>').addClass("media-container")
+										.append($('<a/>').attr('href',item.link).addClass('pinitem')
+																.append($('<img/>').attr('src',$wk_jq('img',item.content).attr('src'))
+																				   .attr('alt','').error(function(){
+																						$wk_jq(this).remove();
+																					  })))
+												.append($wk_jq('<span/>').addClass('feed').append(item.contentSnippet))
+												.append($date)));
+													
+						}
+						$wk_jq('#columns').append($contant);
+						
+					}
+				});
+			}
+		}
+	});
+	
+	function num(a){
+            var b = a;
+            if (a > 999999) b = Math.floor(a / 1E6) + "M";
+            else if (a > 9999) b = Math.floor(a / 1E3) + "K";
+            else if (a > 999) b = Math.floor(a / 1E3) + "," + a % 1E3;
+            return b
+        };
+	
+	function nicetime(a)
+	{
+		var d = Math.round((+new Date - a) / 1000), fuzzy;
+		var chunks = new Array();
+			chunks[0] = [60 * 60 * 24 * 365 , 'year'];
+			chunks[1] = [60 * 60 * 24 * 30 , 'month'];
+			chunks[2] = [60 * 60 * 24 * 7, 'week'];
+			chunks[3] = [60 * 60 * 24 , 'day'];
+			chunks[4] = [60 * 60 , 'hr'];
+			chunks[5] = [60 , 'min'];
+		var i = 0;
+		var j = chunks.length;
+		for (i = 0; i < j; i++) 
+			{
+				s = chunks[i][0];
+				n = chunks[i][1];
+				if ((xj = Math.floor(d / s)) != 0)
+					break;
+			}
+		fuzzy = (xj == 1)? '1 '+n : xj+' '+n+'s';
+		if (i + 1 < j) 
+		{
+			s2 = chunks[i + 1][0];
+			n2 = chunks[i + 1][1];
+			if ( ((xj2 = Math.floor((d - (s * xj)) / s2)) != 0) )
+			{
+				fuzzy += (xj2 == 1) ? ' + 1 '+n2 : ' + '+xj2+' '+n2+'s';
+			
+			}
+		}
+			fuzzy += ' ago';
+			return fuzzy;
+			
+	} 
+});
+})(jQuery);
+</script>
+
+<?php 
+
+ ?> 

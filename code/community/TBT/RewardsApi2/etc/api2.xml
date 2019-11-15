@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <api2>
+        <resource_groups>
+            <rewardsapi2>
+                <title>MageRewards</title>
+                <sort_order>500</sort_order>
+            </rewardsapi2>
+        </resource_groups>
+        <resources>
+            <rewards_transfers translate="title" module="rewardsapi2">
+                <group>rewardsapi2</group>
+                <sort_order>10</sort_order>
+                <model>rewardsapi2/api2_transfer</model>
+                <working_model>rewards/transfer</working_model>
+                <title>Transfers</title>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                    </admin>
+                </privileges>
+                <attributes module="rewardsapi2">
+                    <rewards_transfer_id>Transfer ID</rewards_transfer_id>
+                    <customer_id>Customer ID</customer_id>
+                    <quantity>Quantity</quantity>
+                    <comments>Comments</comments>
+                    <status_id>Status ID</status_id>
+                    <is_dev_mode>Is Development Mode</is_dev_mode>
+                    <reason_id>Reason ID</reason_id>
+                    <effective_start>Effective Start</effective_start>
+                    <created_at>Created At</created_at>
+                    <issued_by>Issued By</issued_by>
+                    <updated_at>Updated At</updated_at>
+                    <updated_by>Updated By</updated_by>
+                    <reference_id>Reference ID</reference_id>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/rewards_transfers/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/rewards_transfers</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </rewards_transfers>
+            <rewards_customers>
+                <group>rewardsapi2</group>
+                <sort_order>20</sort_order>
+                <model>rewardsapi2/api2_customer</model>
+                <working_model>customer/customer</working_model>
+                <title>Customers</title>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                </privileges>
+                <attributes module="rewardsapi2">
+                    <entity_id>Customer ID</entity_id>
+                    <last_logged_in>Last Logged In</last_logged_in>
+                    <firstname>First Name</firstname>
+                    <lastname>Last Name</lastname>
+                    <email>Email</email>
+                    <website_id>Associate to Website</website_id>
+                    <created_in>Created From</created_in>
+                    <group_id>Group</group_id>
+                    <confirmation>Is Confirmed</confirmation>
+                    <disable_auto_group_change>Disable automatic group change based on VAT ID</disable_auto_group_change>
+                    <rewards_active_balance>Points Active Balance</rewards_active_balance>
+                    <rewards_usable_balance>Points Usable Balance</rewards_usable_balance>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/rewards_customers/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/rewards_customers</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </rewards_customers>
+        </resources>
+    </api2>
+</config>
+

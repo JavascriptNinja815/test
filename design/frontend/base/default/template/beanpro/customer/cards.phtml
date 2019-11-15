@@ -1,0 +1,340 @@
+<div id="carddiv">
+<?php 
+			$ccform = new Mage_Payment_Block_Form_Cc;
+			$cust_id = Mage::helper('beanpro')->getSession()->getCustomer()->getId();
+		$cards = Mage::helper('beanpro')->loadStoredAccountId($cust_id);
+?>
+<?php if(!count($cards)): ?>
+<?php echo $this->__('You do not have any stored cards.'); ?>
+<?php endif; ?>
+
+<div class="card-list">
+<div class="card-col-headers">
+    <div class="card-col-header remove">
+        <?php echo $this->__('Remove') ?>
+    </div>
+    <div class="card-col-header default">
+        <?php echo $this->__('Default') ?>
+    </div>
+    <div class="card-col-header number">
+        <?php echo $this->__('Card Number') ?>
+    </div>
+    <div class="card-col-header expiry">
+        <?php echo $this->__('Expiry') ?>
+    </div>
+</div>
+
+<?php $rid=0; $dc_set = false; foreach($cards as $carddetails): ?>
+	<div id="stored_cc_<?php echo $rid ?>_row" class="card-col-details<?php echo ((($rid % 2) == 1)?' even':' odd') ?>">
+        <div class="card-col-detail remove">
+            <a href="#" onClick="deleteCard( 'stored_cc_<?php echo $rid ?>');"><img src="<?php echo $this->getSkinUrl('images/cards_delete_button.png') ?>" height="15" border="0" alt="<?php echo $this->__('Delete stored card') ?>" title="<?php echo $this->__('Delete stored card') ?>" /></a>
+        </div>
+        <div class="card-col-detail default">
+           <?php if(count($cards) == 1): ?>
+		   <input type="checkbox" 
+                class=" validate-one-required-by-name stored_cc" 
+                id="stored_cc_<?php echo $rid ?>" 
+                name="payment[cc_stored]" 
+                onClick="validateSetDefault(this)"
+				 <?php echo isset($carddetails['default_card']) && $carddetails['default_card'] == 1? "checked=checked" : ""; ?>
+                value="<?php echo $carddetails['data_key']; ?>" />
+<?php else: ?>		   <input type="radio" 
+                class="radio validate-one-required-by-name stored_cc" 
+                id="stored_cc_<?php echo $rid ?>" 
+                name="payment[cc_stored]" 
+                onClick="validateSetDefault(this)" <?php echo isset($carddetails['default_card']) && $carddetails['default_card'] == 1? "checked=checked" : ""; ?>
+                value="<?php echo $carddetails['data_key']; ?>" />
+<?php endif; ?>
+        </div>
+        <div class="card-col-detail number">	
+            <?php echo $this->__('XXXX-XXXX-XXXX-'); ?> 
+            <?php echo str_pad($carddetails['cc_last4'],4,"0",STR_PAD_LEFT); ?>
+        </div>
+        <div class="card-col-detail expiry"> 
+            <?php echo date('F Y',strtotime('20'.substr($carddetails['card_expiry_MMYY'],-2).'-'.substr($carddetails['card_expiry_MMYY'],0,2).'-01')); ?>
+        </div>
+<?php if(isset($carddetails['default_card']) &&  $carddetails['default_card'] == 1): $dc_set = 1;?>
+	<input type="hidden" name="default_card"  id="default_card" value="stored_cc_<?php echo $rid ?>" />
+<?php endif; ?>
+	</div>
+<?php $rid++; endforeach; ?>
+</div>
+<?php if(!$dc_set):?>
+	<input type="hidden" name="default_card"  id="default_card" value="false" />
+<?php endif; ?>
+
+
+	<div id="addcardarea">
+		<br />
+        <a href="#" onClick="addCard();"><?php echo $this->__('Add Another Card'); ?></a>
+		<div id="addcard" class="card-new-container" style="display: none">
+			<h2><?php echo $this->__('Add a securely stored Credit Card to your account.'); ?></h2>
+			<?php if(!Mage::helper('beanpro')->customerHasAddresses()): ?>
+				<?php echo $this->__('Please add addresses to your account to add stored credit cards.'); ?>
+			<?php else: ?>
+			<form name="addcardform" id="addcardform" method="POST" action="<?php echo $this->getUrl('beanpro/customer/savecard/', array("_secure"=>true));?>">
+			<div class="card-input">
+                <label for="billing-address-select">
+                    <?php echo $this->__('Card Billing Address'); ?>
+                </label>
+			    <div class="input-box">
+                    <?php echo Mage::helper('beanpro')->getAddressesHtmlSelect($type = 'billing'); ?><br />
+			        <a href="<?php echo $this->getUrl('customer/address/new/', array("_secure"=>true));?>" title="<?php echo $this->__('Add a new Address.'); ?>">
+                        <?php echo $this->__('Add a new Address.'); ?>
+                    </a>
+                </div>
+            </div>
+			
+            <fieldset class="card-form-list">
+                <?php $_code='internetsecure'; ?>
+                <ul id="payment_form_<?php echo $_code ?>">
+                    <li>
+                        <div class="card-input">
+                            <label for="<?php echo $_code ?>_cc_type">
+                                <?php echo $this->__('Credit Card Type') ?> <span class="required">*</span>
+                            </label>
+                            <div class="input-box">
+                                <select id="<?php echo $_code ?>_cc_type" name="payment[cc_type]" class="required-entry validate-cc-type-select">
+                                    <option value=""><?php echo $this->__('--Please Select--')?></option>
+                                    <?php foreach (Mage::helper('beanpro')->getCcAvailableTypes() as $_typeCode => $_typeName): ?>
+                                    <option value="<?php echo $_typeCode ?>"><?php echo $_typeName ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card-input">
+                            <label for="<?php echo $_code ?>_cc_number">
+                                <?php echo $this->__('Credit Card Number') ?> <span class="required">*</span>
+                            </label>
+                            <div class="input-box">
+                                <input type="text" id="<?php echo $_code ?>_cc_number" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number') ?>" class="input-text validate-cc-number validate-cc-type" value="" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="card-input">
+                            <label for="<?php echo $_code ?>_expiration">
+                                <?php echo $this->__('Expiration Date') ?> <span class="required">*</span>
+                            </label>
+                            <div class="v-fix">
+                                <select id="<?php echo $_code ?>_expiration" style="width:140px;" name="payment[cc_exp_month]" class="required-entry">
+                                    <?php foreach ($ccform->getCcMonths() as $k=>$v): ?>
+                                    <option value="<?php echo $k?$k:'' ?>"><?php echo $v ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                            <div class="v-fix" style="padding-left:5px;">
+                                <select id="<?php echo $_code ?>_expiration_yr" style="width:103px;" name="payment[cc_exp_year]" class="required-entry">
+                                    <?php foreach ($ccform->getCcYears() as $k=>$v): ?>
+                                    <option value="<?php echo $k?$k:'' ?>"><?php echo $v ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                    <?php if(Mage::getStoreConfig('payment/beanpro/useccv')): ?>
+                    <li>
+                        <div class="card-input">
+                            <label for="<?php echo $_code ?>_cc_cid">
+                                <?php echo $this->__('Card Verification Number') ?> <span class="required">*</span>
+                            </label>
+                            <div class="v-fix">
+                                <input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="required-entry input-text validate-cc-cvn" id="<?php echo $_code ?>_cc_cid" name="payment[cc_cid]" style="width:3em;" value="" />
+                            </div>
+                            <a href="#" onmouseover="showCVV();" onmouseout="hideCVV();" id="cvv-what-is-this" class="cvv-what-is-this">
+                                <?php echo $this->__('What is this?') ?>
+                            </a>
+                            <div id="cvvimg" style="display:none;">
+                                <img id="cvvimg_img" src="<?php echo $this->getSkinUrl('images/cvv-visa.gif') ?>">
+                            </div>
+                        </div>
+                    </li>
+		            <?php else: ?>
+	                <li>
+                        <input type="hidden" title="<?php echo $this->__('Card Verification Number') ?>"  id="<?php echo $_code ?>_cc_cid" name="payment[cc_cid]" value="111" />
+                    </li>
+			        <?php endif; ?>
+                </ul>
+            </fieldset>
+
+	        <input type="checkbox" id="new_default" name="new_default" value="1" onclick="toggleDefault();" checked />: 
+            <?php echo $this->__('Set as your new default payment method?') ?>
+	
+			<a href="#" onClick="submitDetails();" class="button"><?php echo $this->__('Add Card') ?></a>
+			<a href="#" onClick="cancelCard();" class="button"><?php echo $this->__('Cancel') ?></a>
+			</form>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+<script>
+
+Event.observe(document.getElementById('cvv-what-is-this'), 'click', toggleToolTip);
+
+function toggleDefault() {
+    var obj = document.getElementById('new_default');
+    if(obj != null) {
+        if(obj.checked) {
+            obj.value = '1';
+        } else {
+            obj.value = '0';
+        }
+    }
+}
+
+var cX = 0; var cY = 0; var rX = 0; var rY = 0;
+
+function UpdateCursorPosition(e) { 
+    cX = e.pageX; 
+    cY = e.pageY;
+}
+
+function UpdateCursorPositionDocAll(e) { 
+    cX = event.clientX; 
+    cY = event.clientY;
+}
+
+function AssignPosition() {
+    if(self.pageYOffset) {
+        rX = self.pageXOffset;
+        rY = self.pageYOffset;
+    } else if(document.documentElement && document.documentElement.scrollTop) {
+        rX = document.documentElement.scrollLeft;
+        rY = document.documentElement.scrollTop;
+    } else if(document.body) {
+        rX = document.body.scrollLeft;
+        rY = document.body.scrollTop;
+    }
+    if(document.all) {
+        cX += rX; 
+        cY += rY;
+    }
+}
+
+if(document.all) { 
+    document.onmousemove = UpdateCursorPositionDocAll; 
+} else { 
+    document.onmousemove = UpdateCursorPosition; 
+}
+
+function showCVV() {
+    var obj = document.getElementById('cvvimg');
+    if(obj != null) {
+        obj.style.display = 'block';
+        obj.style.zIndex = '9999';
+        obj.style.top = (cY - 124) + 'px';
+        obj.style.left = (cX + 90) + 'px';
+    }
+}
+
+function hideCVV() {
+    var obj = document.getElementById('cvvimg');
+    if(obj != null) obj.style.display = 'none';    
+}
+
+function toggleToolTip(event) {
+    if($('payment-tool-tip')) {
+        /*$('payment-tool-tip').setStyle({
+                top: (Event.pointerY(event)-510)+'px',
+                left: (Event.pointerX(event)-800)+'px'
+            })*/
+        $('payment-tool-tip').toggle();
+    }
+    Event.stop(event);
+}
+
+function cancelCard() {
+	document.getElementById('internetsecure_cc_number').value = '';
+	document.getElementById('internetsecure_cc_cid').value = '';
+	document.getElementById('addcard').style.display = 'inline';
+}
+
+function submitDetails() {
+	var test = validateCreditCard(document.getElementById('internetsecure_cc_number').value);
+	//alert(document.getElementById('internetsecure_cc_number').value + " and " + test );
+	if(!test) {
+		alert("please ensure you typed your card correctly");
+		return false;
+	}
+    
+    // Timestamp down to the millisecond
+    var ts = new Date();
+    var now = ts.getFullYear().toString() + '-'; 
+    now += (((ts.getMonth() + 1) < 10) ? '0' : '') + (ts.getMonth() + 1).toString() + '-'; 
+    now += ((ts.getDate() < 10) ? '0' : '') + ts.getDate().toString() + ' '; 
+    now += ((ts.getHours() < 10) ? '0' : '') + ts.getHours().toString() + ':';
+    now += ((ts.getMinutes() < 10) ? '0' : '') + ts.getMinutes().toString() + ':'; 
+    now += ((ts.getSeconds() < 10) ? '0' : '') + ts.getSeconds().toString() + '.';
+    now += ts.getMilliseconds().toString();
+    
+    var obj = document.getElementById('<?php echo $_code ?>_cc_cid');
+    if(obj != null) {
+        var errmsg = '', cntr = 0, ok = true;       
+        for(var i = 0; i < obj.value.length; i++) {
+            cntr++;
+            if((obj.value.charCodeAt(i) < 48) || (obj.value.charCodeAt(i) > 57)) ok = false;                   
+        }
+        if(cntr < 3) errmsg += ', Please verify your CVV	';
+        if(!ok) errmsg += ', CVV is not numeric';
+        if(errmsg != '')
+		{
+			alert(errmsg.substring(2));
+			 return(false);
+		}
+		// test date here
+     }
+    document.getElementById('addcardform').submit();
+}
+
+function cancelCard() {
+	//reset form values
+	 document.getElementById('addcard').style.display = 'none';
+}
+
+function addCard() {
+	 document.getElementById('addcard').style.display = 'inline';
+}
+
+function deleteCard(elementId) {
+	var element = document.getElementById(elementId);
+	var data_key = element.value;
+	var t = false;
+	if(document.getElementById('default_card').value == element.id) {
+		t = confirm("<?php echo $this->__('Are you sure you want to Delete your default stored card? This cannot be undone!'); ?>");
+	} else {
+		t = confirm("<?php echo $this->__('Are you sure you want to Delete this stored card? This cannot be undone!'); ?>");
+	}
+		// console.log("ajax update here to remove the card" + element.id + "f or " + element.value);
+		// console.log("ajax update here after " +document.getElementById('default_card').value);
+		// console.log("ajax update here after " +'' + "<?php echo $this->getUrl('beanpro/customer/deletecard/', array("_secure"=>true));?>?data_key="+data_key);
+		// console.log("ajax update here after " +'' + element.id + '_row');
+	if(t) {
+		document.getElementById('default_card').value = false;
+		document.location = "<?php echo $this->getUrl('beanpro/customer/deletecard/', array("_secure"=>true));?>?data_key="+data_key;
+		//redirec to here once done 
+		return;
+	}
+	return false;
+}
+
+function validateSetDefault(element) {
+	var t = confirm("<?php echo $this->__('Are you sure you want to set this as your default Billing Card?'); ?>");
+	var data_key = element.value;
+
+	if(t) {
+		document.getElementById('default_card').value = element.id;
+		console.log("ajax update here" + element.id + "f or " + element.value);
+		console.log("ajax update here after " +document.getElementById('default_card').value);
+		document.location = "<?php echo $this->getUrl('beanpro/customer/defaultcard/', array("_secure"=>true));?>?data_key="+data_key;
+	}
+	element.checked = false;
+	if(document.getElementById('default_card').value != '') {
+		var old_id = document.getElementById('default_card').value;
+		$(old_id).checked = "checked";
+	}
+	return false;
+}
+
+</script>

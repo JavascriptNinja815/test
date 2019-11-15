@@ -1,0 +1,14 @@
+<?php if($_info = $this->getInfo()): 
+$help = mage::helper('beanpro');
+$realData = $help->loadAccountById($this->getInfo()->getCcOwner()); 
+if(!isset($realData['cardtype']) && isset($realData[0])) {
+	$realData = $realData[0];
+}
+?>
+<?php echo $this->__('Stored Account: %s', $this->htmlEscape($this->getInfo()->getCcOwner())) ?><br />
+<?php echo $this->__('Credit Card Type: %s', isset($realData['cardtype']) ? $this->htmlEscape($realData['cardtype']) : false) ?><br />
+<?php echo $this->__('Credit Card Number: xxxx-%s', $this->htmlEscape($realData['cc_last4'] ? $realData['cc_last4'] : false)) ?><br />
+<?php echo $this->__('Expiration Date: %s/%s', $this->htmlEscape(substr($realData['card_expiry_MMYY'],0,2)), $this->htmlEscape(substr($realData['card_expiry_MMYY'],-2))) ?>
+<?php else: ?>
+
+<?php endif; ?>

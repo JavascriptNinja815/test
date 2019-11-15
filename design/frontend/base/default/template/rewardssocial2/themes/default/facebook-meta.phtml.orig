@@ -1,0 +1,38 @@
+<?php $socialHelper = Mage::helper('rewardssocial2'); ?>
+<?php if ($product = Mage::registry('current_product')) : ?>
+    <meta property="og:title" content="<?php echo htmlspecialchars(($product->getMetaTitle()) ? $product->getMetaTitle() : $product->getName());?>" />
+    <meta property="og:type" content="product" />
+
+    <?php if ($product->getImage() != 'no_selection' && $product->getImage()): ?>
+    <meta property="og:image" content="<?php echo Mage::helper('catalog/image')->init($product, 'image');?>"/>
+    <?php endif; ?>
+
+    <?php if (!$socialHelper->isNullOrEmptyString($product->getMetaDescription())) : ?>
+    <meta property="og:description" content="<?php echo htmlspecialchars(strip_tags($product->getMetaDescription()));?>" />
+    <?php elseif (!$socialHelper->isNullOrEmptyString($product->getDescription())) : ?>
+    <meta property="og:description" content="<?php echo htmlspecialchars(strip_tags($product->getDescription()));?>" />
+    <?php elseif (!$socialHelper->isNullOrEmptyString($product->getShortDescription())) : ?>
+    <meta property="og:description" content="<?php echo htmlspecialchars(strip_tags($product->getShortDescription()));?>" />
+    <?php endif; ?>
+
+<?php elseif ($category = Mage::registry('current_category')) : ?>
+    <meta property="og:title" content="<?php echo htmlspecialchars(($category->getMetaTitle()) ? $category->getMetaTitle() : $category->getName());?>" />
+    <meta property="og:type" content="product" />
+    
+    <?php if ($categoryImage = $category->getImageUrl()) : ?>
+    <meta property="og:image" content="<?php echo $category->getImageUrl();?>"/>
+    <?php endif; ?>
+
+    <?php if (!$socialHelper->isNullOrEmptyString($category->getMetaDescription())) : ?>
+    <meta property="og:description" content="<?php echo htmlspecialchars(strip_tags($category->getMetaDescription()));?>" />
+    <?php endif; ?>
+
+<?php elseif (Mage::getSingleton('cms/page')->getId()) : ?>
+    <?php $cmsPage = Mage::getSingleton('cms/page'); ?>
+	<meta property="og:title" content="<?php echo htmlspecialchars($cmsPage->getTitle()) ?>"/>
+	<meta property="og:type" content="article"/>
+
+	<?php if (!$socialHelper->isNullOrEmptyString($cmsPage->getMetaDescription())):?>
+	<meta property="og:description" content="<?php echo htmlspecialchars(strip_tags($cmsPage->getMetaDescription())) ?>"/>
+	<?php endif; ?>
+<?php endif; ?>

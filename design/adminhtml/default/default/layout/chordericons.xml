@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <chordericons_adminhtml_index_index>
+        <reference name="content">
+            <block type="chordericons/adminhtml_chicons" name="chordericons" />
+        </reference>
+    </chordericons_adminhtml_index_index>
+    <chordericons_adminhtml_index_edit>
+        <update handle="editor"/>
+    </chordericons_adminhtml_index_edit>
+
+    <ch_ordericon_div>
+        <block type="core/template" name="sales_order.grid.chordericons"  as="sales_order.grid.chordericons" template="chordericons/ordergridadd.phtml" output="toHtml"></block>
+    </ch_ordericon_div>
+
+    <adminhtml_sales_order_index>
+        <update handle="ch_ordericon_div"/>
+    </adminhtml_sales_order_index>
+    
+    <adminhtml_sales_order_view>
+        <reference name="order_tab_info">
+            <action method="setTemplate">
+                <template>chordericons/viewblock.phtml</template>
+            </action> 
+    <!-- Add your block to display in above order total block -->
+        </reference>
+    </adminhtml_sales_order_view>
+    
+</layout>

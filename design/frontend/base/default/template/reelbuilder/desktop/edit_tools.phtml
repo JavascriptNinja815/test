@@ -1,0 +1,175 @@
+<?php $helper = Mage::helper('reelbuilder/tools'); ?>
+<style>
+	.fileinput {
+		position: relative;
+		text-align: right;
+		-moz-opacity:0 ;
+		filter:alpha(opacity: 0);
+		opacity: 0;
+		z-index: 2;
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 0;
+		border: solid transparent;
+		border-width: 0 0 100px 200px;
+		opacity: 0.0;
+		filter: alpha(opacity=0);
+		-o-transform: translate(250px, -50px) scale(1);
+		-moz-transform: translate(-300px, 0) scale(4);
+		direction: ltr;
+		cursor: pointer;
+		background-color: #f08146;
+
+	}
+</style>
+<div class="edit-tools" id="edit-tools">
+	<div class="desktop-switch-reelname">
+		<div id="mobile-switch" class="screen-switcher">
+			<a href="/retroviewer/reelbuilder/index/mobile?reel_id=<?php echo $_REQUEST['reel_id'];?>">
+				<img src="<?php echo $this->getSkinUrl('images/reelbuilder/mobile-icon.png') ?>" />
+			</a>
+		</div>
+		<div class="tool-container" id="container-reelname" >
+			<div class="tool-row">
+				<label for="txt-reelName"><?php echo $this->__('Name Your Reel - Type Here'); ?></label>
+				<input type="text" name="txt-reelName" id="txt-reelName" placeholder="Name Your Reel - Type Here" />
+			</div>
+	        <!-- <div id="uploader" style="">
+	           <br />
+	        </div> -->
+		</div>
+	</div>
+
+	<div class="tool-container" id="container-img-buttons" style="display:none;" >
+        <p><?php echo $this->__('UPLOAD AN IMAGE OR CHOOSE STOCK ART'); ?></p>
+		<div class="help-buttons my-photo-link">
+			<label for="imgLoader" style="cursor:pointer;"><?php echo $this->__('MY OWN PHOTOS'); ?></label>
+			<input type="file" onChange="javascript:rb.uploaderChange(this);" id="imgLoader" class="fileinput no-display" accept="image/jpeg, image/jpg"/>
+			<!-- <a href="javascript:jQuery('.ui-dialog-content').dialog('close'); jQuery('#imgLoader').click();" id="my_own_photos"><?php echo $this->__('MY OWN PHOTOS'); ?></a>  -->
+		</div>
+		<div class="help-buttons stock-photo-link">
+			<a href="javascript: jQuery('.ui-dialog-content').dialog('close'); stockArt.reset(); stockArt.showDialog(); " id="stock_photos"><?php echo $this->__('STOCK IMAGES'); ?></a>
+		</div>
+	</div>
+
+	<div class="tool-container" id="container-color" >
+		<h1><?php echo $this->__('Image Options'); ?></h1>
+
+        <a href="javascript:void(0)" id="img_popup"><?php echo $this->__('ADD IMAGE'); ?></a>
+		
+		<div class="tool-row">
+
+			<div id="color-options">
+				<input type="radio" id="rad-fullColor" name="radio" class="img-color-opts" checked="checked"/><label for="rad-fullColor"><?php echo $this->__('FULL COLOR'); ?></label><span class="green-dash">-</span>
+				<input type="radio" id="rad-bw" name="radio" class="img-color-opts" /><label for="rad-bw"><?php echo $this->__('B/W'); ?></label><span class="green-dash">-</span>
+				<input type="radio" id="rad-sepia" name="radio" class="img-color-opts"/><label for="rad-sepia"><?php echo $this->__('Sepia Tones'); ?></label>
+			</div>
+
+		</div>
+	</div>
+	<div class="tool-container" id="container-imageadjust">
+		<div class="tool-row">
+			<ul>
+				<li>
+					<!--<div class="slider-label"><?php echo $this->__('SCALE'); ?> <a href="#" onclick="javascript:jQuery('#slider-scale').slider('option', 'value', SCALE_DEFAULT*SCALE_MODIFIER);return false;"><sub>X</sub></a></div>-->
+					<div class="slider-label"><?php echo $this->__('SCALE'); ?> <a href="#" onclick="javascript:rb.setCurrentImageDefaultScale();return false;"><sub>X</sub></a></div>
+					<div class="slider-container">
+						<div class="slider" id="slider-scale"></div>
+					</div>
+				</li>
+				<li><div class="slider-label"><?php echo $this->__('ROTATION'); ?> <a href="#" onclick="javascript:jQuery('#slider-rotate').slider('option', 'value', ROTATE_DEFAULT);return false;"><sub>X</sub></a></div>
+					<div class="slider-container">
+						<div class="slider"  id="slider-rotate"></div>
+					</div>
+				</li>
+				<li><div class="slider-label"><?php echo $this->__('BRIGHTNESS'); ?> <a href="#" onclick="javascript:jQuery('#slider-brightness').slider('option', 'value', BRIGHTNESS_DEFAULT);return false;"><sub>X</sub></a></div>
+					<div class="slider-container">
+						<div class="slider"  id="slider-brightness"></div>
+					</div>
+				</li>
+				<li><div class="slider-label"><?php echo $this->__('CONTRAST'); ?> <a href="#" onclick="javascript:jQuery('#slider-contrast').slider('option', 'value', CONTRAST_DEFAULT);return false;"><sub>X</sub></a></div>
+					<div class="slider-container">
+						<div class="slider"  id="slider-contrast"></div>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+    <div class="tool-container" id="container-image-center">
+        <span class="center" id="center_active_image"><?php echo $this->__('Center Frame'); ?></span>
+    </div>
+
+	<div class="tool-container" id="container-text" >
+		<h1><?php echo $this->__('TEXT OPTIONS'); ?></h1>
+		<div class="tool-row">
+			<ul>
+				<li>
+					<label for="txt-reelText"><?php echo $this->__('ADD TEXT'); ?></label><input type="text" name="txt-reelText" id="txt-reelText" placeholder="Type Here" />
+					<input type="button" id="btn-remove-text" alt="Remove Text" value="x"/>
+					<button id="updateText"></button>
+					<div id="create-text-help">
+						<?php $createText = $this->getLayout()->createBlock('cms/block')->setBlockId('reel-builder-create-text')->toHtml(); ?> 
+						<?php $createText = strip_tags($createText); ?>
+						<p><?php echo substr($createText,0,150); ?></p>
+					</div>
+				</li>
+				<li><label for="cmb-font" class="main-label" ><?php echo $this->__('FONT'); ?></label>
+					<select id="cmb-font" name="cmb-font">
+						<?php foreach($helper->getFonts() as $v => $l): ?>
+							<option value="<?php echo $v;?>"><?php echo $this->__($l);?></option>
+						<?php endforeach; ?>
+					</select>
+				</li>
+				<li>
+					<label class="main-label" ><?php echo $this->__('FONT SIZE'); ?></label>
+					<div id="font-size-options">
+						<div class="lbl-small-big"><?php echo $this->__('SMALL'); ?></div>
+						<?php $fontSize = 16; $fontCounter = 0; ?>
+						<input type="radio" id="rad-font-size1" name="font-size" value="22"><label id="lbl-font-size1" for="rad-font-size1"><?php echo $this->__('A'); ?></label>
+						<input type="radio" id="rad-font-size2"  value="30<?php //echo $fontSize*++$fontCounter; ?>"  name="font-size"/><label id="lbl-font-size2"  for="rad-font-size2"><?php echo $this->__('A'); ?></label>
+						<input type="radio" id="rad-font-size3"  value="45<?php //echo $fontSize*++$fontCounter; ?>"  name="font-size"/><label id="lbl-font-size3"  for="rad-font-size3"><?php echo $this->__('A'); ?></label>
+						<input type="radio" id="rad-font-size4"  value="65<?php //echo $fontSize*++$fontCounter; ?>"  name="font-size"/><label id="lbl-font-size4"  for="rad-font-size4"><?php echo $this->__('A'); ?></label>
+						<input type="radio" id="rad-font-size5"  value="80<?php //echo $fontSize*++$fontCounter-10; ?>"  name="font-size"/><label id="lbl-font-size5"  for="rad-font-size5"><?php echo $this->__('A'); ?></label>
+						<div class="lbl-small-big"><?php echo $this->__('BIG'); ?></div>
+					</div>
+				</li>
+				<li>
+					<label id="lbl-color-options" class="main-label" ><?php echo $this->__('FONT COLOR'); ?></label>
+					<div id="font-color-options" >
+						<?php foreach($helper->getFontColors() as $v => $l): ?>
+							<input type="radio" id="<?php echo $v;?>" value="<?php echo $helper->getFontHtml($v); ?>" title="<?php echo $this->__($l);?>" name="color-choice"/><label class="<?php echo $v;?>" for="<?php echo $v;?>"></label>
+						<?php endforeach; ?>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="help-buttons save-frame-link">
+	<!-- <a href="javascript:void(0)" id="btn-saveFrame"><?php echo $this->__('SAVE'); ?></a> -->
+
+		<div name="help-overlay" border="0" style="display:none" id="rb-help-overlay">
+	
+		<?php $collection = Mage::getModel('cms/block')->getCollection()->addFieldToFilter('identifier',array('like' => array('rb-helper-%')));
+			$select = $collection->getSelect()->join(
+				array('block_store' => $collection->getTable('cms/block_store')),
+				'main_table.block_id = block_store.block_id',
+				array('store_id')
+			)->where('block_store.store_id IN (0,?)', array(mage::app()->getStore()->getId()))->order('main_table.identifier ASC'); ?>
+				
+			<?php $i = 1; $len = count($collection); foreach ($collection as $block):?>
+				<div class="step<?php if($i == '1'){ echo ' current first'; } else if ($i == $len) { echo ' last'; } ?>" id="step<?php echo $i; ?>">
+					<?php $identifier = (string)$block->getIdentifier() //return string not object; ?> 
+					<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($identifier)->toHtml(); ?> 
+				</div>
+			<?php $i++; endforeach; ?>
+		</div>
+
+		<div id="rb-howto-overlay" style="display:none;">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('reel-builder-how-to')->toHtml(); ?> 
+		</div>
+
+	</div>
+</div>
+

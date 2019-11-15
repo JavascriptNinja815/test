@@ -1,0 +1,110 @@
+<?php
+/**
+ * Sweet Tooth
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS
+ * License, which extends the Open Software License (OSL 3.0).
+ * The Sweet Tooth License is available at this URL:
+ *     https://www.sweettoothrewards.com/terms-of-service
+ * The Open Software License is available at this URL:
+ *      http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is
+ * not held liable for any inconsistencies or abnormalities in the
+ * behaviour of this code.
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the
+ * provided Sweet Tooth License.
+ * Upon discovery of modified code in the process of support, the Licensee
+ * is still held accountable for any and all billable time Sweet Tooth spent
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension.
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy
+ * immediately.
+ *
+ * @category   [TBT]
+ * @package    [TBT_Rewards]
+ * @copyright  Copyright (c) 2014 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+
+/**
+ * Admin Order Create Search ProductProduct View Points
+ *
+ * @category   TBT
+ * @package    TBT_Rewards
+ * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+ $rewards = $this->getDistriRewards();
+ $hideApplyButton = false;
+ ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head fieldset-legend"><?php echo $this->__("Configure Rewards");?></h4>
+    </div>
+</div>
+<div id="rewards-modal-window-wrapper" style="padding:10px;">
+    <div class="rewards-product-price">
+        <span id="rewards-product-price-text" class="rewards-caption-text"><?php echo $this->__("Product Price");?>: </span>
+        <span id="rewards-product-price-original"></span>
+        <span id="rewards-product-price-discounted" style="display:none;"></span>
+    </div>
+    <div class="rewards-product-view-points"> 
+        <?php if($this->doShowRedeemer() || sizeof($rewards) > 0): ?>
+        <div class="product-view-points" id="product-view-points">
+            <?php if($this->doShowRedeemer() && $redeemedBlockHtml = $this->getRedeemedHtml()): ?>
+                <?php // if(!$this->getProduct()->isGrouped()): /* Grouped products don't show the catalog redemption selector*/  ?>
+                    <?php echo $redeemedBlockHtml; ?>
+                <?php // endif; ?>
+            <?php else: ?>
+                <?php $hideApplyButton = true; $errorMessage = $this->__("PointsOnly rule is active for this product or No rewards rules is available for this product!"); ?>
+                <div id="messages">
+                    <ul class="messages">
+                        <li class="notice-msg">
+                            <ul>
+                                <li><span><?php echo $errorMessage;?></span></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            <?php endif; ?>
+            <div id="points-total">
+                <?php if(sizeof($rewards) > 0): ?>
+                   <?php echo $this->getEarnedHtml(); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+    <div class="buttons-set a-right">
+        <button onclick="javascript:sweettooth.getSweettoothGlobalVar('rewardsOrderCreateProdSearchInstance').closeModalWindow();" class="scalable" type="button"><span><span><span><?php echo $this->__('Cancel');?></span></span></span></button>
+        <?php if (!$hideApplyButton) : ?>
+        <button onclick="javascript:sweettooth.getSweettoothGlobalVar('rewardsOrderCreateProdSearchInstance').applyPoints();" class="scalable" type="button"><span><span><span><?php echo $this->__('Apply Points');?></span></span></span></button>
+        <?php endif; ?>
+    </div>
+</div>
+<script type="text/javascript">
+    sweettooth.setSweettoothGlobalVar(
+        'rewardsCatalogSliderInstance',
+        sweettooth.OrderCreate.CatalogSlider.init(
+            {
+                'sliderHandle' : 'catalogSliderHandle',
+                'sliderRail': 'catalogSliderRail',
+                'sliderCaption': 'catalogSliderCaption',
+                'sliderIncr' : 'catalogSliderIncr',
+                'sliderDecr' : 'catalogSliderDecr'
+            },
+            'catalogRedemptionRule',
+            'catalogRedemptionRuleUses',
+            'catalogRedemptionRulePrev',
+            'catalogRedemptionRuleUsesContainer'
+        )
+    );
+</script>

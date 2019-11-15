@@ -1,0 +1,13 @@
+<layout version="0.1.0">
+
+    <!--
+    Default layout, loads most of the pages
+    -->
+
+    <default>
+        <!-- Collinsharper_Vsw -->
+        <reference name="after_body_start">
+            <block type="vsw/featurelink" name="vsw_feature_link" as="vsw_feature_link" template="ch_vsw/vsw_feature_link.phtml" />
+        </reference>
+    </default>
+</layout>

@@ -1,0 +1,48 @@
+<section class="connect-your-account">
+    <div class="section-header">
+        <span class="section-counter">1</span>
+        <span class="title">Connect to MageRewards</span>
+    </div>
+    <div class="section-content">
+        <form id="connect-to-sweettooth" action="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/index'); ?>">
+            <input type="hidden" name="step" value="connect" />
+            <div class="fields-section">
+                <div class="field field-username">
+                    <label>Email / Username<span class="required">*</span></label>
+                    <input type="text" name="username" />
+                </div>
+                <div class="field field-password">
+                    <label>Password<span class="required">*</span></label>
+                    <input type="password" name="password" />
+                </div>
+                <div class="field field-link">
+                    <a href="https://account.magerewards.com/admin/index/forgotpassword/" title="Forgot your passoword?" target="_blank">Forgot your password?</a>
+                </div>
+                <div class="field field-store">
+                    <label>Is this a Live or a Development store?</label>
+                    <div class="switch">
+                        <span>Live</span>
+                        <input id="switch" class="toggle" type="checkbox" name="isDevMode" <?php if (Mage::getStoreConfig('rewards/platform/dev_mode')) { echo 'checked'; } ?> />
+                        <label for="switch"></label>
+                        <span>Development</span>
+                    </div>
+                </div>
+                <div class="field field-link">
+                    <a href="https://www.magerewards.com/pricing/" title="Don't have an account?" target="_blank">Don't have an account?</a>
+                </div>
+            </div>
+            <div class="submit-section">
+                <img id="busy" class="loading hide" src="<?php echo $this->getSkinUrl('rewards/images/opc-ajax-loader.gif'); ?>" alt="Loading" />
+                <button id="connect-action" type="submit">Connect</button>
+            </div>
+        </form>
+    </div>
+    <div class="section-header collapsed">
+        <span class="section-counter">2</span>
+        <span class="title">Loyalty Program Goals & Settings</span>
+    </div>
+    <div class="section-header collapsed">
+        <span class="section-counter">3</span>
+        <span class="title">Review & Launch</span>
+    </div>
+</section>

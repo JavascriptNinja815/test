@@ -1,0 +1,116 @@
+<section class="loyalty-program-settings">
+    <div class="section-header collapsed">
+        <span class="section-counter">1</span>
+        <span class="title">Connect to MageRewards</span>
+    </div>
+    <div class="section-header">
+        <span class="section-counter">2</span>
+        <span class="title">Loyalty Program Goals & Settings</span>
+    </div>
+    <div class="section-content">
+        <form id="rewards-settings-form" action="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/index'); ?>">
+            <strong>The answers to these questions will determine your ideal loyalty program</strong>
+            <input type="hidden" name="step" value="settings" />
+            <div class="questions">
+                <div class="question">
+                    <label>
+                        1. What do you want to call your Loyalty Rewards Program?
+                        <a class="wikiHint" href="javascript:void(0)" target="_blank">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="hide">You can call your Loyalty Reward Program anything you want, most Merchants use their brand name to make it brand centric. e.g. Sony Rewards</span>
+                        </a>
+                    </label>
+                    <input name="program-name" type="text" placeholder="e.g. Fashion Rewards" />
+                    <small>(optional)</small>
+                </div>
+                <div class="question">
+                    <label>
+                        2. What do you want to call your Loyalty Points?
+                        <a class="wikiHint" href="javascript:void(0)" target="_blank">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="hide">You can call your Loyalty program points anything you want, such as Gold Points or Star Points etc. Or you can use your brand name. e.g. Sony Points</span>
+                        </a>
+                    </label>
+                    <div class="field-content">
+                        <input class="points-caption left" type="text" name="points-caption" placeholder="e.g. Gold" class="singular" /><span class="points-input-label">Points</span>
+                        <small>(optional)</small>
+                    </div>
+                </div>
+                <div class="question">
+                    <label>
+                        3. What is the main goal of your loyalty program?
+                        <a class="wikiHint" href="javascript:void(0)" target="_blank">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="hide">We have launched thousands of Loyalty Programs, If you want to grow your store quickly choose the customers and repeat orders option.</span>
+                        </a>
+                    </label>
+                    <select name="main-goal">
+                        <option value="">-- Choose --</option>
+                        <option value="2">I want to generate repeat orders from existing customers.</option>
+                        <option value="1">I want to generate more Customer Acquisition.</option>
+                        <option value="3">I want to generate more orders and customers.</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label>
+                        4. What is your Average Order Value?
+                        <a class="wikiHint" href="javascript:void(0)" target="_blank">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="hide">The AOV for your store is the average price paid on any order placed by your customers.</span>
+                        </a>
+                    </label>
+                    <select name="average-order-value">
+                        <option value="">-- Choose --</option>
+                        <option value="1">$0 - $100</option>
+                        <option value="2">$100 - $200</option>
+                        <option value="3">$200 - $300</option>
+                        <option value="4">$300 - $500</option>
+                        <option value="5">$500 - $1000</option>
+                        <option value="6">$1000+</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <label>
+                        5. What is your Average Product Price Margin?
+                        <a class="wikiHint" href="javascript:void(0)" target="_blank">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="hide">Product Price Margin percent is the amount of profit or revenue you make after the cost to sell your product.</span>
+                        </a>
+                    </label>
+                    <select name="price-margin">
+                        <option value="">-- Choose --</option>
+                        <option value="1">0% - 30%</option>
+                        <option value="2">30% - 60%</option>
+                        <option value="3">60% +</option>
+                    </select>
+                </div>
+            </div>
+            <div class="submit-section">
+                <img id="busy" class="loading hide" src="<?php echo $this->getSkinUrl('rewards/images/opc-ajax-loader.gif'); ?>" alt="Loading" />
+                <button id="connect-action" type="submit">See Your Program!</button>
+            </div>
+        </form>
+    </div>
+    <div class="section-header collapsed">
+        <span class="section-counter">3</span>
+        <span class="title">Review & Launch</span>
+    </div>
+</section>
+<script type="text/javascript">
+    document.observe("dom:loaded", function() {
+        $$('.wikiHint').each(function (metricInfoTag) {
+            new Opentip(metricInfoTag, metricInfoTag.innerHTML.replace(/&nbsp;/g, ''), {
+                style:          'dark',
+                tipJoint:       'left',
+                targetJoint:    'bottom',
+                background:     'black',
+                borderColor:    'white',
+                borderWidth:    2,
+                shadow:         false,
+                fixed:          true,
+                offset:         [15, 0],
+                escapeContent:  false
+            });
+        });
+    });
+</script>

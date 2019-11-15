@@ -1,0 +1,9 @@
+<?php
+$earningsStr = $this->getEarningsString();
+?>
+
+<?php if ($earningsStr !== '') : ?>
+<div class="points-prediction">
+    <div class="earnable"><?php echo $this->__('Earn starting with') . ' ' . $earningsStr;?></div>
+</div>
+<?php endif; ?>

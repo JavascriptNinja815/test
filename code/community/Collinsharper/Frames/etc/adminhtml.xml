@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <customer>
+            <children>
+            	<chreels translate="title" module="catalog">
+            	                    <title>Customer Reels</title>
+
+            		<children>
+<!--                <chframes translate="title" module="chframes">
+                    <title>Reel Frames</title>
+                    <sort_order>100</sort_order>
+                    <action>chframes_admin/adminhtml_index</action>
+                </chframes>  -->
+            		</children>
+            			</chreels>
+            </children>
+        </customer>
+    </menu>
+
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <customer>
+                        <children>
+                            <chframes>
+                        <children>
+                            <chframes>
+                                <title>Manage Frames</title>
+                            </chframes>
+                        </children>
+                            </chframes>
+                        </children>
+                    </customer>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <translate>
+        <modules>
+            <Collinsharper_Frames>
+                <files>
+                    <default>Collinsharper_Frames.csv</default>
+                </files>
+            </Collinsharper_Frames>
+        </modules>
+    </translate>
+</config>

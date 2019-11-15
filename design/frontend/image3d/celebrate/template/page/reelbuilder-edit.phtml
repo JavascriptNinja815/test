@@ -1,0 +1,47 @@
+<?php
+/**
+ * Template for Collinsharper_Reelbuilder_Block_Index
+ */
+?>
+
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" id="top" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" id="top" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" id="top" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" id="top" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="top" class="no-js"> <!--<![endif]-->
+
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+<div class="wrapper">
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <div class="page">
+        <?php echo $this->getChildHtml('header') ?>
+        <div class="main-container">
+            <div class="main">
+                <?php echo $this->getChildHtml('breadcrumbs') ?>
+				
+               
+                <div class="col-preview">
+                    <?php echo $this->getChildHtml('global_messages') ?>
+                    <?php echo $this->getChildHtml('preview') ?>
+                </div>
+                <div class="col-tools"><?php echo $this->getChildHtml('tools') ?></div>
+            </div>
+			<div class="reel-footer">
+				<?php echo $this->getChildHtml('reel_foot') ?>
+			</div>
+        </div>
+        <?php echo $this->getChildHtml('footer_before') ?>
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+    </div>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

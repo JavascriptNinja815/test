@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <sales>
+            <children>
+                <chinquiry translate="title" module="chinquiry">
+                    <title>Inquiries</title>
+                    <sort_order>100</sort_order>
+                    <action>chinquiry_admin/adminhtml_index</action> 
+                    <!--<children>
+                        <chinquiry translate="title" module="chinquiry">
+                            <title>Item</title>
+                            <sort_order>100</sort_order>
+                            <action>chinquiry_admin/adminhtml_index</action>
+                        </chinquiry>
+                        <paymentinquiry translate="title" module="chinquiry">
+                            <title>Item 2</title>
+                            <sort_order>100</sort_order>
+                            <action>chinquiry_admin/adminhtml_inquiry</action>
+                        </paymentinquiry>
+                    </children> -->
+                </chinquiry>
+            </children>
+        </sales>
+    </menu>
+
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <chinquiry>
+                                <title>Manage Inquiries</title>
+                            </chinquiry>
+                        </children>
+                    </sales>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

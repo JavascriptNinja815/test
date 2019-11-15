@@ -1,0 +1,113 @@
+<div style="float: right;"><a href="javascript:void(0);" onClick="chOpenMessagePopup(<?=$this->getOrder()->getId();?>);">Change Icons</a></div>
+<?php foreach($this->getImages() as $title => $image): ?>
+    <h4  class="ordericons image chordericons" style="float:left" ><img src="<?=$image;?>" title="<?=$title;?>" alt="<?=$title;?>" style="max-height: 18px;" /> </h4><br />
+<?php endforeach; ?>
+<?php if(!$this->getIsAjax()): ?>
+<script type="text/javascript">
+    //<![CDATA[
+    var messagePopupClosed = false;
+    function chOpenMessagePopup(oid, tag_ids) {
+        var myAjax = new Ajax.Updater('ch-message-popup-window', '<?php echo Mage::helper("adminhtml")->getUrl('chordericons_admin/adminhtml_index/ajaxLoadOrderIconDiv');?>',
+            {
+                method: 'get',
+                parameters: 'is_ajax=true&order_id=' + oid ,
+                onSuccess: function(response) {
+                    var height = $('html-body').getHeight();
+                    $('ch-message-popup-window-mask').setStyle({'height':height+'px'});
+                    toggleSelectsUnderBlock($('ch-message-popup-window-mask'), false);
+                    Element.show('ch-message-popup-window-mask');
+                    $('ch-message-popup-window').addClassName('show');
+                    $('ch-message-popup-window').show();
+                    $('ch-message-popup-window-mask').show();
+
+//        $$('.ch_order_icons_cb').each(function(ele) {
+//            $(ele).checked = false;
+//            });
+
+//        if(typeof tags_ids != "undefined") {
+//            var temp = new Array();
+//            temp = tags_ids.split(",");
+//            for (a in temp ) {
+//                $('order_icons_' + a).checked = true;
+//            }
+//        }
+                }
+            });
+
+    }
+
+    function chCloseMessagePopup() {
+        toggleSelectsUnderBlock($('ch-message-popup-window-mask'), true);
+        Element.hide('ch-message-popup-window-mask');
+        $('ch-message-popup-window').removeClassName('show');
+        messagePopupClosed = true;
+    }
+
+    function saveTagsReloadPage(oid) {
+
+
+        var iconIds = '';
+        $$('.ch_order_icons_cb:checked').length
+        $$('.ch_order_icons_cb:checked').each(function(ele) {
+            iconIds += $(ele).value +',';
+        });
+
+        var myAjax = new Ajax.Request('<?php echo Mage::helper("adminhtml")->getUrl('chordericons_admin/adminhtml_index/ajaxSaveOrderIconDiv');?>',
+            {
+                method: 'post',
+                parameters: 'is_ajax=true&order_id=' + oid + '&iconIds=' + iconIds+ '&comment=' + $('ch-icon-message').value,
+                onSuccess: function(response) {
+                    chCloseMessagePopup();
+                    if(response && response.responseText) {
+//                      $$('.chordericons')[0].up().innerHTML = response.responseText;
+//			$$('.chordericons')[0].up().hide();
+//			$$('.chordericons')[0].up().show();
+                    }
+                    setTimeout(function(){ location.reload(); }, 500);
+                }
+            });
+
+    }
+
+//    Event.observe(window, 'load', openMessagePopup);
+//    Event.observe(window, 'keyup', function(evt) {
+//        if(messagePopupClosed) return;
+//        var code;
+//        if (evt.keyCode) code = evt.keyCode;
+//        else if (evt.which) code = evt.which;
+//        if (code == Event.KEY_ESC) {
+//            closeMessagePopup();
+//        }
+//    });
+
+    //]]>
+</script>
+    <div id="ch-message-popup-window-mask" style="display:none;"></div>
+<div id="ch-message-popup-window" class="message-popup" style="display:none;">
+    <?php endif; ?>
+<?php if($this->getIsAjax()): ?>
+    <div class="message-popup-head">
+        <a href="#" onclick="chCloseMessagePopup(); return false;" title="close"><span><?php echo $this->__('close'); ?></span></a>
+        <h2><?php echo $this->__('Add Tags To Order'); ?></h2>
+    </div>
+    <div class="message-popup-content">
+        <div class="message">
+            <p class="message-text">
+                <?php
+                $collection = Mage::getModel('chordericons/chicons')->getCollection();
+                $selectedList = $this->getActiveIcons() ? $this->getActiveIcons() : array(); ?>
+                <div id="scrollable_icons" style="width:375px; height:250px; overflow: auto;">
+                <?php foreach($collection as $icon): ?>
+                    <?php $selected = in_array($icon->getId(), $selectedList) ? ' checked="checked"' : ''; ?>
+                <input type="checkbox" class="ch_order_icons_cb" name="order_icons[]" id="order_icons_<?php echo $icon->getId(); ?>" value="<?php echo $icon->getId(); ?>" <?php echo $selected; ?> title="<?php echo $icon->getName(); ?>" /> <img src="<?php echo Mage::helper('chordericons')->getMediaUrl($icon->getData('image')); ?>" title="<?php echo $icon->getName(); ?>" /> <br />
+                <?php endforeach; ?>
+            </div>
+                <?php echo $this->__('Comment:'); ?> <input type="text" id="ch-icon-message" /></p>
+
+        </div>
+        <p class="read-more"><a href="javascript:void(0);" onclick="saveTagsReloadPage(<?php echo $this->getOrderId(); ?>);"><?php echo $this->__('Update'); ?></a></p>
+    </div>
+<?php endif; ?>
+    <?php if(!$this->getIsAjax()): ?>
+</div>
+<?php endif; ?>

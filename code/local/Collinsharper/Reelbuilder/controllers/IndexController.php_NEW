@@ -1,0 +1,183 @@
+<?php
+class Collinsharper_Reelbuilder_IndexController extends Mage_Core_Controller_Front_Action
+{
+
+	public function IndexAction()
+	{
+
+
+		// the server uses the canvas to render it.
+		$helper = new Collinsharper_Image3d_Helper_Data;
+		$serverCallbackSkipAuth = $helper->isServerCallback();
+
+		if($serverCallbackSkipAuth) {
+			Mage::getSingleton('core/session')->setIsServerCallBack(true);
+		}
+
+		if (!$serverCallbackSkipAuth && !Mage::helper('customer')->isLoggedIn()) {
+			Mage::app()->getFrontController()->getResponse()->setRedirect(Mage::getUrl('customer/account/login'));
+			Mage::getSingleton('customer/session')->setBeforeAuthUrl(Mage::helper('core/url')->getCurrentUrl());
+			return;
+		}
+
+		$this->loadLayout();
+		$this->getLayout()->getBlock("head")->setTitle($this->__("Reel Builder"));
+		/*	        $breadcrumbs = $this->getLayout()->getBlock("breadcrumbs");
+              $breadcrumbs->addCrumb("home", array(
+                        "label" => $this->__("Home Page"),
+                        "title" => $this->__("Home Page"),
+                        "link"  => Mage::getBaseUrl()
+                   ));
+
+              $breadcrumbs->addCrumb("reel builder", array(
+                        "label" => $this->__("Reel Builder"),
+                        "title" => $this->__("Reel Builder")
+                   ));
+        */
+		$this->renderLayout();
+
+	}
+
+	public function deleteAction()
+	{
+		$reelId = (int)(isset($_GET['reel_id']) ? $_GET['reel_id'] : -1);
+		$customerId =  Mage::getSingleton('customer/session')->getCustomer()->getId();
+		if(!$reelId || $reelId <= 0 || !$customerId) {
+			Mage::getSingleton('customer/session')->addError('Invalid Reel.');
+			$this->_redirect('customer/account/');
+			return;
+		}
+		$reel = Mage::getModel('chreels/reels');
+		$reel->load($reelId);
+		if(!$reel || !$reel->getId() || $reel->getCustomerId() != $customerId) {
+			Mage::getSingleton('customer/session')->addError('Invalid Reel.');
+			$this->_redirect('customer/account/');
+			return;
+		}
+		//manage file removal - or queue the files to be checked - duplicate reels mIGHT share files?
+		//Remove commented out call to Mage::helper('chreels/cleaner')->cleanReelFiles
+		//in /app/code/community/Collinsharper/Reels/Model/Reels.php
+
+		$reel->delete();
+		Mage::getSingleton('customer/session')->addSuccess('Reel deleted.');
+		$this->_redirect('customer/account/');
+		return;
+
+	}
+
+	public function duplicateAction()
+	{
+		$reelId = (int)(isset($_GET['reel_id']) ? $_GET['reel_id'] : -1);
+		$customerId =  Mage::getSingleton('customer/session')->getCustomer()->getId();
+		if(!$reelId || $reelId <= 0 || !$customerId) {
+			Mage::getSingleton('customer/session')->addError('Invalid Reel.');
+			$this->_redirect('customer/account/');
+			return;
+		}
+		$reel = Mage::getModel('chreels/reels');
+		$reel->load($reelId);
+		if(!$reel || !$reel->getId() || $reel->getCustomerId() != $customerId) {
+			Mage::getSingleton('customer/session')->addError('Invalid Reel.');
+			$this->_redirect('customer/account/');
+			return;
+		}
+
+		$mediaPath = Mage::getBaseDir() . DS . 'media' . DS;
+
+		$newReel = Mage::getModel('chreels/reels');
+		$newReel->setData($reel->getData());
+		$newReel->setData("reel_name", $reel->getData('reel_name') . ' - Copy');
+		$newReel->unsId();
+		$newReel->unsEntityId();
+		// just not 10?
+		$newReel->setData("status", 3);
+		$newReel->setData("entity_id", null);
+
+
+		$newReel->save();
+		$newReelId = $newReel->getId();
+
+		//Make new links to final_reel_file and thumb if values are set
+		$thumb = $reel->getData('thumb');
+		$newCompletePath = $mediaPath . DS . 'reel_builder' . DS . 'complete' . DS . $customerId . DS;
+
+		if($thumb && file_exists($mediaPath . DS . $thumb)) {
+			link($mediaPath . $thumb, $newCompletePath . $newReelId . '_thumb.jpg');
+			$newThumb = 'reel_builder' . DS . 'complete' . DS . $customerId . DS . $newReelId . '_thumb.jpg';
+			$newReel->setData('thumb', $newThumb);
+			$newReel->save();
+		}
+
+		$newLinkPath = $mediaPath . DS . 'reel_builder' . DS . 'uploads' . DS . 'users' . DS . $customerId . DS . $newReelId . DS;
+		mkdir($newLinkPath);
+
+		$frames = Mage::getModel('chframes/frames')->getCollection();
+		$frames->addFieldToFilter('reel_id', $reel->getEntityId());
+		$frames->setOrder('frame_index','asc')->load();
+
+		$linkFileList = array(
+			'source_file',
+			'rendered_file',
+			'left_file',
+			'right_file',
+			'background_file',
+			'text_file',
+			'thumb_file');
+
+		foreach($frames as $frame) {
+			$newFrame = Mage::getModel('chframes/frames');
+			//Update the record values to use the new reel id
+			$newFrame->setData($frame->getData());
+			//Get the old id here for cb url replacement to follow.
+			$oldFrameId = $newFrame->getEntityId();
+			$newFrame->unsId();
+			$newFrame->unsEntityId();
+
+			//duplicate the images as when we delete a stale reel; we might remove the images for this reel
+			foreach($linkFileList as $fieldName) {
+				$fieldValue = $frame->getData($fieldName);
+				if($fieldValue && file_exists($mediaPath . $fieldValue)) {
+					//Link the existing target to a new name
+					link($mediaPath . $fieldValue, $newLinkPath . basename($fieldValue));
+				}
+				$fieldValue = str_replace($reelId, $newReelId, $fieldValue);
+				$newFrame->setData($fieldName, $fieldValue);
+			}
+
+			$newFrame->setData('reel_id', $newReel->getId());
+			$newFrame->save();
+
+			//The canvas json image object cb url points to the old reel. Update it here
+			$newFrameId = $newFrame->getId();
+			$frameData = $newFrame->getFrameData();
+
+			$oldString = 'reel_id='.$reelId.'&frame_id='.$oldFrameId;
+			$newString = 'reel_id='.$newReelId.'&frame_id='.$newFrameId;
+			$frameData = str_replace($oldString, $newString, $frameData);
+			$newFrame->setFrameData($frameData);
+			$newFrame->save();
+		}
+
+		Mage::getSingleton('customer/session')->addSuccess('Reel Duplicated.');
+
+		$this->_redirect('customer/account/');
+		return;
+
+	}
+
+	public function mobileAction()
+	{
+		$this->loadLayout();
+		$this->getLayout()->getBlock("head")->setTitle($this->__("Reel Builder"));
+		$this->renderLayout();
+
+	}
+
+	public function previewAction()
+	{
+		$this->loadLayout();
+		$this->getLayout()->getBlock("head")->setTitle($this->__("Reel Builder Preview"));
+		$this->renderLayout();
+
+	}
+}

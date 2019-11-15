@@ -1,0 +1,166 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Your order has been received.') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php // KL: Use CMS block instead ?>
+<?php $thankyou_message = $this->getLayout()->createBlock('cms/block')->setBlockId('thankyou_message')->toHtml(); ?>
+<?php if (strlen($thankyou_message) > 0): ?>
+<?php
+    // KL: Format the message
+    $buffer = $thankyou_message;
+
+    // Order Link
+    if ($this->getOrderId()) :
+        if ($this->getCanViewOrder()) :
+            $buffer = str_ireplace('#order_link#',
+                            $this->__('%s', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))),
+                            $buffer);
+        else:
+            $buffer = str_ireplace('#order_link#',
+                $this->escapeHtml($this->getOrderId()),
+                $buffer);
+        endif;
+
+        $buffer = str_ireplace('#order_number#',
+            $this->escapeHtml($this->getOrderId()),
+            $buffer);
+
+        if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :
+            $buffer = str_ireplace('#print_order_link#',
+                $this->getPrintUrl(),
+                $buffer);
+        endif;
+    endif;
+
+    echo $buffer;
+?>
+<?php else: ?>
+<h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
+
+<?php if ($this->getOrderId()):?>
+<?php if ($this->getCanViewOrder()) :?>
+    <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
+<?php  else :?>
+    <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
+<?php endif;?>
+    <p><?php echo $this->__('You will receive an order confirmation email with details<br /> of your order and a link to track its progress.') ?></p>
+<?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
+    <p>
+        <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
+        <?php echo $this->getChildHtml() ?>
+    </p>
+<?php endif;?>
+<?php endif;?>
+<?php endif; ?>
+<p>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('checkout_success_text')->toHtml(); ?>
+
+</p>
+
+<?php if ($this->getAgreementRefId()): ?>
+    <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
+<?php endif;?>
+
+<?php if ($profiles = $this->getRecurringProfiles()):?>
+<p><?php echo $this->__('Your recurring payment profiles:'); ?></p>
+<ul class="disc">
+<?php foreach($profiles as $profile):?>
+<?php $profileIdHtml = ($this->getCanViewProfiles() ? sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getProfileUrl($profile)), $this->escapeHtml($this->getObjectData($profile, 'reference_id'))) : $this->escapeHtml($this->getObjectData($profile, 'reference_id')));?>
+    <li><?php echo $this->__('Payment profile # %s: "%s".', $profileIdHtml, $this->escapeHtml($this->getObjectData($profile, 'schedule_description')))?></li>
+<?php endforeach;?>
+</ul>
+<?php endif;?>
+
+<div class="buttons-set">
+    <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
+</div>
+
+<script>
+
+    <?php
+    $getOrder = Mage::getModel('sales/order')->loadByIncrementId($this->getOrderId());
+    $orderItems= $getOrder->getAllVisibleItems();
+    ?>
+
+    var brontoCart = {
+        //"customerCartId": "cart_ABC123", // This value will be auto-generated when not set.
+        "phase": "ORDER_COMPLETE", // Set as SHOPPING for Cart Recovery
+        "currency": "<?php echo $getOrder->getData('base_currency_code') ?>",
+        "subtotal": <?php echo $getOrder->getData('base_subtotal') ?>,
+        "discountAmount": <?php echo $getOrder->getData('base_discount_amount') ?>,
+        "taxAmount": <?php echo $getOrder->getData('base_tax_amount') ?>,
+        "grandTotal": <?php echo $getOrder->getData('base_grand_total') ?>,
+        "customerOrderId": "<?php echo $this->getOrderId() ?>", // Not necessary for Cart Recovery
+        "emailAddress": "<?php echo $getOrder->getData('customer_email') ?>",
+        "cartUrl": "<?php echo Mage::helper('checkout/cart')->getCartUrl() ?>",
+        "shippingAmount": <?php echo $getOrder->getData('base_shipping_amount') ?>, // Not necessary for Cart Recovery
+        //"shippingDate": "2019-11-02T18:47:57+00:00", // Not necessary for Cart Recovery
+        "shippingDetails": "<?php echo $getOrder->getData('shipping_description') ?>", // Not necessary for Cart Recovery
+        //"shippingTrackingUrl": "http://fedex.com/tracking/NIeX3KYLcPhgRzKy", // Not necessary for Cart Recovery
+        //"mobilePhoneNumber": "19195551234",
+        "orderSmsConsentChecked": true,
+        "lineItems": [
+            <?php
+            foreach($orderItems as $item):
+                $product = Mage::getModel('catalog/product')->load($item->getProductId());
+
+                $options = $item->getProductOptions();
+                $customOptions = $options['options'];
+                $optionValue = '';
+                if(!empty($customOptions))
+                {
+                    foreach ($customOptions as $option)
+                    {
+                        if ($option['option_id'] == 'reel_name') {
+                            $optionTitle = $option['label'];
+                            $optionId = $option['option_id'];
+                            $optionType = $option['type'];
+                            $optionValue = $option['value'];
+                        }
+                    }
+                }
+            ?>
+                {
+                    "sku": "<?php echo $product->getSku() ?>",
+                    "name": "<?php echo $product->getName() ?>",
+                    "description": "<?php echo $optionValue ?>",
+                    //"category": "Shirts > T-Shirts > Blue",
+                    //"other": "This can be any string value you like",
+                    "unitPrice": <?php echo $product->getPrice() ?>,
+                    "salePrice": <?php echo $item->getPrice() ?>,
+                    "quantity": <?php echo intval($item->getQtyOrdered()) ?>,
+                    "totalPrice": <?php echo $item->getBaseRowTotal() ?>,
+                    "imageUrl": "<?php echo  Mage::helper('catalog/image')->init($product, 'thumbnail') ?>",
+                    "productUrl": "<?php echo $product->getProductUrl() ?>"
+                },
+            <?php endforeach; ?>
+        ]
+    };
+    bronto("cart:send", brontoCart);
+</script>

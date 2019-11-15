@@ -1,0 +1,5 @@
+<div class="email-options">
+    <input id="email-preference" type="checkbox" name="rewards_points_notification" <?php if ($this->hasEmailsEnabled()) { echo 'checked'; } ?> />
+    &nbsp;
+    <label for="email-preference"><?php echo $this->getLabel(); ?></label>
+</div>

@@ -1,0 +1,73 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: kl
+ */
+?>
+<script language="javascript">
+//<![CDATA[
+Shipping.addMethods({
+    updateShippingNewAddress : function(addressValue)
+    {
+        if (addressValue == 'reset') {
+            $('shipping:street1').value = '';
+            $('shipping:street2').value = '';
+            $('shipping:city').value = '';
+            $('shipping:region_id').value = '';
+            $('shipping:postcode').value = '';
+            $('shipping:country_id').value = '';
+            $('shipping:save_in_address_book').checked = false;
+        } else {
+            var arrayAddress = addressValue.split('^');
+            $('shipping:street1').value = arrayAddress[0];
+            $('shipping:street2').value = '';
+            $('shipping:city').value = arrayAddress[1];
+            $('shipping:region_id').value = arrayAddress[2];
+            $('shipping:postcode').value = arrayAddress[3];
+            $('shipping:country_id').value = arrayAddress[5];
+            $('shipping:save_in_address_book').checked = true;
+        }
+    }
+});
+
+//]]>
+
+</script>
+<?php if (strlen($this->getMessageInfo()) > 0) { ?>
+<ul class="messages"><li class="error-msg"><ul><li><span><?php echo $this->getMessageInfo(); ?></span></li></ul></li></ul>
+<?php } ?>
+<?php
+    $addresses = $this->getAddressFromUPS();
+?>
+<ul>
+    <?php
+        foreach ($addresses as $address) {
+            $regionModel = Mage::getModel('directory/region')->loadByCode($address->PoliticalDivision1, $address->CountryCode);
+            $regionId = $regionModel->getId();
+            $jsAddressValue = $address->AddressLine."^".$address->PoliticalDivision2."^".$regionId."^".$address->PostcodePrimaryLow."^".$address->PostcodeExtendedLow."^".$address->CountryCode;
+            $displayAddressValue = $address->AddressLine." ".$address->Region." ".$address->CountryCode;
+    ?>
+    <li><span style="text-decoration: underline;cursor: pointer;" onclick="Shipping.prototype.updateShippingNewAddress('<?php echo $jsAddressValue; ?>')"><?php echo $displayAddressValue; ?></span></li>
+    <?php } ?>
+</ul>
+    <br/><br/>
+<script language="javascript">
+
+$('shipping-address-select').value = "";
+shipping.newAddress(true);
+
+// Force customer to use UPS address
+<?php if ($this->getforceAddress() == true) { ?>
+    $$('label[for="shipping-address-select"]').first().update('<?php echo $this->__("Please verify the address below before continue, this address will be used for shipping"); ?>');
+    //20121218 - what if they want to use one of their other saved addresses?
+    //$('shipping-address-select').disabled = true;
+    Shipping.prototype.updateShippingNewAddress('reset');
+<?php } else { ?>
+    $$('label[for="shipping-address-select"]').first().update('<?php echo $this->__("Please select the address either from the screen above or from the dropdown box below, this address will be used for shipping"); ?>');
+    $('shipping-address-select').disabled = false;
+<?php } ?>
+
+</script>
+<?php
+    //print_r($this->getAddressFromUPS());
+?>

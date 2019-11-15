@@ -1,0 +1,23 @@
+<?php
+
+    $reels = $this->listSharedReels();
+
+?>
+
+
+
+
+<div class="block latest-twitter-block">
+    <div class="block-content light">
+        <ul class="grid3"  >
+            <?php
+              foreach ($reels as $reel): ?>
+                <li class="grid-itemx">
+                    <a href="<?php echo $reel; ?>" target="_blank"><img src="<?php echo $reel; ?>" /></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+
+    </div>
+</div>

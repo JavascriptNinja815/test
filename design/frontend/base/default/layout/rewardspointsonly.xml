@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <!-- Minicart RWD -->
+        <reference name="minicart_content">
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>default</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>simple</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>grouped</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_grouped</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>configurable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_configurable</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>bundle</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_bundle</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>downloadable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_downloadable</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>virtual</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/minicart/default.phtml</template>
+            </action>
+        </reference>
+        <!-- Minicart RWD END -->
+        
+        <!-- Cart Sidebar -->
+        <reference name="cart_sidebar">
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>simple</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/sidebar/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>grouped</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_grouped</block>
+                <template>rewardspointsonly/checkout/cart/sidebar/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>configurable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_configurable</block>
+                <template>rewardspointsonly/checkout/cart/sidebar/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>bundle</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_bundle</block>
+                <template>rewardspointsonly/checkout/cart/sidebar/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>downloadable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_downloadable</block>
+                <template>rewardspointsonly/checkout/cart/sidebar/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>virtual</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/sidebar/default.phtml</template>
+            </action>
+        </reference>
+        <!-- Cart Sidebar END -->
+    </default>
+    
+    <catalog_product_view>
+        <reference name="head">
+            <action method="addJs"><script>tbt/rewardspointsonly/RewardsPointsOnly.js</script></action>
+        </reference>
+        <reference name="content">
+            <block type="rewardspointsonly/catalog_product_view_additionalOptionsJs" name="rewardspointsonly_additional_js" template="rewardspointsonly/catalog/product/view/additional_options_js.phtml" after="-" />
+        </reference>
+        <reference name="product.info">
+            <!--<remove name="product.tierprices" />-->
+            <block type="rewardspointsonly/catalog_product_view" name="product.tierprices" as="tierprices" template="catalog/product/view/tierprices.phtml"/>
+        </reference>
+    </catalog_product_view>
+    
+    <PRODUCT_TYPE_bundle>
+        <reference name="product.info.options.wrapper">
+            <block type="bundle/catalog_product_view_type_bundle" name="product.info.bundle.options" as="type_bundle_options" template="bundle/catalog/product/view/type/bundle/options.phtml">
+                <action method="addRenderer"><type>select</type><block>rewardspointsonly/catalog_product_view_type_bundle_option_select</block></action>
+                <action method="addRenderer"><type>multi</type><block>rewardspointsonly/catalog_product_view_type_bundle_option_multi</block></action>
+                <action method="addRenderer"><type>radio</type><block>rewardspointsonly/catalog_product_view_type_bundle_option_radio</block></action>
+                <action method="addRenderer"><type>checkbox</type><block>rewardspointsonly/catalog_product_view_type_bundle_option_checkbox</block></action>
+            </block>
+            <action method="insert" ifconfig="rewards/general/pointsonly_enabled"><block>product.info.bundle.options</block></action>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+    
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>default</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>simple</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>grouped</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_grouped</block>
+                <template>rewardspointsonly/checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>configurable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_configurable</block>
+                <template>rewardspointsonly/checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>bundle</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_bundle</block>
+                <template>rewardspointsonly/checkout/cart/item/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>downloadable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_downloadable</block>
+                <template>rewardspointsonly/checkout/cart/item/downloadable.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>virtual</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/cart/item/default.phtml</template>
+            </action>
+        </reference>
+    </checkout_cart_index>
+    
+    <checkout_onepage_review>
+        <reference name="root">
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>default</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>simple</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>grouped</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_grouped</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>configurable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_configurable</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>bundle</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_bundle</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>downloadable</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer_downloadable</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/pointsonly_enabled">
+                <type>virtual</type>
+                <block>rewardspointsonly/checkout_cart_item_renderer</block>
+                <template>rewardspointsonly/checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </checkout_onepage_review>
+    
+    <!-- Customer My Account > My Orders > View Order -->
+    <sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_item_renderer_grouped</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </sales_order_view>
+
+    <!-- Customer My Account > My Orders > View Invoice -->
+    <sales_order_invoice>
+        <reference name="invoice_items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_item_renderer_grouped</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </sales_order_invoice>
+
+    <!-- Email layouts section -->
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/order/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_email_items_order_grouped</block>
+                <template>rewardspointsonly/email/order/items/order/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/order/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/order/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/order/default.phtml</template>
+            </action>
+        </reference>
+    </sales_email_order_items>
+
+    <sales_email_order_invoice_items>
+        <reference name="items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_email_items_order_grouped</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+        </reference>
+    </sales_email_order_invoice_items>
+    
+    <sales_email_order_creditmemo_items>
+        <reference name="items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_email_items_order_grouped</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_email_items_order_default</block>
+                <template>rewardspointsonly/email/order/items/invoice/default.phtml</template>
+            </action>
+        </reference>
+    </sales_email_order_creditmemo_items>
+
+    <sales_order_print>
+        <reference name="sales.order.print">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_item_renderer_grouped</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </sales_order_print>
+
+    <sales_order_printinvoice>
+        <reference name="sales.order.print.invoice">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>grouped</type>
+                <block>rewardspointsonly/sales_order_item_renderer_grouped</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>virtual</type>
+                <block>rewardspointsonly/sales_order_item_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </sales_order_printinvoice>
+</layout>

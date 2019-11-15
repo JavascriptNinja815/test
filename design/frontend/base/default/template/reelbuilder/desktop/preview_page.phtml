@@ -1,0 +1,29 @@
+
+<div style="display:none" class="preview-page-container" id="preview-page-container">
+	<img class="blank-reel preview-reel-temp" width="400" id="active-reel-preview" src="<?php echo $this->getSkinUrl('images/logo245x227.png') ?>" />
+	<img class="preview-reel-center" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'reel_builder_templates/center-dot.png'; ?>">
+	
+	<div class="preview-right-content">
+		<div class="preview-navigate">
+			<p id="nav-preview"><?php echo $this->__('Navigate Through Your Frames To Preview') ?></p>
+			<p class="header-frame"><?php echo $this->__('Frame <span>1</span>') ?></p>
+			<div class="header-save-preview">
+				<p>
+					<a id="preview-back" href="javascript:rb.previewBackFrame()"><?php echo ('Back') ?></a>
+					<a id="preview-next" href="javascript:rb.previewNextFrame()"><?php echo ('Next') ?></a>
+				</p>
+			</div>
+		</div>
+		<div class="frame-preview-wrap">
+			<div class="frame-preview" id="frame-preview"></div>
+			<div class="frame-preview-border" style="z-index: 99"></div>
+<!--not working			<div class="frame-preview-border2"></div> -->
+		</div>	
+		<div class="edit-approve">
+			<a id="cancelPrevieweditmore" href="javascript:rb.cancelPreviewEditReel()"><?php echo $this->__('Go Back and <span>Edit More</span>') ?></a>
+			<a id="approvereel" href="javascript:rb.approveReelDialog()">
+				<img class="approve-img" src="<?php echo $this->getSkinUrl('images/approve-reel.png') ?>" />
+			</a>
+		</div>
+	</div>
+</div>

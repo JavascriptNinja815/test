@@ -1,0 +1,91 @@
+<?php
+    /**
+     * @var $this TBT_Rewards_Block_Manage_Dashboard
+     */
+?>
+<?php if ($this->displayRewardsDashboard()) : ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4><?php echo $this->__("MageRewards") ?></h4>
+    </div>
+    <fieldset class="rewards-np">
+        <div id="rewards_dashboard" style="padding:10px;">
+            <div id="rewards_dashboard_loading" style="display: none;">
+                <span>
+                    <img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo Mage::helper('adminhtml')->__('Loading...') ?>"/>
+                    <br/><?php echo Mage::helper('adminhtml')->__('Refreshing...') ?>
+                </span>
+            </div>
+            <div id="rewards_dashboard_contents" style="display: none;">
+                <?php foreach ($this->getSortedChildBlocks() as $child): ?>
+                    <div class="<?php echo $child->getDomClassName(); ?>">
+                        <?php echo $child->toHtml(); ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+
+    window.sweettooth = window.sweettooth || {};
+    window.sweettooth.urls = window.sweettooth.urls || {};
+    window.sweettooth.urls.dashboard = "<?php echo Mage::helper("adminhtml")->getUrl('adminhtml/QuickLaunch/index'); ?>";
+    window.sweettooth.goToDashboard = function() {
+        window.location = this.urls.dashboard;
+    };
+
+    var countAjaxCalls = <?php echo $this->countAjaxComponents(); ?>;
+    var rewardsDashboardContents = $('rewards_dashboard_contents');
+    var rewardsDashboardLoading = $('rewards_dashboard_loading');
+    var showContents = function() {
+        rewardsDashboardContents.show();
+        rewardsDashboardLoading.hide();
+    };
+
+    if (countAjaxCalls == 0 ){
+        return showContents();
+    }
+
+    window.onload = function() {
+
+        rewardsDashboardLoading.show();
+        // temporarily disable default Magento loader handler
+        Ajax.Responders.unregister(varienLoaderHandler.handler);
+
+        var completedCalls = 0;
+        var selector, blockToRender, url;
+        <?php foreach ($this->getChild() as $child): ?>
+            <?php if (!$child->isAjaxComponent()) continue; ?>
+            url = "<?php echo $child->getAjaxUrl(); ?>";
+            new Ajax.Request(
+                url,
+                {
+                    onSuccess: function(t) {
+                        // Treat response as JSON-Value
+                        var html = t.responseJSON ? t.responseJSON : "";
+                        selector = '.<?php echo $child->getDomClassName(); ?>';
+                        blockToRender = rewardsDashboardContents.select(selector).first();
+                        blockToRender.insert(html);
+                    },
+
+                    onComplete: function(t) {
+                        completedCalls++;
+                        if (completedCalls == countAjaxCalls) {
+                            showContents();
+                        }
+                    }
+                }
+            );
+        <?php endforeach; ?>
+
+        // restore default Magento loader handler
+        Ajax.Responders.register(varienLoaderHandler.handler);
+    }
+})();
+//]]>
+</script>
+<?php endif;?>

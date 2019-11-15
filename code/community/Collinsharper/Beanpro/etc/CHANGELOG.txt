@@ -1,0 +1,5 @@
+2015-09-04  Max Nulman  <mnulman@collinsharper.com>
+
+magento_beanstream/cc_profiles_recurring/app/code/community/Collinsharper/Beanpro/Model/PaymentMethod.php
+
+fixed order status for recurring payment

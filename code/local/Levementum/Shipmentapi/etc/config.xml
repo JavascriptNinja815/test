@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Levementum_Shipmentapi>
+            <version>0.1</version>
+        </Levementum_Shipmentapi>
+    </modules>
+    <global>
+        <models>
+	    <Levementum_Shipmentapi>
+		<class>Levementum_Shipmentapi_Model</class>
+	    </Levementum_Shipmentapi>
+            <sales>
+                <rewrite>
+                    <order_shipment_api>Levementum_Shipmentapi_Model_Order_Shipment_Api</order_shipment_api>
+                </rewrite>
+            </sales>
+        </models>
+
+    </global>
+</config>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout>
+    <mcafeesecure_trustmark_adminhtml_trustmark_index>
+        <reference name="head" before="-">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>css/Mcafeesecure/Trustmark/admin.css</name>
+            </action>
+        </reference>
+
+        <reference name="content">
+            <block type="core/template" name="settingsForm" template="Mcafeesecure/Trustmark/settings.phtml"/>
+        </reference>
+    </mcafeesecure_trustmark_adminhtml_trustmark_index>
+</layout>

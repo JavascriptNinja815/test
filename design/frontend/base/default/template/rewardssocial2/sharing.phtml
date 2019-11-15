@@ -1,0 +1,37 @@
+<?php $defaultTheme = $this->getTheme(); ?>
+<?php if ($this->areButtonsEnabled()): ?>
+    <?php $actionType = $this->getActionType(); ?>
+    <div class="sweettooth-sharing-buttons sweettooth-default-theme">
+        <?php if ($this->isSharingButtonEnabled('facebook_share')): ?>
+            <!--Facebook Share-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/facebook-share.phtml")
+                ->setActionType("facebook_share_{$actionType}")
+                ->setProduct($this->getProduct())
+                ->setOrderId($this->getOrderId())
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+
+        <?php if ($this->isSharingButtonEnabled('twitter_tweet')): ?>
+            <!--Twitter Tweet-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/twitter-tweet.phtml")
+                ->setActionType("twitter_tweet_{$actionType}")
+                ->setProduct($this->getProduct())
+                ->setOrderId($this->getOrderId())
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+
+        <?php if (Mage::helper('rewardssocial2')->hasCustomerToReward()): ?>
+            <div class="sweettooth-social-messages<?php if ($this->getProduct()) { echo "-{$this->getProduct()->getId()}"; } ?>">
+                <?php if (Mage::getStoreConfig('rewards/rewardssocial2/auto_integrate')): ?>
+                    <?php echo $this->__("Earn points for sharing."); ?>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Chcustom>
+            <version>0.1.1</version>
+        </Collinsharper_Chcustom>
+    </modules>
+    <global>
+        <models>
+            <chcustom>
+                <class>Collinsharper_Chcustom_Model</class>
+                <resourceModel>chcustom_mysql4</resourceModel>
+            </chcustom>
+
+            <chcustom_mysql4>
+                <class>Collinsharper_Chcustom_Model_Mysql4</class>
+            </chcustom_mysql4>
+        </models>
+
+        <helpers>
+            <chcustom>
+                <class>Collinsharper_Chcustom_Helper</class>
+            </chcustom>
+        </helpers>
+
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <promo_quote_grid>Collinsharper_Chcustom_Block_Adminhtml_Promo_Quote_Grid</promo_quote_grid>
+                    <promo_quote_edit_tab_main>Collinsharper_Chcustom_Block_Adminhtml_Promo_Quote_Edit_Tab_Main</promo_quote_edit_tab_main>
+                </rewrite>
+            </adminhtml>
+            <enterprise_giftcardaccount>
+                <rewrite>
+                    <adminhtml_giftcardaccount_grid>Collinsharper_Chcustom_Block_Adminhtml_Giftcardaccount_Grid</adminhtml_giftcardaccount_grid>
+                </rewrite>
+            </enterprise_giftcardaccount>
+            <chcustom>
+                <class>Collinsharper_Chcustom_Block</class>
+            </chcustom>
+        </blocks>
+
+        <resources>
+            <chcustom_setup>
+                <setup>
+                    <module>Collinsharper_Chcustom</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chcustom_setup>
+        </resources>
+        <events>
+            <checkout_cart_coupon_applied>
+                <observers>
+                    <chcustom_coupon>
+                        <type>singleton</type>
+                        <class>Collinsharper_Chcustom_Model_Observer</class>
+                        <method>verifyRetailCoupon</method>
+                    </chcustom_coupon>
+                </observers>
+            </checkout_cart_coupon_applied>
+        </events>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <Collinsharper_Chcustom module="chcustom">
+                    <file>ch_custom.xml</file>
+                </Collinsharper_Chcustom>
+            </updates>
+        </layout>
+        <!--
+            <routers>
+                <chcustom>
+                    <use>standard</use>
+                    <args>
+                        <module>Collinsharper_Chcustom</module>
+                        <frontName>collinsharper_chcustom</frontName>
+                    </args>
+                </chcustom>
+            </routers>
+        -->
+
+    </frontend>
+
+    <admin>
+        <routers>
+            <chcustom_admin>
+                <use>admin</use>
+                <args>
+                    <frontName>chcustom_admin</frontName>
+                    <modules>
+                        <Collinsharper_Image3d>Collinsharper_Chcustom_Adminhtml</Collinsharper_Image3d>
+                    </modules>
+                </args>
+            </chcustom_admin>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <Collinsharper_Chcustom module="chcustom">
+                    <file>ch_custom.xml</file>
+                </Collinsharper_Chcustom>
+            </updates>
+        </layout>
+
+    </adminhtml>
+    <crontab>
+        <jobs>
+            <chcustom_cron>
+                <schedule>
+                    <cron_expr>*/15 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>chcustom/cron::updateRetailOrders</model>
+                </run>
+            </chcustom_cron>
+        </jobs>
+    </crontab>
+
+
+</config>

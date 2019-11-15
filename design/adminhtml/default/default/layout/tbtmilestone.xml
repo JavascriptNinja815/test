@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+    <adminhtml_manage_rule_index>
+        <reference name="content">
+            <block type="tbtmilestone/manage_rule" />
+        </reference>
+    </adminhtml_manage_rule_index>
+
+    <adminhtml_manage_special_new>
+        <reference name="head">
+            <action method="addJs">
+                <script>tbt/milestone/adapter/special.js</script>
+            </action>
+        </reference>
+    </adminhtml_manage_special_new>
+
+    <adminhtml_manage_special_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>tbt/milestone/adapter/special.js</script>
+            </action>
+        </reference>
+    </adminhtml_manage_special_edit>
+
+    <adminhtml_manage_history_index>
+        <reference name="content">
+            <block type="tbtmilestone/manage_history" />
+        </reference>
+    </adminhtml_manage_history_index>
+</layout>

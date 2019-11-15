@@ -1,0 +1,1558 @@
+<style type="text/css">
+
+@font-face {
+  font-family: "engschrift";
+  src: url("<?php echo $this->getSkinUrl('fonts/DINEngschriftStd.otf')?>") format("opentype");
+}
+body {
+    width: 360px;
+    height: 520px;
+    background-color: #ECE6D2;
+    font-family: "engschrift",Verdana,Arial,sans-serif;
+    margin: 0;
+}
+p, a, div, ul {
+	padding: 0;
+	margin: 0;
+}
+ul {
+	list-style: none;
+}
+.mobile-reelbuilder-container {
+	display: inline-block;
+	background: #F9F6EA;
+    padding: 2px 8px 0;
+    margin: 0 0 49px;
+    width: 98.5%;
+}
+.mobile-reelbuilder-container .return-button{
+    float: right;
+}
+
+.mobile-reelbuilder-container .reel-center-image a{
+    max-width: 220px;
+}
+input#txt-reelText{
+    padding-right: 0;
+    padding-top: 5px;
+}
+.reelbuilder-index-mobile #container-imageadjust.photo-adjust-controls .tool-row .slider-label{
+    width: 86px;
+}
+.reelbuilder-index-mobile #container-imageadjust.photo-adjust-controls .slider-container{
+    width: 136px;
+}
+.reelbuilder-index-mobile #container-imageadjust.photo-adjust-controls .slider-container .ui-slider-horizontal{
+    margin-top: 14px;
+}
+.mobile-reelbuilder-wrap {
+	position: relative;
+}
+.mobile-reelbuilder-container .hide {
+    display: none !important;
+}
+.edit-control-container .hide  {
+    display: none !important;
+}
+.frame-title {
+    display: inline-block;
+    width: 20%;
+    vertical-align: middle;
+}
+.frame-title h2 {
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #f08146;
+    margin: 0;
+}
+.frame-title h2 span {
+    font-size: 36px;
+    vertical-align: middle;
+    color: #a6d7bf;
+}
+.save-preview-container {
+    display: inline-block;
+    width: 45%;
+    vertical-align: middle;
+}
+.save-preview-container .save-button,
+.save-preview-container .preview-button {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+}
+.save-preview-container .save-button {
+    position: relative;
+    height: 30px;
+    width: 0px;
+    border-top: 4px solid transparent;
+    border-left: 75px solid #f08146;
+    border-bottom: 4px solid transparent;
+    display: inline-block;
+}
+.save-preview-container .save-button a {
+    color: #fff;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 6px 0px 0px -78px;
+    display: block;
+}
+.save-preview-container .preview-button {
+    position: absolute;
+    height: 30px;
+    width: 0px;
+    border-top: 4px solid transparent;
+    border-right: 75px solid #A6D7BF;
+    border-bottom: 4px solid transparent;
+    display: inline-block;
+    margin-left: -17px;
+	margin-top: 4px;
+}
+.save-preview-container .preview-button a {
+    color: #fff;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 6px 0px 0px 14px;
+    display: block;
+}
+.return-button {
+    display: inline-block;
+	vertical-align: middle;
+}
+.return-button a {
+    font-size: 19px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    margin-left: 7px;
+}
+.bottom-controls {
+	margin-bottom: 10px;
+}
+.current-frame-container {
+    height: 270px;
+}
+.current-frame-container .prev-frame, 
+.current-frame-container .next-frame { 
+    position: relative; 
+    height: 0px;  
+    border-top: 10px solid transparent; 
+    border-bottom: 10px solid transparent; 
+    display: inline-block;
+	vertical-align: middle;
+	width: 0;
+}
+.current-frame-container .prev-frame {  
+    border-right: 10px solid #f08146; 
+}
+.current-frame-container .next-frame { 
+    border-left: 10px solid #f08146; 
+}
+.current-frame-container .current-frame {
+    display: inline-block;
+    vertical-align: middle;
+    width: 293px;
+    box-shadow: 0px 0px 0px 7px rgba(240, 129, 70, 0.5) inset;
+    margin: 3px 10px 0;
+    height: 266px;
+    -webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+    cursor: pointer;
+}
+.current-frame-container .current-frame p {
+	text-align: center;
+	margin-top: 100px;
+	font-size: 18px;
+	color: #f08146;
+	text-transform: uppercase;
+	line-height: 18px;
+}
+.reel-center-image .current-frame {
+    display: block;
+    //width: 140px;
+    width: 229px;
+    box-shadow: 0px 0px 0px 7px rgba(240, 129, 70, 0.5) inset;
+    margin: 50px auto;
+    height: 229px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.reel-center-image .current-frame p {
+    text-align: center;
+    font-size: 18px;
+    color: #f08146;
+    text-transform: uppercase;
+    line-height: 18px;
+    padding-top: 43px;
+}
+.edit-options-container {
+    display: inline-block;
+    width: 50px;
+}
+.edit-options-container ul {
+    list-style: none;
+}
+.edit-options-container .edit-options {
+    width: 40px;
+    height: 40px;
+    margin: 5px auto;
+    -webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+.edit-options-container .edit-options:first-child {
+    margin-top: 2px;
+}
+.edit-options-container #photo-edit-options.edit-options {
+    background: #F08146 url("<?php echo $this->getSkinUrl('images/reelbuilder/mobile/camera.png')?>") no-repeat scroll center;
+}
+.edit-options-container #text-edit-options.edit-options {
+    background: #F08146 url("<?php echo $this->getSkinUrl('images/reelbuilder/mobile/text-icon.png')?>") no-repeat scroll center;
+}
+.edit-options-container #reel-edit-options.edit-options {
+    background: #F08146 url("<?php echo $this->getSkinUrl('images/reelbuilder/mobile/reel-icon.png')?>") no-repeat scroll center;
+}
+.edit-options-container #photo-edit-options.edit-options:hover {
+    background-color: #A6D7BF;
+}
+.edit-options-container #photo-edit-options.edit-options.active {
+    background-color: #A6D7BF;
+}
+.edit-options-container #text-edit-options.edit-options:hover {
+    background-color: #A6D7BF;
+}
+.edit-options-container #text-edit-options.edit-options.active {
+    background-color: #A6D7BF;
+}
+.edit-options-container #reel-edit-options.edit-options:hover {
+    background-color: #A6D7BF;
+}
+.edit-options-container #reel-edit-options.edit-options.active {
+    background-color: #A6D7BF;
+}
+.edit-control-container, 
+.text-control-container, 
+.reel-control-container {
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+    margin-top: 2px;
+}
+.edit-control-container .photo-top-options li {
+    display: inline-block;
+    font-size: 24px;
+    text-transform: uppercase;
+    width: 30%;
+    text-align: center;
+    color: #658569;
+    cursor: pointer;
+}
+.edit-control-container .photo-top-options li.active {
+    color: #F08146;
+}
+.edit-control-container .photo-top-options li:hover {
+	color: #F08146;
+}
+.edit-control-container .photo-change-controls ul li {
+    font-size: 21px;
+    color: #F08146;
+    text-transform: uppercase;
+    width: 92%;
+}
+.edit-control-container .photo-change-controls ul li.delete-image-control {
+    margin-bottom: 0px;
+}
+.span-green-button {
+    color: #fff;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 41px;
+    background-color: #658569;
+    -webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	text-align: center;
+	vertical-align: middle;
+	margin-left: 30px;
+    cursor: pointer;
+}
+.span-red-bg {
+    background-color: #F00;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	position: relative;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+    font-size: 16px;
+	margin: 0 auto;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+}
+.photo-adjust-controls li {
+    text-align: right;
+    width: 92%;
+    margin-bottom: 5px;
+}
+.photo-adjust-controls .adjust-type {
+    color: #d37b4d;
+    text-transform: uppercase;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 18px;
+    margin-bottom: -4px;
+}
+.photo-adjust-controls .adjust-slider-range {
+    width: 155px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.photo-adjust-controls .adjust-slider-range span.adjust-bar {
+    width: 125px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 2px;
+    background-color: #a5ceb5;
+}
+.photo-adjust-controls .adjust-slider-range span.plus-minus {
+    width: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    color: #d37b4d;
+}
+.photo-adjust-controls .adjust-slider-handle {
+    width: 6px;
+    height: 18px;
+    display: block;
+    background-color: rgba(240,129,70,0.7);
+    position: absolute;
+    margin-top: -20px;
+    margin-left: 155px;
+}
+.photo-color-controls {
+    text-align: center;
+    width: 92%;
+}
+.photo-color-controls .colour-heading {
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #658569;
+    margin-top: 20px;
+}
+.photo-color-controls li {
+    display: inline-block;
+    margin-top: 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #F08146;
+    padding: 5px 4px 0px;
+    cursor: pointer;
+}
+.photo-color-controls li:hover {
+    background-color: #c1d4bd;
+}
+.photo-color-controls li.active {
+    background-color: #c1d4bd;
+}
+.photo-color-controls ul span {
+    color: #a5ceb5;
+}
+.text-control-container .text-edit-options {
+    font-size: 18px;
+    width: 97%;
+    text-align: right;
+    margin-bottom: 5px;
+}
+.text-control-container .text-edit-options p {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    text-transform: uppercase;
+    line-height: 18px;
+    margin-bottom: -6px;
+    color: #d37b4d;
+}
+.text-control-container .text-edit-controls {
+    display: inline-block;
+    vertical-align: middle;
+    width: 155px;
+}
+.text-control-container .text-edit-controls input {
+    font-family: "engschrift",Verdana,Arial,sans-serif;
+    /*text-transform: uppercase;*/
+    width: 128px;
+    border: medium none;
+    background-color: #658569;
+    color: #fff;
+    padding: 4px 3px 0px;
+    font-size: 11px;
+}
+.text-control-container .text-edit-controls .span-red-bg {
+    line-height: 18px;
+    padding-top: 2px;
+}
+.text-control-container #font-edit .text-edit-controls {
+    width: 135px;
+    overflow: hidden;
+    margin-right: 18px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    height: 19px;
+}
+.text-control-container .text-edit-controls select {
+    border: none;
+    background: #658569 url("images/down-arrow.png") no-repeat scroll 110px -6px;
+    color: #fff;
+    font-family: "engschrift",Verdana,Arial,sans-serif;
+    /*text-transform: capitalize;*/
+    font-size: 14px;
+    padding: 3px 15px 0px 0px;
+    height: 20px;
+    width: 155px;
+    text-align: center;
+    letter-spacing: 0.75px;
+}
+.text-control-container #font-size-edit.text-edit-options {
+    margin-bottom: 0;
+}
+.text-control-container #font-edit.text-edit-options {
+    margin-bottom: 0;
+}
+.text-control-container #font-size-edit.text-edit-options li {
+    display: inline-block;
+    vertical-align: bottom;
+    font-family: Arial Black,sans-serif;
+    color: #75ae90;
+    padding: 0 1px 8px;
+    cursor: pointer;
+}
+.text-control-container #font-size-edit.text-edit-options li:hover {
+    color: #d37b4d;
+}
+.text-control-container #font-size-edit.text-edit-options li.active {
+    color: #d37b4d;
+}
+.text-control-container #font-size-edit.text-edit-options li#small-option,
+.text-control-container #font-size-edit.text-edit-options li#big-option {
+    font-size: 11px;
+    color: #d37b4d;
+    font-family: "engschrift",Verdana,Arial,sans-serif;
+    line-height: 6px;
+    cursor: initial;
+}
+.text-control-container #font-size-edit.text-edit-options li#a1-option {
+    font-size: 13px;
+    line-height: 13px;
+}
+.text-control-container #font-size-edit.text-edit-options li#a2-option {
+    font-size: 17px;
+    line-height: 16px;
+}
+.text-control-container #font-size-edit.text-edit-options li#a3-option {
+    font-size: 20px;
+    line-height: 18px;
+}
+.text-control-container #font-size-edit.text-edit-options li#a4-option {
+    font-size: 24px;
+    line-height: 22px;
+}
+.text-control-container #font-size-edit.text-edit-options li#a5-option {
+    font-size: 28px;
+    line-height: 24px;
+}
+.text-control-container .text-edit-controls .color-options li {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    float: left;
+    border: 1px solid #ECE6D2;
+}
+.text-control-container .text-edit-controls .color-options li#white-option {
+    background-color: #fff;
+}
+.text-control-container .text-edit-controls .color-options li#black-option {
+    background-color: #000;
+}
+.text-control-container .text-edit-controls .color-options li#tan-option {
+    background-color: #d2b490;
+}
+.text-control-container .text-edit-controls .color-options li#brown-option {
+    background-color: #8d4425;
+}
+.text-control-container .text-edit-controls .color-options li#red-option {
+    background-color: #f24048;
+}
+.text-control-container .text-edit-controls .color-options li#orange-option {
+    background-color: #f6a24a;
+}
+.text-control-container .text-edit-controls .color-options li#yellow-option {
+    background-color: #f2eb5d;
+}
+.text-control-container .text-edit-controls .color-options li#rose-option {
+    background-color: #d08aba;
+}
+.text-control-container .text-edit-controls .color-options li#lavender-option {
+    background-color: #814696;
+}
+.text-control-container .text-edit-controls .color-options li#purple-option {
+    background-color: #802a7a;
+}
+.text-control-container .text-edit-controls .color-options li#navy-option {
+    background-color: #2b2e78;
+}
+.text-control-container .text-edit-controls .color-options li#blue-option {
+    background-color: #3b549f;
+}
+.text-control-container .text-edit-controls .color-options li#green-option {
+    background-color: #2d8148;
+}
+.text-control-container .text-edit-controls .color-options li#lime-option {
+    background-color: #4bb957;
+}
+.text-control-container .text-edit-controls .color-options li.active {
+    border-color: blue;
+}
+.frame-strip-container {
+    background-color: #F08146;
+    width: 100%;
+    padding: 2px 0;
+	margin-top: 7px;
+	position: absolute;
+	bottom: 0;
+	max-width: 353px;
+}
+.frame-strip-container p {
+	display: none;
+}
+.frame-strip-container li {
+    background-color: #000;
+    -webkit-border-radius: 11px;
+    -moz-border-radius: 11px;
+    border-radius: 11px;
+    color: #FFF;
+    display: inline-block;
+    font-family: "Engschrift",Verdana,Arial,sans-serif;
+    font-size: 10px;
+    height: 42px;
+    letter-spacing: .5px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 46px;
+    border: 3px solid #F08146;
+    position: relative;
+    padding: 0px;
+    line-height: 42px;
+    cursor: pointer;
+	vertical-align: top;
+}
+.frame-strip-container li:last-child {
+	border-radius: 50% !important;
+	overflow:hidden;
+    	opacity: 1 !important;
+	width: 42px;
+}
+.frame-strip-container li:last-child img {
+	width: 100%;
+}
+.frame-strip-container li.filmstrip-frame-active {
+    border-color: #fff;
+}
+.frame-strip-container .prev-frame, 
+.frame-strip-container .next-frame { 
+    position: relative; 
+    height: 0px;  
+    border-top: 10px solid transparent; 
+    border-bottom: 10px solid transparent; 
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    margin: 0 5px;
+}
+.frame-strip-container .prev-frame {  
+    border-right: 10px solid #fff; 
+}
+.frame-strip-container .next-frame { 
+    border-left: 10px solid #fff; 
+}
+.frame-list-container {
+    width: 273px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+	max-height: 43px;
+}
+.frame-strip-container ul {
+    display: inline-block;
+    /*width: 420px;*/
+    width: 390px;
+}
+
+/* Opened Frame Reorder*/
+.frame-strip-container.opened p {
+	display: block;
+}
+.frame-strip-container.opened .prev-frame, 
+.frame-strip-container.opened .next-frame { 
+	display: none;
+}
+.frame-strip-container.opened .expanded-strip-container {
+    background-color: #F08146;
+    position: fixed;
+    width: 320px;
+    bottom: 0px;
+    display: none;
+}
+.frame-strip-container.opened .close-expand-window.expand-top-close {
+    width: 100%;
+    height: 22px;
+    border-bottom: 1px solid #fca476;
+    padding-top: 4px;
+}
+.frame-strip-container.opened .expand-top-close .close-icon {
+    width: 25px;
+    height: 2px;
+    display: block;
+    border-top: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+    margin: 3px auto 0;   
+}
+.frame-strip-container.opened .expanded-strip-frames {
+    padding: 15px;
+	width: 100%;
+	max-height: 100%;
+}
+.frame-strip-container.opened .expanded-strip-frames p {
+    font-size: 21px;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: .5px;
+    text-align: center;
+}
+.frame-strip-container.opened .expanded-strip-frames li {
+    background-color: #000;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    color: #FFF;
+    display: inline-block;
+    font-family: "Engschrift",Verdana,Arial,sans-serif;
+    font-size: 14px;
+    height: 82px;
+    letter-spacing: .5px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 90px;
+    border: 4px solid #F08146;
+    position: relative;
+    padding: 0px;
+    line-height: 70px;
+    cursor: pointer;
+}
+
+.frame-strip-container.opened .expanded-strip-frames li {
+    background-color: #000;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    color: #FFF;
+    display: inline-block;
+    font-family: "Engschrift",Verdana,Arial,sans-serif;
+    font-size: 14px;
+    height: 82px;
+    letter-spacing: .5px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 90px;
+    border: 4px solid #F08146;
+    position: relative;
+    padding: 0px;
+    line-height: 70px;
+    cursor: pointer;
+}
+
+.frame-strip-container.opened .expanded-strip-frames li:last-of-type {
+    height: 82px;
+    width: 82px;
+}
+
+.frame-strip-container.opened .expanded-strip-frames li.active {
+    border-color: #fff;
+}
+.frame-strip-container.opened .expanded-strip-frames ul {
+    text-align: left;
+    margin-top: 10px;
+	width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    display: block;
+}
+.frame-strip-container .expanded-strip-frames .close-expand-window.expand-bottom-close {
+	opacity: 0;
+}
+.frame-strip-container.opened .expanded-strip-frames .close-expand-window.expand-bottom-close {
+    background-color: transparent;
+    line-height: normal;
+    width: 100px;
+    height: auto;
+    margin: 0;
+    position: absolute;
+    bottom: 30px;
+    right: 35px;    
+	opacity: 1;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 321px) {
+    .frame-strip-container.opened .expanded-strip-frames .close-expand-window.expand-bottom-close {
+        right: 15px;
+    }
+}
+.frame-strip-container.opened .expanded-strip-frames .close-expand-window.expand-bottom-close.active {
+    border-color: transparent;
+}
+.close-icon-triangle { 
+    position: relative; 
+    height: 0px;  
+    border-right: 10px solid transparent; 
+    border-left: 10px solid transparent; 
+    border-top: 10px solid #fff;
+    display: block;
+    width: 0;
+    margin: 0 auto;
+}
+.expand-strip-arrow { 
+    position: absolute; 
+    height: 0px;  
+    border-right: 10px solid transparent; 
+    border-left: 10px solid transparent; 
+    border-bottom: 10px solid #F08146;
+    display: block;
+    width: 0;
+    cursor: pointer;
+    margin: 0 auto;
+    top: 0;
+    top: -10px;
+    left: 0;
+    right: 0;
+}
+.frame-strip-container.opened .expand-strip-arrow {
+	display: none;
+}
+.page-mobile #stock-art-div {
+	display: none;
+}
+
+a.sm_btn_img {
+    padding: 2px 10px;
+    background: #fb7a36;
+    vertical-align: middle;
+    color: #fff;
+    float: left;
+    margin-right: 5px;
+    border-radius: 5px;
+}
+
+.framesli.ui-state-disabled {
+    opacity: 1;
+}
+
+/* For Iphone 5 */
+@media screen and (max-width: 320px) {
+	body,
+	.mobile-reelbuilder-container {
+		width: 100%;
+	}
+	.frame-title {
+		display: block; 
+		float: left;
+		margin-top: 5px;
+	}
+	.mobile-reelbuilder-container .save-preview-container {
+		display: block; 
+		float: left;
+		width: 53%;
+		margin-top: 5px;
+	}
+	.mobile-reelbuilder-container .save-preview-container .save-button {
+		display: inline-block;
+		float: none;
+		width: 45%;
+		padding: 0;
+		margin: 0;
+		margin-right: -16px;
+	}
+	
+	.mobile-reelbuilder-container .save-preview-container .preview-button {
+	    display: inline-block;
+		width: auto;
+		margin: 0;
+		padding: 0;
+		width: 45%;
+		margin: 3px 0 0 0;
+	}
+	.return-button {
+	    display: block;
+		vertical-align: middle;
+		float: right;
+		width: 27%;
+		margin-top: 5px;
+	}
+	.current-frame-container .current-frame {
+		margin: 0 6px;
+	}
+	.current-frame-container .prev-frame {
+		position: absolute;
+		left: 0;
+		top: 225px;
+	}
+	.current-frame-container .next-frame {
+		position: absolute;
+		right: 0;
+		top: 225px;
+	}
+	.bottom-controls {
+	    display: inline-block;
+		width: 100%;
+	}
+	.bottom-controls .edit-options-container:first-child {
+		width: 15%;
+		display: block;
+		float: left;
+	}
+	.bottom-controls > div:nth-child(2) {
+		width: 85%;
+		display: block;
+		float: left;
+	}
+}
+
+
+
+</style>
+<?php $helper = Mage::helper('reelbuilder/tools'); ?>
+<?php
+$_frame_list = array(
+        'apple',
+        'pineapple',
+        'orange',
+        'yellow',
+        'green',
+        'banana',
+        'watermelon',
+);
+?>
+<div class="tool-container" id="container-img-buttons" style="display:none;" >
+        <p><?php echo $this->__('UPLOAD AN IMAGE OR CHOOSE STOCK ART'); ?></p>
+                <div class="help-buttons my-photo-link">
+                        <label for="imgLoader" style="cursor:pointer;"><?php echo $this->__('MY OWN PHOTOS'); ?></label>
+			<form id="uploadform">
+                        	<input type="file" name="userfile" onChange="javascript:rb.directUploaderChange();" id="imgLoader" class="fileinput no-display" accept="image/jpeg, image/jpg, image/png"/>
+			</form>
+                </div>
+                <div class="help-buttons stock-photo-link">
+                        <a href="javascript: jQuery('.ui-dialog-content').dialog('close'); stockArt.reset(); stockArt.showDialog(); " id="stock_photos"><?php echo $this->__('STOCK IMAGES'); ?></a>
+                </div>
+</div>
+
+<div class="tool-container" id="scale-popup" style="display:none;" >
+    <p><?php echo $helper->getScaleCMS(); ?></p>
+</div>
+
+<div class="tool-container" id="rotation-popup" style="display:none;" >
+    <p><?php echo $helper->getRotateCMS(); ?></p>
+</div>
+	<div class="mobile-reelbuilder-wrap">
+    <div class="mobile-reelbuilder-container">
+<marquee><?php echo $helper->getBetaScrollCMS(); ?></marquee>
+    	<div class="top-controls">
+    		<div class="frame-title">
+    			<h2>Frame <span id="cf-span"></span></h2>
+    		</div>
+    		<div class="save-preview-container">
+    			<div class="save-button">
+    				<a href="javascript:rb.saveOnly();">Save</a>
+    			</div>
+    			<div class="preview-button">
+    				<a href="javascript:void(0);" id="preview-reel-link">Preview</a>
+    			</div>
+    		</div>
+            <div id="desktop-switch" class="screen-switcher">
+                <a href="/retroviewer/reelbuilder?reel_id=<?php echo $_REQUEST['reel_id'];?>">
+                    <img src="<?php echo $this->getSkinUrl('images/reelbuilder/computer-icon.png') ?>" />
+                </a>
+            </div>
+    		<div class="return-button">
+    			<a href="javascript:rb.saveAndExit();">Exit</a>
+    		</div>
+    	</div>
+	<div class="tool-row">
+                <input type="text" name="txt-reelName" id="txt-reelName" placeholder="Name Your Reel - Type Here" />
+        </div>
+    	<div class="current-frame-container">
+    		<a class="prev-frame" href="#"></a>
+    		<div class="current-frame">
+			<canvas id="reelBuilderCanvas" width="293" height="266"></canvas>
+			<!--<canvas id="reelBuilderCanvas" width="586" height="532"></canvas>-->
+    			<!--<p>Click or tap this frame<br />Upload an image</p>-->
+    		</div>
+    		<a class="next-frame" href="#"></a>
+    	</div>
+        <div class="reel-center-image hide">
+            <div class="current-frame">
+			<canvas id="centerReelBuilderCanvas" width="230" height="230"></canvas>
+                <!--<p>Click or tap this frame<br />Upload an image</p>-->
+            </div>
+	    <div>
+		<a href="javascript:void(0)" id="doneeditbutton">Done Editing Center Image</a>
+		<!--<a href="javascript:jQuery('#photo-edit-options').click();" id="doneeditbutton">Done Editing Center Image</a>-->
+	    </div>
+        </div>
+
+	<div class="preview-unfinished-reel" style="display:none">
+                        <h3><?php echo $this->__('Denied! (politely.)');?></h3>
+                        <?php echo $this->__('Your reel has missing frames.');?>
+                        <?php echo $this->__('Please add images to all areas before previewing.');?>
+        </div>
+
+        <div class="preview-open-centeredit" style="display:none">
+                        <h3><?php echo $this->__('Denied! (politely.)');?></h3>
+                        <?php echo $this->__('Please select DONE EDITING before previewing.');?>
+        </div>
+
+        <div class="preview-empty-center" style="display:none">
+                        <?php $emptyCenterMessage = Mage::app()->getLayout()->createBlock('cms/block')->setBlockId('empty_center_warning')->toHtml();?>
+                        <?php echo $this->__($emptyCenterMessage);?>
+        </div>
+
+    	<div class="bottom-controls">
+    		<div class="edit-options-container">
+    			<ul>
+    				<li id="photo-edit-options" class="edit-options active"></li>
+    				<li id="text-edit-options" class="edit-options"></li>
+    				<!--<li id="reel-edit-options" class="edit-options"></li>-->
+    			</ul>
+    		</div>
+    		<div class="edit-control-container">
+    			<div class="photo-edit-controls">
+    				<ul class="photo-top-options">
+    					<li id="photo-change-option" class="active">Change</li>
+    					<li id="photo-adjust-option">Adjust</li>
+    					<li id="photo-color-option">Color</li>
+    				</ul>
+    				<div class="photo-change-controls">
+    					<ul>
+    						<li class="change-image-control image-control">
+    							<a href="javascript:void(0)" id="img_popup">Change Image</a>
+    						</li>
+    						<li class="delete-image-control image-control">
+    							<a href="javascript:void(0)" id="del-img">Delete Image</a>
+    						</li>
+    					</ul>
+    				</div>
+
+    				<!-- <div class="photo-adjust-controls hide">
+    					<ul>
+                            <li>
+                                <p class="adjust-type">Scale</p>
+				                <div class="slider-container" style="width:130px;">
+                                    <div class="slider" id="slider-scale">
+					                       <a href="#" onclick="javascript:rb.setCurrentImageDefaultScale();return false;"><sub>X</sub></a>
+				                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="adjust-type">Rotation</p>
+                                <div class="slider-container" style="width:130px;">
+                                    <div class="slider" id="slider-rotate">
+					                   <a href="#" onclick="javascript:jQuery('#slider-rotate').slider('option', 'value', ROTATE_DEFAULT);return false;"><sub>X</sub></a>
+				                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="adjust-type">Brightness</p>
+				                <div class="slider-container" style="width:130px;">
+                                    <div class="slider" id="slider-brightness">
+                					   <a href="#" onclick="javascript:jQuery('#slider-brightness').slider('option', 'value', BRIGHTNESS_DEFAULT);return false;"><sub>X</sub></a>
+                				    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p class="adjust-type">Contrast</p>
+				                <div class="slider-container" style="width:130px;">
+                                    <div class="slider" id="slider-contrast">
+                					   <a href="#" onclick="javascript:jQuery('#slider-contrast').slider('option', 'value', CONTRAST_DEFAULT);return false;"><sub>X</sub></a>
+                				    </div>
+                                </div>
+                            </li>
+                        </ul>
+    				</div> -->
+
+
+                    <div id="container-imageadjust" class="tool-container photo-adjust-controls hide">
+                        <div class="tool-row">
+                            <ul>
+                                <li>
+                                    <!--<div class="slider-label">SCALE <a href="#" onclick="javascript:jQuery('#slider-scale').slider('option', 'value', SCALE_DEFAULT*SCALE_MODIFIER);return false;"><sub>X</sub></a></div>-->
+                                    <div class="slider-label">SCALE </div>
+                                    <div class="slider-container">
+                                        <a href="javascript:void(0)" class="sm_btn_img" id="scale">?</a>
+                                        <a href="javascript:void(0)" class="sm_btn_img" onclick="javascript:rb.setCurrentImageDefaultScale();return false;">Reset</a>
+                                        <!-- <div id="slider-scale" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><span tabindex="0" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 50.5556%;"></span>
+                                            <a onclick="javascript:rb.setCurrentImageDefaultScale();return false;" href="#"><sub>X</sub></a>
+                                        </div> -->
+                                    </div>
+                                </li>
+                                <li><div class="slider-label">ROTATION</div>
+                                    <div class="slider-container">
+                                        <a href="javascript:void(0)" class="sm_btn_img" id="rotation">?</a>
+                                        <a href="javascript:void(0)" class="sm_btn_img" onclick="javascript:rb.setCurrentImageDefaultRotation();return false;">Reset</a>
+                                        <!-- <div id="slider-rotate" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><span tabindex="0" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 50%;"></span>
+                                            <a onclick="javascript:jQuery('#slider-rotate').slider('option', 'value', ROTATE_DEFAULT);return false;" href="#"><sub>X</sub></a>
+                                        </div> -->
+                                    </div>
+                                </li>
+                                <li><div class="slider-label">BRIGHTNESS </div>
+                                    <div class="slider-container">
+                                        <div id="slider-brightness" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><span tabindex="0" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 50%;"></span>
+                                            <a onclick="javascript:jQuery('#slider-brightness').slider('option', 'value', BRIGHTNESS_DEFAULT);return false;" href="#"><sub>X</sub></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><div class="slider-label">CONTRAST </div>
+                                    <div class="slider-container">
+                                        <div id="slider-contrast" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><span tabindex="0" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 50%;"></span>
+                                            <a onclick="javascript:jQuery('#slider-contrast').slider('option', 'value', CONTRAST_DEFAULT);return false;" href="#"><sub>X</sub></a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+    				<div class="photo-color-controls hide" id="color-options">
+    					<p class="colour-heading">Select a Color Option</p>
+					<input type="radio" id="rad-fullColor" name="radio" class="img-color-opts" checked="checked"/><label for="rad-fullColor"><?php echo 'FULL COLOR'; ?></label><span class="green-dash">-</span>
+                                <input type="radio" id="rad-bw" name="radio" class="img-color-opts" /><label for="rad-bw"><?php echo 'BLACK AND WHITE'; ?></label><span class="green-dash">-</span>
+                                <input type="radio" id="rad-sepia" name="radio" class="img-color-opts"/><label for="rad-sepia"><?php echo 'SEPIA'; ?></label>
+    				</div>
+    			</div>
+    		</div>
+            <div class="text-control-container hide">
+                <ul>
+                    <li id="add-new-text" class="text-edit-options">
+                        <p>Text</p>
+                        <div class="text-edit-controls">
+			    <input type="text" name="txt-reelText" class="scroll_tex_area" id="txt-reelText" placeholder="Type Here" onclick="textScrollUp()" />
+                            <!--<input type="text" name="NewText" placeholder="Type Here to Start a New Text Box">-->
+                            <span class="span-red-bg" id="btn-remove-text">&times;</span>
+                        </div>
+                    </li>
+                    <li id="font-edit" class="text-edit-options">
+                        <p>Font</p>
+                        <div class="text-edit-controls">
+                             <select id="cmb-font" name="cmb-font">
+				<?php foreach($helper->getFonts() as $v => $l): ?>
+				    <option value="<?php echo $v;?>"><?php echo $this->__($l);?></option>
+				<?php endforeach; ?>
+				<!--
+                                <option value="arial">Arial</option>
+                                <option value="timesnewroman">Times New Roman</option>
+                                <option value="helvetica">Helvetica</option>
+                                <option value="futura">Futura</option>
+				-->
+                            </select> 
+                        </div>
+                    </li>
+                    <li id="font-size-edit" class="text-edit-options">
+                        <p>Size</p>
+                        <div id="font-size-options">
+			    <div class="lbl-small-big"><?php echo $this->__('SMALL'); ?></div>
+			    <?php $fontSize = 16; $fontCounter = 0; ?>
+			    <input type="radio" id="rad-font-size1" name="font-size" value="11"><label id="lbl-font-size1" for="rad-font-size1"><?php echo $this->__('A'); ?></label>
+                            <input type="radio" id="rad-font-size2"  value="15<?php //echo $fontSize*++$fontCounter; ?>"  name="font-size"/><label id="lbl-font-size2"  for="rad-font-size2"><?php echo $this->__('A'); ?></label>
+                            <input type="radio" id="rad-font-size3"  value="22.5<?php //echo $fontSize*++$fontCounter; ?>"  name="font-size"/><label id="lbl-font-size3"  for="rad-font-size3"><?php echo $this->__('A'); ?></label>
+                            <input type="radio" id="rad-font-size4"  value="32.5<?php //echo $fontSize*++$fontCounter; ?>"  name="font-size"/><label id="lbl-font-size4"  for="rad-font-size4"><?php echo $this->__('A'); ?></label>
+                            <input type="radio" id="rad-font-size5"  value="40<?php //echo $fontSize*++$fontCounter-10; ?>"  name="font-size"/><label id="lbl-font-size5"  for="rad-font-size5"><?php echo $this->__('A'); ?></label>
+                            <div class="lbl-small-big"><?php echo $this->__('BIG'); ?></div>
+			    <!--
+                            <ul>
+                                <li id="small-option">Small</li>
+                                <li id="a1-option">A</li>
+                                <li id="a2-option">A</li>
+                                <li id="a3-option">A</li>
+                                <li id="a4-option">A</li>
+                                <li id="a5-option">A</li>
+                                <li id="big-option">Big</li>
+                            </ul>
+			    -->
+                        </div>
+                    </li>
+                    <li id="font-color-edit" class="text-edit-options">
+                        <p>Color</p>
+                        <!--<div class="text-edit-controls" id="font-color-options">-->
+                        <div id="font-color-options">
+			    <!--<ul class="color-options">-->
+				<?php foreach($helper->getFontColors() as $v => $l): ?>
+                                        	<input type="radio" id="<?php echo $v;?>" value="<?php echo $helper->getFontHtml($v); ?>" title="<?php echo $this->__($l);?>" name="color-choice"/><label class="<?php echo $v;?>" for="<?php echo $v;?>"></label>
+                                <?php endforeach; ?>
+<!--
+                            <ul class="color-options">
+                                <li id="white-option"></li>
+                                <li id="black-option"></li>
+                                <li id="tan-option"></li>
+                                <li id="brown-option"></li>
+                                <li id="red-option"></li>
+                                <li id="orange-option"></li>
+                                <li id="yellow-option"></li>
+                                <li id="rose-option"></li>
+                                <li id="lavender-option"></li>
+                                <li id="purple-option"></li>
+                                <li id="navy-option"></li>
+                                <li id="blue-option"></li>
+                                <li id="green-option"></li>
+                                <li id="lime-option"></li>
+-->
+                            <!--</ul>-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+    	</div>
+    </div>
+    <div id="frame-strip" class="frame-strip-container">
+    <div class="expand-strip-arrow"> </div>
+        <div class="close-expand-window expand-top-close">
+            <span class="close-icon"></span>
+            <span class="close-icon"></span>
+        </div>
+        <a class="prev-frame" href="#"></a>
+        <div class="frame-list-container expanded-strip-frames">
+            <p>Click and Drag to Reorder</p>
+            <ul class="frame-list frame-list-sort" id="frame-list-sort">
+		<?php  $active = ' filmstrip-frame-active ';  ?>
+		<?php foreach($_frame_list as $notK => $idx): $fi= $notK+1; ?>
+                        <li rel="<?php echo $idx; ?>" data-frame-id="<?php echo $fi; ?>" data-frame-entity-id="" class="framesli frames ui-state-default ui-state-disabled mobile <?php echo $active; $active = ''; ?>">
+                                <div class="frame-indentifier-wrap">
+                                        <span class="frame_identifier" style="text-align: center;"><?php echo "Frame " . $fi; ?></span>
+                                </div>
+
+                        </li>
+                <?php endforeach;?>
+		<li id="reel-edit-options" data-frame-id="0" data-frame-entity-id="" class="ui-state-default ui-state-disabled mobile <?php echo $active; $active = ''; ?>">
+		    <a href="javascript:void(0);" >
+			<img src="<?php echo $this->getSkinUrl('images/centerlabel-placeholder.png') ?>" width="42" id="center-art-thumb">
+		    </a>
+                	<!--<div class="frame-indentifier-wrap">
+                        	<span class="frame_identifier" style="text-align: center;"><?php echo "Center"; ?></span>
+                        </div>-->
+
+                </li>
+
+            </ul>
+                <div class="close-expand-window expand-bottom-close">
+                    <p>Done Reordering</p>
+                    <span class="close-icon-triangle"></span>
+                </div>
+        </div>
+        <a class="next-frame" href="#"></a>
+    </div>
+	</div>
+
+<script type="text/javascript">
+//These get moved to the frame edit file when template gets divided.
+var RB_AJAX_URL = '<?php echo $this->getUrl('reelbuilderCb/index'); ?>';
+var RB_AJAX_URL = BASE_URL + 'reelbuilderCb/';
+var ONE_PIXEL_PNG = '<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX . Collinsharper_Image3d_Model_Reelajaxhandler::ONE_PIXEL_PNG; ?>';
+var FRAME_WIDTH = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::FRAME_WIDTH; ?>;
+var FRAME_HEIGHT = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::FRAME_HEIGHT; ?>;
+var THUMB_WIDTH = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::THUMB_WIDTH; ?>;
+var THUMB_HEIGHT = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::THUMB_HEIGHT; ?>;
+var CENTER_WIDTH = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::CENTER_WIDTH; ?>;
+var CENTER_HEIGHT = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::CENTER_HEIGHT; ?>;
+var CANVAS_MASK = '<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX . Collinsharper_Image3d_Model_Reelassembly::CANVAS_MASK; ?>';
+var CENTER_CANVAS_MASK = '<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX . Collinsharper_Image3d_Model_Reelassembly::CENTER_CANVAS_MASK; ?>';
+var CANVAS_DIM_MODIFIER = '<?php echo Collinsharper_Image3d_Model_Reelassembly::CANVAS_DIM_MODIFIER; ?>';
+var CENTER_CANVAS_DIM_MODIFIER = '<?php echo Collinsharper_Image3d_Model_Reelassembly::CENTER_CANVAS_DIM_MODIFIER; ?>';
+//var SCALE_FACTOR = 0.4266;
+var SCALE_FACTOR = 0.5;
+var DEFAULT_TEXT = '<?php echo Collinsharper_Image3d_Model_Reelassembly::DEFAULT_TEXT; ?>';
+var MAX_UPLOAD_MUX = <?php echo Collinsharper_Image3d_Helper_Image::MAX_UPLOAD_MUX; ?>;
+var FRAME_WORD = '<?php echo $this->__('Frame'); ?>';
+var MSG_CONFIRM_DELETE_FRAME = '<?php echo $this->__('Are you sure you would like to delete this frame?'); ?>';
+var MSG_CONFIRM_UNSAVED_FRAME = '<?php echo $this->__('You have unsaved changes on this frame that will be lost. Do you want to continue without saving?'); ?>';
+var MSG_MUSTBE_LOGGED_IN = '<?php echo $this->__('You are going to have to login or create an account to save your reel'); ?>';
+var MSG_APPROVE_REEL = '<?php echo $this->__('Once a reel is approved you cannot make any more changes to it. Do you want to continue?'); ?>';
+var MSG_PROBLEM_PREVIEW = '<?php echo $this->__('There was a problem generating your reel preview, please refresh your page and try again or contact customer support.'); ?>';
+var MSG_PROBLEM_IMAGE = '<?php echo $this->__('There was a problem saving your image, please refresh your page and try again or contact customer support.'); ?>';
+var MSG_IMAGE_BEEN_RESIZED = '<?php echo $this->__('Image has been resized.'); ?>';
+var MSG_UPLOADING_IMAGES = '<?php echo $this->__('Please wait while we upload your image.'); ?>';
+var MSG_GENERIC = '<?php echo $this->__('Please wait.'); ?>';
+var MSG_LOW_RES_IMAGE = '<?php echo $this->__('Image is less than 400 pixels. Image may be pixelated.'); ?>';
+var MSG_CHANGE_FRAME = '<?php echo $this->__('Changed to Frame '); ?>';
+var MSG_CHANGE_FRAME_FORCE = '<?php echo $this->__('Please edit frames in order. Changed to frame '); ?>';
+var MSG_BROWSER_UPGRADE = '<?php echo $this->__('Your browser is outdated and insecure. Please upgrade your browser.<br /> <h2>Note: this application may not work on your current configuration.</h2>'); ?>';
+var MSG_GENERATION_START = '<?php echo $this->__('Checking your images..'); ?>';
+var MSG_GENERATION_COMPLETE = '<?php echo $this->__('All set!!'); ?>';
+var MSG_LIMITED_UPLOAD_FILES = '<?php echo $this->__('Sorry you can only upload png or jpeg file!'); ?>';
+var MSG_REORDER_REORDER = '<?php echo $this->__('Please create frames before re-ordering.'); ?>';
+var _stockArtTree = <?php echo ($this->helper('chimage3d/stockart')->getStockArt(true)); ?>;
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	//find div
+	var div = jQuery('div.frame-list-container');
+	//find ul width
+	var liNum = jQuery(div).find('ul').children('li').length;
+	var speed = 500;
+	var containerWidth = 290;
+	var itemWidth = 50;
+	//jQuery('div.left-arrow').css('pointer-events', 'none');
+	//Remove scrollbars
+	jQuery(div).css({overflow: 'hidden'});
+	jQuery('.next-frame').click(function(e){
+		if((jQuery(div).scrollLeft()+containerWidth)<(liNum*itemWidth)){
+			jQuery(div).animate({
+				//scrollLeft: '+='+containerWidth
+				scrollLeft: '+='+itemWidth
+			}, speed);
+		}
+		if((jQuery(div).scrollLeft() + 2*containerWidth)>=(liNum*itemWidth)){
+			jQuery('div.right-arrow').css('pointer-events', 'none');
+		}
+		jQuery('.prev-frame').css('pointer-events', 'auto');
+	});
+	jQuery('.prev-frame').click(function(e){
+		if((jQuery(div).scrollLeft()+containerWidth)>containerWidth){
+			jQuery(div).animate({
+				//scrollLeft: '-='+containerWidth
+				scrollLeft: '-='+itemWidth
+			}, speed);
+		}
+		if((jQuery(div).scrollLeft() <= containerWidth)){
+			jQuery('div.left-arrow').css('pointer-events', 'none');
+		}
+		jQuery('.next-frame').css('pointer-events', 'auto');
+	});
+
+    jQuery('.frame-list li[data-frame-id="5"], .frame-list li[data-frame-id="6"]').click(function(e){
+        jQuery(div).animate({
+                //scrollLeft: '+='+containerWidth
+            scrollLeft: '+='+itemWidth
+        }, speed);
+    });
+    jQuery('.frame-list li[data-frame-id="2"], .frame-list li[data-frame-id="3"]').click(function(e){
+        jQuery(div).animate({
+                //scrollLeft: '+='+containerWidth
+            scrollLeft: 0
+        }, speed);
+    });
+
+  jQuery('#cf-span').html("1");
+  // Edit Option toggles
+  jQuery('#photo-edit-options').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery('#text-edit-options, #reel-edit-options').removeClass('active');
+    jQuery('.edit-control-container').removeClass('hide');
+    jQuery('.text-control-container').addClass('hide');
+    e.preventDefault();
+  });
+
+  jQuery('#doneeditbutton').on('click', function(e) {
+    if(rb.currentFrameIndex == 0) {
+        rb.doneEditCenterArtClick();
+    }
+    jQuery(this).addClass('active');
+    jQuery('#text-edit-options, #reel-edit-options').removeClass('active');
+    jQuery('.edit-control-container').removeClass('hide');
+    jQuery('.text-control-container').addClass('hide');
+    jQuery('.current-frame-container').removeClass('hide');
+    jQuery('.reel-center-image').addClass('hide');
+    e.preventDefault();
+  });
+
+  jQuery('#text-edit-options').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery('#photo-edit-options, #reel-edit-options').removeClass('active');
+    jQuery('.text-control-container').removeClass('hide');
+    jQuery('.edit-control-container').addClass('hide');
+    //jQuery('.current-frame-container').removeClass('hide');
+    //jQuery('.reel-center-image').addClass('hide');
+    e.preventDefault();
+  });
+
+  jQuery('#reel-edit-options').on('click touchstart', function(e) {
+    if(jQuery('#frame-strip').hasClass('opened')) {
+	return;
+    }
+    jQuery(this).addClass('active');
+    jQuery('#photo-edit-options, #text-edit-options').removeClass('active');
+    jQuery('.edit-control-container').removeClass('hide');
+    jQuery('.text-control-container').addClass('hide');
+    jQuery('.reel-center-image').removeClass('hide');
+    jQuery('.current-frame-container').addClass('hide');
+    rb.editCenterArtClick();
+    e.preventDefault();
+  });
+
+  // Photo Edit toggles
+  jQuery('#photo-change-option').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery('#photo-adjust-option, #photo-color-option').removeClass('active');
+    jQuery('.photo-change-controls').removeClass('hide');
+    jQuery('.photo-adjust-controls, .photo-color-controls').addClass('hide');
+    e.preventDefault();
+  });
+
+  jQuery('#photo-adjust-option').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery('#photo-change-option, #photo-color-option').removeClass('active');
+    jQuery('.photo-adjust-controls').removeClass('hide');
+    jQuery('.photo-change-controls, .photo-color-controls').addClass('hide');
+    e.preventDefault();
+  });
+
+  jQuery('#photo-color-option').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery('#photo-change-option, #photo-adjust-option').removeClass('active');
+    jQuery('.photo-color-controls').removeClass('hide');
+    jQuery('.photo-adjust-controls, .photo-change-controls').addClass('hide');
+    e.preventDefault();
+  });
+
+  jQuery('.photo-color-controls li').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery(this).siblings().removeClass('active');
+    e.preventDefault();
+  });
+
+  // Text Edit toggles
+  jQuery('.text-edit-controls li').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery(this).siblings().removeClass('active');
+    e.preventDefault();
+  });
+
+/*
+  // Frame Strip toggles
+  jQuery('.frame-list-container li').on('click touchstart', function(e) {
+    if(jQuery('#frame-strip').hasClass('opened')) {
+	console.log('opened');
+	return;
+    }
+    if(rb.currentFrameIndex == 0) {
+	return;
+    }
+    jQuery(this).addClass('filmstrip-frame-active');
+    jQuery(this).siblings().removeClass('filmstrip-frame-active');
+    var frameIndex = jQuery(this).data('frame-id');
+    jQuery('#cf-span').html(frameIndex);
+    rb.changeCurrentFrame(e);
+    e.preventDefault();
+  });
+*/
+
+/*
+  jQuery('.framesli').on('touchmove', function() {
+	jQuery('#frame-strip').addClass('opened');
+  });
+*/
+
+  // Frame Strip toggles
+  jQuery('.expanded-strip-frames li').on('click', function(e) {
+    jQuery(this).addClass('active');
+    jQuery(this).siblings().removeClass('active');
+    e.preventDefault();
+  });
+
+  //Frame container navigation
+  //TODO Check for changes to current frame and save?
+  jQuery('.current-frame-container .next-frame').on('click', function(e) {
+    //Save if changes were made
+    if(rb.frameHasChanges) {
+	rb.saveReel();
+    }
+    //Figure out the next frame
+    var currentFrame = Number(rb.getCurrentFrameIndex());
+    var nextFrame;
+    if(currentFrame == 7){
+	nextFrame = 1;
+    } else {
+	nextFrame = currentFrame + 1;
+    }
+    rb.setCurrentFrameIndex(nextFrame);
+    //Make the thumb li active
+    var element = jQuery('.frame-list-container').find("[data-frame-id='" + nextFrame + "']");
+    jQuery(element).addClass('filmstrip-frame-active');
+    jQuery(element).siblings().removeClass('filmstrip-frame-active');
+    jQuery('#cf-span').html(nextFrame);
+    rb.loadFrame();
+    e.preventDefault();
+  });
+
+  jQuery('.current-frame-container .prev-frame').on('click', function(e) {
+    //Save if changes were made
+    if(rb.frameHasChanges) {
+	rb.saveReel();
+    }
+    //Figure out the next frame
+    var currentFrame = Number(rb.getCurrentFrameIndex());
+    var prevFrame;
+    if(currentFrame == 1){
+        prevFrame = 7;
+    } else {
+        prevFrame = currentFrame - 1;
+    }
+    rb.setCurrentFrameIndex(prevFrame);
+    //Make the thumb li active
+    var element = jQuery('.frame-list-container').find("[data-frame-id='" + prevFrame + "']");
+    jQuery(element).addClass('filmstrip-frame-active');
+    jQuery(element).siblings().removeClass('filmstrip-frame-active');
+    jQuery('#cf-span').html(prevFrame);
+    rb.loadFrame();
+    e.preventDefault();
+  });
+
+  jQuery(".expand-strip-arrow").click(function(){
+    jQuery(".frame-strip-container").addClass("opened");
+    jQuery(".framesli").removeClass("ui-state-disabled");
+  });
+  jQuery(".close-expand-window").click(function(){
+    jQuery(".framesli").addClass("ui-state-disabled");
+    jQuery( "#frame-list-sort" ).sortable("destroy");
+    jQuery( "#frame-list-sort" ).sortable({
+                items: "li:not(.ui-state-disabled)",
+                delay: 150,
+                deactivate: function(event, ui) {
+                        rb.reorderFrames(event, ui);
+                }
+        });
+
+    jQuery(".frame-strip-container").removeClass("opened");
+  });
+
+  
+});
+
+    jQuery('#del-img').click(function() {
+	rb.deleteCurrentFrameDialog(null, true);
+    });
+
+    jQuery('input.scroll_tex_area').on('focus',function(e){
+	if(jQuery('.current-frame-container').hasClass('hide')) {
+		jQuery("html, body").animate({
+            		scrollTop: jQuery('.reel-center-image').offset().top
+        		}, 1000);
+	} else {
+         	jQuery("html, body").animate({
+            		scrollTop: jQuery('.current-frame-container').offset().top
+        	}, 1000);
+	}
+    });
+
+    jQuery('#scale').click(function() {
+        jQuery('#scale-popup').clone().dialog({
+            autoOpen: true,
+            modal: true,
+            height: 'auto',
+            resizable: false,
+            buttons : {
+                "Cancel" : function() {
+                    jQuery(this).dialog("close");
+                }
+            }
+        });
+        jQuery(".ui-dialog-titlebar").hide();
+    });
+
+    jQuery('#rotation').click(function() {
+        jQuery('#rotation-popup').clone().dialog({
+            autoOpen: true,
+            modal: true,
+            height: 'auto',
+            resizable: false,
+            buttons : {
+                "Cancel" : function() {
+                    jQuery(this).dialog("close");
+                }
+            }
+        });
+        jQuery(".ui-dialog-titlebar").hide();
+    });
+
+    /*function textScrollUp() {
+        jQuery("html, body").animate({
+            scrollTop: jQuery('.current-frame-container').offset().top
+        }, 2000);
+    }*/
+
+    
+
+</script>
+
+<script id="stock-art-template" type="text/x-handlebars-template">
+	<div id="stock-art-div" title="Browse {{currentName}}">
+		<div class="stock-art">
+			<div class="stock-header">
+				<p><?php echo $this->__('TAP AN IMAGE TO ADD TO YOUR FRAME');?></p>
+			</div>
+			<div class="directory-tree stock-options-container">
+				{{#if currIsDir}}
+				<p><?php echo $this->__('Choose A Category');?></p>
+				{{else}}
+				<p><?php echo $this->__('Choose One');?></p>
+					{{/if}}
+				<ul>
+					{{#each listItems}}
+					{{#if this.is_dir}}
+					<li>
+						{{#if this.thumb}}
+						<a href="javascript:void(0)" onClick="stockArt.showDialog('{{@key}}')"><img width="95" src="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{thumb}}" title="{{@key}}" /></a>
+						{{/if}}
+						<a class="stock-options" href="javascript:void(0)" onClick="javascript:stockArt.showDialog('{{@key}}')" data-path="{{path}}">{{@key}}</a>
+					</li>
+					{{/if}}
+					{{/each}}
+					{{#each listItems.children}}
+					{{#if this.is_dir}}
+					<li>
+						{{#if this.thumb}}
+						<a href="javascript:void(0)" onClick="stockArt.showDialog('{{@key}}')"><img width="95" src="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{thumb}}" title="{{@key}}" /></a>
+						{{/if}}
+						<a class="stock-options" href="javascript:stockArt.showDialog('{{@key}}')" data-path="{{path}}">{{@key}}</a>
+					</li>
+					{{/if}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="stock-image-list">
+				<ul>
+					{{#each listItems.children}}
+					{{#unless this.is_dir}}
+					<!-- need thumb code... .. -->
+					<li>
+						<a href="javascript:void(0)" onClick="rb.loadStockArt('<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{path}}');"><img width="95" src="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{#if this.thumb}}{{thumb}}{{else}}{{path}}{{/if}}" data-full-image="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{path}}" title="{{@key}}" /></a>
+					</li>
+					{{/unless}}
+					{{/each}}
+				</ul>
+			</div>
+			<a class="stock-backlink" href="javascript:stockArt.showDialog('-1')" data-path="-1"><?php echo $this->__('Go Back');?></a>
+		</div>
+	</div>
+</script>

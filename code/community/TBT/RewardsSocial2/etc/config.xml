@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <modules>
+        <TBT_RewardsSocial2>
+            <version>2.0.1</version>
+        </TBT_RewardsSocial2>
+    </modules>
+    <global>
+        <resources>
+            <rewardssocial2_setup>
+                <setup>
+                    <module>TBT_RewardsSocial2</module>
+                    <class>TBT_RewardsSocial2_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </rewardssocial2_setup>
+            <rewardssocial2_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </rewardssocial2_write>
+            <rewardssocial2_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </rewardssocial2_read>
+        </resources>
+        <events>
+            <st_rewards_manage_diagnostics_reinstalldb_before>
+                <observers>
+                    <rewardssocial2_before_rewards_manage_diagnostics_reinstalldb>
+                        <class>rewardssocial2/observer_diagnostics</class>
+                        <method>reinstallDb</method>
+                    </rewardssocial2_before_rewards_manage_diagnostics_reinstalldb>
+                </observers>
+            </st_rewards_manage_diagnostics_reinstalldb_before>
+        </events>
+        <blocks>
+            <rewardssocial2>
+                <class>TBT_RewardsSocial2_Block</class>
+            </rewardssocial2>
+            <adminhtml>
+                <rewrite>
+                    <system_config_form>TBT_RewardsSocial2_Block_Adminhtml_System_Config_Form</system_config_form>
+                </rewrite>
+            </adminhtml>
+        </blocks> 
+        <helpers>
+            <rewardssocial2>
+                <class>TBT_RewardsSocial2_Helper</class>
+            </rewardssocial2>
+        </helpers>
+        <models>
+            <rewardssocial2>
+                <class>TBT_RewardsSocial2_Model</class>
+                <resourceModel>rewardssocial2_mysql4</resourceModel>
+            </rewardssocial2>
+            <rewardssocial2_mysql4>
+                <class>TBT_RewardsSocial2_Model_Mysql4</class>
+                <entities>
+                    <action>
+                        <table>rewardssocial2_action</table>
+                    </action>
+                </entities>
+            </rewardssocial2_mysql4>
+        </models>
+    </global>
+    <frontend>
+        <routers>
+            <rewardssocial2>
+                <use>standard</use>
+                <args>
+                    <module>TBT_RewardsSocial2</module>
+                    <frontName>rewardssocial2</frontName>
+                </args>
+            </rewardssocial2>
+        </routers>
+        <layout>
+            <updates>
+                <rewardssocial2>
+                    <file>rewardssocial2.xml</file>
+                </rewardssocial2>
+            </updates>
+        </layout>
+        <translate>
+              <modules>
+                  <TBT_RewardsSocial2>
+                      <files>
+                          <default>TBT_RewardsSocial2.csv</default>
+                      </files>
+                  </TBT_RewardsSocial2>
+              </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <rewardssocial2 after="Mage_Adminhtml">TBT_RewardsSocial2</rewardssocial2>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <rewardssocial2>
+                    <file>rewardssocial2.xml</file>
+                </rewardssocial2>
+            </updates>
+        </layout>
+        <events>
+            <controller_action_predispatch_adminhtml_manage_special_index>
+                <observers>
+                    <rewardssocial2_rules_special_predispatch>
+                        <type>singleton</type>
+                        <class>rewardssocial2/observer</class>
+                        <method>rulesSpecialPreDispatch</method>
+                    </rewardssocial2_rules_special_predispatch>
+                </observers>
+            </controller_action_predispatch_adminhtml_manage_special_index>
+            <controller_action_predispatch_adminhtml_manage_special_save>
+                <observers>
+                    <rewardssocial2_twitter_follow_customer_behavior_rule_pre_dispatch>
+                        <type>singleton</type>
+                        <class>rewardssocial2/observer</class>
+                        <method>checkFollowSettings</method>
+                    </rewardssocial2_twitter_follow_customer_behavior_rule_pre_dispatch>
+                </observers>
+            </controller_action_predispatch_adminhtml_manage_special_save>
+        </events>
+    </adminhtml>
+    <default>
+        <rewards>
+            <InitialTransferStatus>
+                <AfterFacebookLike>5</AfterFacebookLike>
+                <AfterFacebookProductShare>5</AfterFacebookProductShare>
+                <AfterTwitterTweet>5</AfterTwitterTweet>
+                <AfterTwitterFollow>5</AfterTwitterFollow>
+                <AfterPinterestPin>5</AfterPinterestPin>
+                <AfterReferralShare>5</AfterReferralShare>
+                <AfterGooglePlusOne>5</AfterGooglePlusOne>
+                <afterPurchaseShareOnFacebook>5</afterPurchaseShareOnFacebook>
+                <afterPurchaseShareOnTwitter>5</afterPurchaseShareOnTwitter>
+            </InitialTransferStatus>
+            <transferComments>
+                <facebookLike><![CDATA[Points received for liking something on Facebook.]]></facebookLike>
+                <facebookProductShare><![CDATA[Points received for sharing a product on Facebook.]]></facebookProductShare>
+                <twitterTweet><![CDATA[Points received for tweeting something on Twitter.]]></twitterTweet>
+                <twitterFollow><![CDATA[Points received for following us on Twitter.]]></twitterFollow>
+                <pinterestPin><![CDATA[Points received for pinning a page on Pinterest.]]></pinterestPin>
+                <referralShare><![CDATA[Points received for sharing a referral link.]]></referralShare>
+                <googlePlusOne><![CDATA[Points received for +1'ing a page on Google+.]]></googlePlusOne>
+                <purchaseShareOnFacebook><![CDATA[Points received for sharing a purchase on Facebook.]]></purchaseShareOnFacebook>
+                <purchaseShareOnTwitter><![CDATA[Points received for sharing a purchase on Twitter.]]></purchaseShareOnTwitter>
+            </transferComments>
+            <rewardssocial2>
+                <auto_integrate>1</auto_integrate>
+                <twitter_message><![CDATA[Check this out!]]></twitter_message>
+                <homepage_buttons>1,2,3,4,5,6</homepage_buttons>
+                <catalog_buttons>1,2,3,4,5,6,7</catalog_buttons>
+                <purchase_buttons>1,2</purchase_buttons>
+                <referral_buttons>1,2</referral_buttons>
+                <weekly_limit>4</weekly_limit>
+                <monthly_limit>12</monthly_limit>
+                <yearly_limit>80</yearly_limit>
+                <lifetime_limit>150</lifetime_limit>
+                <request_interval>10</request_interval>
+                <integration_js>//cdn.magerewards.com/assets/social-integration.js</integration_js>
+            </rewardssocial2>
+        </rewards>
+    </default>
+    <rewards>
+        <special>
+            <social_referral_share>
+                <config>rewardssocial2/special_config_referralShare</config>
+            </social_referral_share>
+            <social_facebook_like>
+                <config>rewardssocial2/special_config_facebookLike</config>
+            </social_facebook_like>
+            <social_twitter_tweet>
+                <config>rewardssocial2/special_config_twitterTweet</config>
+            </social_twitter_tweet>
+            <social_twitter_follow>
+                <config>rewardssocial2/special_config_twitterFollow</config>
+            </social_twitter_follow>
+            <social_google_plusOne>
+                <config>rewardssocial2/special_config_googlePlusOne</config>
+            </social_google_plusOne>
+            <social_pinterest_pin>
+                <config>rewardssocial2/special_config_pinterestPin</config>
+            </social_pinterest_pin>
+            <social_facebook_share>
+                <config>rewardssocial2/special_config_facebookShare</config>
+            </social_facebook_share>
+            <social_purchase_facebook_share>
+                <config>rewardssocial2/special_config_purchaseShareFacebook</config>
+            </social_purchase_facebook_share>
+            <social_purchase_twitter_share>
+                <config>rewardssocial2/special_config_purchaseShareTwitter</config>
+            </social_purchase_twitter_share>
+        </special>
+        <transfer>
+            <reason>
+                <social_facebook_like>
+                    <reason_id>80</reason_id>
+                    <label>Facebook Like</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_facebook_like>
+                <social_facebook_share>
+                    <reason_id>81</reason_id>
+                    <label>Facebook Share</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_facebook_share>
+                <social_google_plusone>
+                    <reason_id>82</reason_id>
+                    <label>Google +1</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_google_plusone>
+                <social_pinterest_pin>
+                    <reason_id>83</reason_id>
+                    <label>Pinterest Pin</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_pinterest_pin>
+                <social_facebook_share_purchase>
+                    <reason_id>84</reason_id>
+                    <label>Share Product Purchase on Facebook</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_facebook_share_purchase>
+                <social_twitter_tweet_purchase>
+                    <reason_id>85</reason_id>
+                    <label>Share Product Purchase on Twitter</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_twitter_tweet_purchase>
+                <social_referral_share>
+                    <reason_id>86</reason_id>
+                    <label>Share Refferal Link</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_referral_share>
+                <social_twitter_follow>
+                    <reason_id>87</reason_id>
+                    <label>Twitter Follow</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_twitter_follow>
+                <social_twitter_tweet>
+                    <reason_id>88</reason_id>
+                    <label>Twitter Tweet</label>
+                    <reference_model>rewardssocial2/action</reference_model>
+                </social_twitter_tweet>
+            </reason>
+        </transfer>
+        <probational_behaviors>
+            <social_facebook_like />
+            <social_twitter_tweet />
+            <social_twitter_follow />
+            <social_pinterest_pin />
+            <social_referral_share />
+            <social_google_plusOne />
+            <social_facebook_share />
+            <social_purchase_share_facebook />
+            <social_purchase_share_twitter />
+        </probational_behaviors>
+    </rewards>
+</config>

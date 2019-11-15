@@ -1,0 +1,153 @@
+<?php
+$accesstoken = Mage::getStoreConfig("facebookwallpost/parameter/accesstoken",Mage::app()->getStore()->getId());
+$wkapiid = Mage::getStoreConfig("facebookwallpost/parameter/appid",Mage::app()->getStore()->getId());
+$wkappsecret = Mage::getStoreConfig("facebookwallpost/parameter/secretkey",Mage::app()->getStore()->getId());
+$data= $this->fbcurlfn($accesstoken,$wkapiid,$wkappsecret);
+if($data->error->code==190)
+	$errormsg = "<h4 style='color:red;padding:10px;'>Error validating access token, Please Give right Accesstoken for that APPS</h4>";
+elseif ($data->error->code==101)
+	$errormsg = "<h4 style='color:red;padding:10px;'>Error validating application, Please Give right APP ID for that APPS</h4>";
+elseif ($data->error->code==1)
+	$errormsg = "<h4 style='color:red;padding:10px;'>Error validating client secret key, Please Give right Secret Key for that APPS</h4>";
+elseif ($data->error->code!="")
+	$errormsg = "<h4 style='color:red;padding:10px;'>Something Went Wrong with the configuration of facebook wall</h4>";
+if($errormsg)	{	?>
+	<span><?php echo $errormsg?></span>
+	<?php
+}
+else{
+	$mediaimg = Mage::getStoreConfig("facebookwallpost/parameter/mediaimg",Mage::app()->getStore()->getId());
+	$addwidth = $this->getwidth() + 20;
+	$comments = $this->getcomments();
+	$guestentries = $this->getguestentries();
+	if($comments=="1") {
+		$check="true";
+	}
+	if($comments=="0") {
+		$check="false";
+	}
+	if($guestentries=="1") {
+		$flag="true";
+	}
+	if($guestentries=="0") {
+		$flag="false";
+	}
+	?>  
+	<link rel="stylesheet" href="<?php echo $this->getSkinUrl("Facebookwallpost/css/jquery.webkul.fb.wall.css") ?>"/>
+	<link rel="stylesheet" href="<?php echo $this->getSkinUrl("Facebookwallpost/css/jquery.jscrollpane.css") ?>"/>	
+	<script type="text/javascript">
+		if (typeof jQuery == "undefined")		{
+			document.write(unescape("%3Cscript src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+		}
+	</script>
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl("Facebookwallpost/js/jquery.webkul.fb.wall.js"); ?>"></script>	
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl("Facebookwallpost/js/jquery.jscrollpane.min.js"); ?>"></script>	
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl("Facebookwallpost/js/jquery.mousewheel.js");?>"></script>
+	<style type="text/css">
+		#fb-ticker {
+			width:<?php echo $addwidth."px"; ?>
+		}
+		.fb-wall {		
+			width:<?php echo $this->getwidth() ?>px;
+			height:<?php echo $this->getheight()?>px;		
+			background-color:<?php echo $this->getwallbackgroungcolor() ?>;		
+		}
+		.fb-wall-message {
+			color:<?php echo $this->getwalldatacolor() ?>
+		}		
+		.fb-wall-comment {
+			background-color:<?php echo $this->getwallcommentbgcolor() ?>;
+			color:<?php echo $this->getwallcommentcolor() ?>;	
+		}
+<?php 	if($mediaimg == "0")	{ 	?>
+			.fb-wall-media-link{
+				display:none;
+			}
+<?php 	}
+		else { 		?>
+			.fb-wall-media-link{
+				display:inline-block;
+			}
+<?php 	} 	?>	
+<?php 	if($this->getshowavatar())	{ 	?>
+			.fb-wall-data{
+				margin-left:60px;
+			}
+<?php 	}
+		else { 		?>
+			.fb-wall-data{
+				padding:5px;
+			}
+<?php 	} 	?>	
+	</style>
+	<script type="text/javascript">
+		jQuery.noConflict();
+		jQuery(function(){
+			jQuery('#live-demo').fbWall({id:"<?php echo $this->getfacebookid() ?>",
+				accessToken:"<?php echo $this->getaccesstoken() ?>",
+				showGuestEntries:<?php echo $this->getguestentries() ?>,
+				showComments:<?php echo $check;?>,
+				max:<?php echo $this->getnumcomments();?>,
+				groupurlOpt:<?php echo $this->getgroupurlOpt() ?>,
+				pageurlOpt:<?php echo $this->getpageurlOpt() ?>,
+				groupurl:"<?php echo $this->getgroupurl() ?>",
+				pageurl:"<?php echo $this->getpageurl() ?>",
+				showdate:"<?php echo $this->getshowdate() ?>",
+				timeConversion:24,
+				showavatar:<?php echo $this->getshowavatar() ?>,
+				show_more_option:<?php echo $this->getshowMoreOption() ?>,
+				char_len:<?php echo $this->getcharLen() ?>,
+				show_in_window:'<?php echo $this->getshowinwindow() ?>',
+				see_more:"<?php echo $this->getseeMore() ?>"
+			});		
+		});			
+	
+		function seemore(name,id){									
+			jQuery("span".concat("#",name)).toggle(<?php echo $this->getcharspeed(); ?>);				
+			var thisid = "a".concat("#",id);
+			var thisval = jQuery(thisid).text();						
+			if(thisval != "<?php echo $this->getseeLess() ?>"){
+				jQuery(thisid).text("<?php echo $this->getseeLess(); ?>");
+				jQuery("span".concat("#",name)).css("display","inline");	
+			}else{
+				jQuery(thisid).text("<?php echo $this->getseeMore(); ?>");	
+				jQuery("span".concat("#",name)).css("display","none");
+			}				
+		}
+	</script>
+	<div id="fb-ticker">
+		<?php
+		if($this->getupperheader() == 1) {?>
+			<div id="top-bar">
+				<h2 class="tut">
+					<a href="<?php echo $this->getheadertextlink();?>" target="_blank"><?php echo $this->getheadertext();?></a>
+				</h2>
+			</div> <?php	
+		}
+		if($this->getfblikebox()==1) {?>
+			<div id="fb-root"></div>
+			<script type="text/javascript">
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, "script", "facebook-jssdk"));
+			</script>
+			<div class="fb-like-box" data-href="http://www.facebook.com/<?php echo $this->getfacebookid();?>" data-width="<?php echo $this->getwidth();?>px" data-height="180" data-show-faces="true" data-stream="false" data-header="false">
+			</div>	
+			<?php 
+		}
+		if($this->getfblike() == 1) {	?>
+			<div id="like">
+				<div class="facebooklike">
+					<iframe src="http://www.facebook.com/plugins/like.php?href=http://www.facebook.com/<?php echo $this->getfacebookid();?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:<?php echo $addwidth;?>px; height:60px;">
+					</iframe>
+				</div>
+			</div>
+			<?php
+		} 	?>
+			<div id="live-demo" class="scroll-pane"></div>
+	</div>
+<?php 	}

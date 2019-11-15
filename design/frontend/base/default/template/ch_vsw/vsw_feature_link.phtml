@@ -1,0 +1,29 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: KL
+ */
+?>
+<!-- VSW CONVERSIONS -->
+
+<script type="text/javascript" id="vswcnvscript">
+
+try {
+    (function() {
+
+        var ERA_RCA={};ERA_RCA.u='https://secure.featurelink.com/Tracking/ConversionProcessing/ConversionTracking.aspx?aid=image3dcom&cnv_name=purchase&cnv_type=1';
+
+        document.write(unescape("%3Cscript src='"+ERA_RCA.u+"' type='text/javascript'%3E%3C/script%3E%3Cdiv id='vswcnv' style='display:none'%3E%3C/div%3E"));
+
+    })()
+} catch (Err) {
+console.log("Issue with featurelink");
+console.log(Err);
+}
+</script><script type="text/javascript">(function(){ VSW_Conversion('<?php echo $this->getOrderValue(); ?>', '<?php echo $this->getOrderIds(); ?>');})();</script>
+
+<noscript><iframe name="vswcnvf" width="0" height="0" src="https://secure.featurelink.com/Tracking/TrackConversion.ashx?aid=image3dcom&cnv_name=purchase&noscript=1&cnv_type=1&cnv_value=<?php echo $this->getOrderValue(); ?>&cnv_ref_id=<?php echo $this->getOrderIds(); ?>&rnd=<?php echo time(); ?>" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" scrolling="no"></iframe></noscript>
+
+<!-- END VSW CONVERSIONS -->
+
+<!--<img src="https://secure.featurelink.com/Tracking/TrackConversion.ashx?aid=image3dcom&cnv_name=purchase&noscript=1&cnv_type=1&img=1&rnd=<?php echo time(); ?>&cnv_value=<?php echo $this->getOrderValue(); ?>&cnv_ref_id=<?php echo $this->getOrderIds(); ?>" width="1" height="1" border="0" /> -->

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<customer_account>
+	  <reference name="head">
+	  <action method="addJs"><script>lib/ccard.js</script></action>
+	</reference>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="beanpro">
+                <name>beanpro</name>
+                <path>beanpro/customer/manage</path>
+                <label>Manage Stored Cards</label>
+            </action>
+        </reference>
+    </customer_account>
+     <beanpro_customer_manage>
+  <reference name="head">
+	  <action method="addJs"><script>lib/ccard.js</script></action>
+      <action method="addItem"><type>skin_css</type><name>css/ccard.css</name><params/></action>
+	</reference>
+
+	<update handle="customer_account"/>
+        <reference name="content">
+		
+                <!--<block type="beanpro/manage" -->
+            <block type="page/html" name="beanpro_manage" template="beanpro/customer/manage.phtml">
+				<block type="page/html" name="current_cards" template="beanpro/customer/cards.phtml" />
+              </block>
+        </reference>
+    </beanpro_customer_manage>
+
+ <checkout_onepage_index>
+         <reference name="head">
+            <action method="addJs"><script>collinsharper/legato.js</script></action>
+            <!--<action method="addJs"><script>//www.beanstream.com/scripts/tokenization/jquery-1.8.0.min.js</script></action>-->
+            <!--<action method="addJs"><script>//www.beanstream.com/scripts/tokenization/legato-1.1.min.js</script></action>-->
+            <!--<action method="addJs"><script>//www.beanstream.com/scripts/tokenization/json2.min.js</script></action>-->
+        </reference>
+            </checkout_onepage_index>
+
+</layout>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <placeholders>
+        <rewardssocial2_share_modal>
+            <block>rewardssocial2/modal</block>
+            <name>social.modal</name>
+            <placeholder>REWARDSSOCIAL2_SHARE_MODAL</placeholder>
+            <container>TBT_RewardsSocial2_Model_PageCache_Container_ShareModal</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </rewardssocial2_share_modal>
+    </placeholders>
+</config>

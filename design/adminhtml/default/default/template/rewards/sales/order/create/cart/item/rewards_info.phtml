@@ -1,0 +1,75 @@
+<?php 
+    // Fetch points redemption data
+    $hasRedeemed = $this->getItemRewardsInfoService()->hasCatalogRedemptions();
+    $redeemListId = 'points-list-redeemed-'.  $this->getItemRewardsInfoService()->getItem()->getId();
+    $redeemedPointsData = $this->getItemRewardsInfoService()->getCatalogRedemptionData();
+    
+    // Fetch points earning data
+    $hasEarned = $this->getItemRewardsInfoService()->hasEarnings();
+    $earnedPointsData = $this->getItemRewardsInfoService()->getEarningData();
+?>
+
+<div id="item-points-undername-<?php echo $this->getItemRewardsInfoService()->getItem()->getId();?>" class="item-points-undername">
+    <?php if ($this->getItemRewardsInfoService()->isPointsOnlyItem() && $hasRedeemed) : ?>
+    <div class="item-points-redeemed-section">
+        <span class="item-points-header-redeemed"> 
+            <?php echo $this->__('Points Spending') ?>: 
+        </span>
+        <ul class="item-points-list-redeemed">
+            <li>
+                <?php echo $redeemedPointsData["points_str"]; ?>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        sweettooth.addSweettoothGlobalVar(
+            'rewardsCartMapPointsOnly', 
+            {<?php echo $this->getItemRewardsInfoService()->getItem()->getId(); ?> : {'points_str' : '<?php echo $redeemedPointsData["points_str"];?>', 'unit_points_str' : '<?php echo $redeemedPointsData["unit_points_str"];?>'}}
+        );
+    </script>
+    <?php else : ?>
+        <?php if ($hasRedeemed) : ?>
+            <?php if (Mage::helper('rewards/version')->isBaseMageVersionBetween('1.11.0.0', '1.13.0.0')) : ?>
+            <script type="text/javascript">
+            sweettooth.addSweettoothGlobalVar(
+                'rewardsCartMapDiscountAmounts',
+                {<?php echo $this->getItemRewardsInfoService()->getItem()->getId(); ?> :
+                    {
+                        'row_subtotal_incl_tax' : '<?php echo $this->getItemRewardsInfoService()->getRowSubtotalInclTax();?>',
+                        'row_subtotal_excl_tax' : '<?php echo $this->getItemRewardsInfoService()->getRowSubtotalExclTax();?>',
+                        'cart_display_type' : <?php echo $this->getItemRewardsInfoService()->getCartDisplayType();?>
+                    }
+                }
+            );
+            </script>
+            <?php endif; ?>
+        <div class="item-points-redeemed-section">
+            <span class="item-points-header-redeemed"> 
+                <?php echo $this->__('Points Spending') ?>: 
+            </span>
+            <ul class='item-points-list-redeemed' id='<?php echo $redeemListId ?>'>
+                <?php  foreach ($redeemedPointsData as $rl): ?>
+                <li>
+                    <?php echo Mage::helper('rewards')->__("%s, %s off", $rl['points_str'], $rl['discount']); ?>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($hasEarned) : ?>
+        <div class="item-points-earned-section">
+            <span class="item-points-header-earned"> 
+                <?php echo $this->__('Points Earning') ?>:
+            </span>
+            <ul class='item-points-list-redeemed' id='<?php echo $redeemListId ?>'>
+                <?php foreach ($earnedPointsData as $earnedLine): ?>
+                <li>
+                    <?php echo $earnedLine; ?>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>

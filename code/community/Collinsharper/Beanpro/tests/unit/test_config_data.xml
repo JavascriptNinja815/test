@@ -1,0 +1,129 @@
+<config>
+    <store_id>1</store_id>
+    <currency>USD</currency>
+    <method>
+        <code>beanpro</code>
+        <class>beanpro/paymentmethod</class>
+
+      <!-- we are not using this -->
+        <!-- <test>1</test>
+        <debug>1</debug>
+        <merchant_id>700000010482</merchant_id>
+        <terminal_id>001</terminal_id>
+        <bin>000002</bin>
+        <login>JOEY0123</login>
+        <password>ED600f40</password>
+        <wsdl>https://wsvar.paymentech.net/PaymentechGateway/wsdl/PaymentechGateway.wsdl</wsdl>
+        <gateway>https://wsvar.paymentech.net/PaymentechGateway</gateway> -->
+    </method>
+    <customer>
+        <firstname>Test</firstname>
+        <lastname>Order</lastname>
+        <email>stharper@collinsharper.com</email>
+        <billing>
+            <firstname>Gayan</firstname>
+            <lastname>Hewa</lastname>
+            <street>1st Street</street>
+            <city>Colombo</city>
+            <country_id>US</country_id>
+            <region>CA</region>
+            <postcode>11111</postcode>
+            <telephone>1111111111</telephone>
+        </billing>
+        <shipping>
+            <firstname>Gayan</firstname>
+            <lastname>Hewa</lastname>
+            <street>1st Street</street>
+            <city>Colombo</city>
+            <country_id>US</country_id>
+            <region>CA</region>
+            <postcode>11111</postcode>
+            <telephone>1111111111</telephone>
+        </shipping>
+    </customer>
+    <product>
+        <is_rand>false</is_rand><!-- true or false -->
+        <sku>Test_2</sku>
+        <qty>1</qty>
+        <price>-1</price><!-- if set to -1, will ignore this value -->
+    </product>
+    <product_recurring>
+        <is_rand>false</is_rand><!-- true or false -->
+        <id>dr001</id>
+        <qty>1</qty>
+        <price>-1</price>
+    </product_recurring>
+
+    <tests>
+
+        <simple_test_two>
+            <test_id>1a</test_id>
+            <test_title>simple purchase</test_title>
+            <payment_actions>
+                <authorize>full</authorize>
+                <!--  <capture>full</capture> -->
+                <!-- purchase / refund / void? value in the middle is either full or amount?-->
+            </payment_actions>
+            <billing>
+                <postcode>22222</postcode>
+            </billing>
+            <card>
+                <type>VI</type><!-- VI,AE,MC,DI -->
+                <cc_num>4030000010001234</cc_num>
+                <cvv>123</cvv>
+                <cc_exp_m>10</cc_exp_m>
+                <cc_exp_y>2022</cc_exp_y>
+            </card>
+            <product>
+                <price>-1</price><!-- if set to -1, will ignore this value -->
+                <qty>2</qty><!-- if set to -1, will ignore this value -->
+            </product>
+        </simple_test_two>
+
+        <simple_test>
+            <test_id>1a</test_id>
+            <test_title>simple purchase</test_title>
+            <payment_actions>
+                <authorize>full</authorize>
+                <!--  <capture>full</capture> -->
+                <!-- purchase / refund / void? value in the middle is either full or amount?-->
+            </payment_actions>
+            <billing>
+                <postcode>22222</postcode>
+            </billing>
+            <card>
+                <type>VI</type><!-- VI,AE,MC,DI -->
+                <cc_num>4030000010001234</cc_num>
+                <cvv>123</cvv>
+                <cc_exp_m>10</cc_exp_m>
+                <cc_exp_y>2022</cc_exp_y>
+            </card>
+            <product>
+                <qty>1</qty><!-- if set to -1, will ignore this value -->
+                <price>-1</price><!-- if set to -1, will ignore this value -->
+            </product>
+        </simple_test>
+
+        <recurring_test>
+            <test_title>recurring order test</test_title>
+            <payment_actions>
+                <authorize>full</authorize>
+            </payment_actions>
+            <card>
+                <type>VI</type>
+                <cc_num>4788250000028291</cc_num>
+                <cvv>111</cvv>
+                <cc_exp_m>10</cc_exp_m>
+                <cc_exp_y>2022</cc_exp_y>
+            </card>
+            <product_recurring>
+                <is_rand>false</is_rand>
+                <id>dr001</id>
+                <qty>1</qty>
+                <price>-1</price>
+            </product_recurring>
+        </recurring_test>
+
+    </tests>
+
+</config>

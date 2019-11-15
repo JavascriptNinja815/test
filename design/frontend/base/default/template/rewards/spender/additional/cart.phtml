@@ -1,0 +1,90 @@
+<script type="text/javascript">
+    window.sweettooth = window.sweettooth || {};
+    sweettooth.slider = sweettooth.slider || {};
+    
+    sweettooth.slider.beforeAjax = function() {
+        $('payment-please-wait').show();
+        $('shopping-cart-totals-table').hide();
+        
+        var checkoutLinks = $$('.checkout-types');
+        for (var i = 0; i < checkoutLinks.length; i++) {
+            Element.extend(checkoutLinks[i]).hide();
+        }
+    };
+    
+    sweettooth.slider.afterAjax = function(response) {
+        var self = this;
+        var result = response.responseJSON;
+        $('payment-please-wait').hide();
+
+        var messages = $$('.messages');
+        if (messages.length > 0) {
+            messages = Element.extend(messages.shift());
+            messages.remove();
+        }
+
+        var checkoutLink = $$('.top-link-checkout', '.top-link-onestepcheckout');
+        checkoutLink = Element.extend(checkoutLink.shift());
+
+        var miniCartCheckoutLink = $$('.checkout-button', '#topCartContent .actions .button');
+        miniCartCheckoutLink = Element.extend(miniCartCheckoutLink.shift());
+
+        if (result.hasOwnProperty('error') && result.error === true) {
+            $('shopping-cart-totals-table').show();
+            self.logMessage(result.message);
+            
+            if (checkoutLink) {            
+                checkoutLink.hide();
+            }
+            
+            if (miniCartCheckoutLink) {
+                miniCartCheckoutLink.hide();
+            }
+            
+            var checkoutLinks = $$('.checkout-types');
+            for (var i = 0; i < checkoutLinks.length; i++) {
+                Element.extend(checkoutLinks[i]).show();
+            }
+        } else {
+            $('shopping-cart-totals-table').insert({after: result.totals});
+            $('shopping-cart-totals-table').remove();
+            
+            if (checkoutLink) {
+                checkoutLink.show();
+            }
+            
+            if (miniCartCheckoutLink) {
+                miniCartCheckoutLink.show();
+            }
+            
+            var selector = $$('.totals .checkout-types');
+            if (selector.length === 0) {
+                // rwd theme compatibility
+                selector = $$('.cart-totals .checkout-types');
+            }
+            
+            var checkoutMethods = Element.extend(selector.shift());
+            checkoutMethods.insert({after: result.methods});
+            checkoutMethods.remove();
+        }
+
+        var checkoutMethods = Element.extend($$('.title-buttons .checkout-types', '.cart-collaterals .totals .checkout-types').shift());
+        checkoutMethods.insert({after: result.top_methods});
+        checkoutMethods.remove();
+
+        $('co-shipping-method-form').insert({after: result.shipping_methods});
+        $('co-shipping-method-form').remove();    
+    };
+    
+    document.observe("dom:loaded", function() {
+        $('shopping-cart-totals-table').insert({after: $('payment-please-wait')});
+        if ($('payment-please-wait')) { 
+            $('payment-please-wait').hide(); 
+        }
+    });
+</script>
+
+<div align="center" id="payment-please-wait" class="rewards-opc-please-wait">
+    <img src="<?php echo $this->getSkinUrl('images/rewards/loading/loading1.gif') ?>" class="v-middle" alt="" /> &nbsp; 
+    <?php echo $this->__('Updating Points Information...') ?> &nbsp;
+</div>

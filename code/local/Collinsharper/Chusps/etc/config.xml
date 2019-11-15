@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Chusps>
+            <version>0.1.0</version>
+        </Collinsharper_Chusps>
+    </modules>
+
+    <global>
+        <models>
+            <chusps>
+                <class>Collinsharper_Chusps_Model</class>
+            </chusps>
+
+            <usa>
+                <rewrite>
+                    <shipping_carrier_usps>Collinsharper_Chusps_Model_Shipping_Carrier_Usps</shipping_carrier_usps>
+                </rewrite>
+            </usa>
+        </models>
+
+        <resources>
+            <chusps_setup>
+                <setup>
+                    <module>Collinsharper_Chusps</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chusps_setup>
+            <chusps_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </chusps_write>
+            <chusps_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </chusps_read>
+        </resources>
+
+        <helpers>
+            <chusps>
+                <class>Collinsharper_Chusps_Helper</class>
+            </chusps>
+        </helpers>
+
+    </global>
+</config>

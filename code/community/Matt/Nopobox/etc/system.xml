@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+         <matt translate="label" module="nopobox">
+            <label>Matt Module</label>
+            <sort_order>0</sort_order>
+        </matt>
+    </tabs>
+	<sections>
+	  	<nopobox  translate="label" module="nopobox">                    
+		<label>Matt Nopobox Setting</label>
+		<tab>matt</tab>
+		<frontend_type>text</frontend_type>
+		<sort_order>0</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>1</show_in_store>            
+			<groups>
+		      <option translate="label"> 
+				  <label>Options</label>
+				  <frontend_type>text</frontend_type>
+				  <sort_order>0</sort_order>
+				  <show_in_default>1</show_in_default>
+				  <show_in_website>1</show_in_website>
+				  <show_in_store>1</show_in_store>
+			       <fields>
+	                   <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+	                   <allowspecific translate="label">
+                            <label>Enable countries filter</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>You can add country filter width nopobox shipping address.</comment>
+                            <sort_order>20</sort_order>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Filter width Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>30</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                            <depends><allowspecific>1</allowspecific></depends>
+                        </specificcountry>
+                        <cerror translate="label">
+                            <label>Custom error message for specific country</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cerror>
+                        <aerror translate="label">
+                            <label>Custom error message if has pobox shippping address</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </aerror>
+				   </fields>
+			   </option>
+			</groups>
+		</nopobox>
+	</sections>
+</config>

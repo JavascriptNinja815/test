@@ -1,0 +1,8 @@
+<script type="text/javascript">
+        <?php if ($this->getProduct() && $this->getProduct()->getTypeId() === 'configurable') : ?>
+        if (typeof RewardsPointsOnly !== 'undefined') {
+            window.rewardsPointsOnlyConfigurableConfigJson = JSON.parse('<?php echo $this->getConfigurablePointsJsonConfig($this->getProduct());?>');
+            var rewarsPointsOnlyConfigurable = new RewardsPointsOnly.Configurable(ProductConfigure.spConfig, window.rewardsPointsOnlyConfigurableConfigJson);
+        }
+        <?php endif; ?>
+</script>

@@ -1,0 +1,150 @@
+<p class="switcher">
+    <span class="a-left bold"><?php echo $this->getReportLabel();?></span>
+    <?php if ($this->hasMetricInfo()) : ?>
+    <img src="<?php echo $this->getSkinUrl('tbtreports/images/metric-info.png');?>" width="16" height="16" id="metric-info-<?php echo $this->getReportCode();?>" class="metric-info"/>
+    <?php endif; ?>
+    <select onchange="javascript:sweettooth.Dashboard.Metrics.updateReport(this,'<?php echo $this->getReportCode();?>', '<?php echo $this->getMetricsUpdateUrl();?>', 'rewards-dashboard-metrics-report_wrapper');" id="<?php echo $this->getReportCode();?>-period" name="period" class="f-right">
+        <option value="30d" <?php echo ($this->isSelectedPeriod('30d')) ? 'selected' : '';?>><?php echo $this->__('Last 30 Days');?></option>
+        <option value="90d" <?php echo ($this->isSelectedPeriod('90d')) ? 'selected' : '';?>><?php echo $this->__('Last 90 Days');?></option>
+        <option value="365d" <?php echo ($this->isSelectedPeriod('365d')) ? 'selected' : '';?>><?php echo $this->__('Last 365 Days');?></option>
+    </select>
+    <span class="f-right"><?php echo Mage::helper('tbtreports')->__('Select Range');?>:</span>
+</p>
+<div class="rewards-dashboard-metrics-report_wrapper">
+        <?php if ($this->hasMetricInfo()) : ?>
+    <div id="metric-info-content-<?php echo $this->getReportCode();?>" class="metric-info-content"><?php echo $this->getMetricInfo();?></div>
+        <?php endif; ?>
+    <?php if (!$this->hasChartData()) : ?>
+    <div class="report-notice-messages">
+        <ul class="messages">
+            <li class="notice-msg">
+                <ul>
+                    <li><span><?php echo $this->getNoticeMessage();?></span></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <?php else : ?>
+    <br/>
+    <div id="chart" class='with-3d-shadow with-transitions'>
+        <svg id="piechart_abstract"></svg>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+      /** 
+       * Prototype.js overwrites native Array.prototype.reduce.
+       * This is a polyfill to make sure we can use reduce() in nvd3.js.
+       * For more check: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+       */
+    Array.prototype.reduce = function( callback  ) {
+        'use strict';
+        if ( null === this || 'undefined' === typeof this ) {
+          throw new TypeError(
+             'Array.prototype.reduce called on null or undefined' );
+        }
+        if ( 'function' !== typeof callback ) {
+          throw new TypeError( callback + ' is not a function' );
+        }
+        var t = Object( this ), len = t.length >>> 0, k = 0, value;
+        if ( arguments.length >= 2 ) {
+          value = arguments[1];
+        } else {
+          while ( k < len && ! k in t ) k++;
+          if ( k >= len )
+            throw new TypeError('Reduce of empty array with no initial value');
+          value = t[ k++ ];
+        }
+        for ( ; k < len ; k++ ) {
+          if ( k in t ) {
+             value = callback( value, t[k], k, t );
+          }
+        }
+        return value;
+      };
+
+
+      nv.addGraph(function() {
+        var width  = 700,
+          height = 500,
+          data   = <?php echo $this->getChartData(); ?>;
+
+        if (!data.length) {
+            $('chart').hide();
+            return;
+        }
+        
+        nv.dev = false;
+
+        var chart = nv.models.pieChart()
+          .x(function(d) { return d.reason_id; })
+          .y(function(d) { return d.total_points; })
+          .color(d3.scale.category10().range())
+          .width(width)
+          .height(height)
+          .showLabels(false);
+
+        // overwrite tooltip to include percentage of points from total amount distributed
+        chart.tooltip.contentGenerator(function(e) {
+          return '<h3>' + e.data.reason_id + '</h3>' +
+          '<p>' +  e.data.total_points + ' ( ' + e.data.points_percentage + '% ) ' + '</p>';
+        });
+
+        d3.select("#piechart_abstract")
+          .datum(data)
+          .transition().duration(1200)
+          .attr('width', width)
+          .attr('height', height)
+          .call(chart);
+
+        function adjustPieAlignments() {
+            d3.selectAll(".nv-pieChart")
+              .attr('transform','translate(20,0)');
+
+            var legendObj = $$('#piechart_abstract .nv-legendWrap')[0].getBBox();
+            var legendWidth = legendObj.width;
+            var legendHeight = legendObj.height;
+
+            /* align legend from right to center - 40px are from margin + container transition */
+            var legendRightPosToCenter = (legendWidth-width)/2 + 40;
+
+            d3.selectAll(".nv-pieWrap")
+              .attr('transform','translate(0,'+(legendHeight+10)+')');
+
+            d3.selectAll(".nv-legendWrap")
+              .attr('transform', 'translate('+legendRightPosToCenter+',0)');
+        }
+          
+        chart.dispatch.on('stateChange', function(e) { 
+            /* */
+        });
+        
+        chart.legend.dispatch.on('legendMouseout', function(e) {
+            adjustPieAlignments();
+        });
+        
+        adjustPieAlignments();            
+
+        return chart;
+      });
+
+    </script>
+    <?php endif; ?>
+    <script type="text/javascript">
+    var metricInfoObj = $('metric-info-<?php echo $this->getReportCode();?>');
+    var metricInfoContentObj = $('metric-info-content-<?php echo $this->getReportCode();?>');
+    if (metricInfoObj) {
+        new Opentip(metricInfoObj, metricInfoContentObj.innerHTML, {
+            style:          'dark',
+            tipJoint:       'top',
+            targetJoint:    'bottom',
+            background:     'black',
+            borderColor:    'white',
+            borderWidth:    2,
+            shadow:         false,
+            fixed:          true,
+            offset:         [0, 15],
+            escapeContent:  false
+        });
+    }
+    </script>
+</div>

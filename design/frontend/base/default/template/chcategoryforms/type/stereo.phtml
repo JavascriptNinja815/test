@@ -1,0 +1,93 @@
+<?php
+$_inquiry = $this->getInquiry();
+$org_inquiry_info = trim($_inquiry->getData( 'post_data' ));
+$order_data = unserialize( $org_inquiry_info );
+$orderType = 'stereo';
+
+    ?>
+
+    <?php
+   $sku = 'reel-viewer-stereo';
+   if($order_data['bundle_option'][27] == 69) : ?>
+        <p><?php echo $this->__('How many reel and viewer sets would you like to order?:'); ?> <?php echo $order_data['bundle_option_qty'][27]; ?></p>
+        <p><?php echo $this->__('What color viewers would you like?:'); ?> <?php echo $order_data['options'][28]; ?></p>
+        <p><?php echo $this->__('Would you like custom imprint on your viewers?'); ?>
+            <?php echo ( isset($order_data['options'][29]) && $order_data['options'][29] == true ) ? $this->__('yes'): $this->__('no'); ?> </p>
+    <?php elseif ($order_data['bundle_option'][27] == 70): ?>
+        <p><?php echo $this->__('How many reels would you like to order?:'); ?>
+            <?php echo $order_data['bundle_option_qty'][27]; ?></p>
+    <?php endif; ?>
+    
+    <p><?php echo $this->__('How will you send your images?:'); ?> <?php echo $order_data['image_transfer']; ?></p>
+
+    <?php if(strstr($order_data['image_transfer'], 're-ordering') === false): ?>
+		<p><?php echo $this->__('What would you like in center of reel?:'); ?> <?php echo $order_data['q108_whatWould108'] ?></p>
+		
+		<br/>
+
+		<p><?php echo $this->__('Center Art Caption:'); ?> <?php echo $order_data['centerart_caption']; ?></p>
+		<p><?php echo $this->__('Center Art Caption2:');?> <?php echo $order_data['centerart_caption_2']; ?></p>
+		
+		<br/>
+
+			<p><?php echo $this->__('Frame 1 Caption:');?>  <?php echo $order_data['frame1_caption']; ?> <?php echo $order_data['frame1_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+			<p><?php echo $this->__('Frame 2 Caption:');?>  <?php echo $order_data['frame2_caption']; ?> <?php echo $order_data['frame2_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+			<p><?php echo $this->__('Frame 3 Caption:');?>  <?php echo $order_data['frame3_caption']; ?> <?php echo $order_data['frame3_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+			<p><?php echo $this->__('Frame 4 Caption:');?>  <?php echo $order_data['frame4_caption']; ?> <?php echo $order_data['frame4_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+			<p><?php echo $this->__('Frame 5 Caption:');?>  <?php echo $order_data['frame5_caption']; ?> <?php echo $order_data['frame5_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+			<p><?php echo $this->__('Frame 6 Caption:');?>  <?php echo $order_data['frame6_caption']; ?> <?php echo $order_data['frame6_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+			<p><?php echo $this->__('Frame 7 Caption:');?>  <?php echo $order_data['frame7_caption']; ?> <?php echo $order_data['frame7_caption_mpo']; ?><?php echo $order_data['frame7_caption_mail']; ?></p>
+		<br/>
+	<?php endif;?>
+
+	
+        <p><?php echo $this->__('Shipping Method:');?>  <?php echo $order_data['q88_howWould']; ?></p>
+        <p><?php echo $this->__('Notes:');?>  <?php echo $order_data['q94_notesOr']; ?></p>
+		
+        <p><?php echo $this->__('Account Information:');?><br/>
+        <?php 
+            echo $order_data['customer_name'] . "<br/>" .
+            $order_data['customer_email'] . "<br/>" ;
+		?></p>
+		
+        <p><?php echo $this->__('Shipping Address:');?><br/>
+        <?php 
+            $_addressShip = new Mage_Customer_Model_Address;
+            $_addressShip->load($order_data['shipping_address_id']);
+			
+			if($order_data['shipping_address_id'] == '') {
+				if($order_data['shipping']['firstname']) 				{ echo $order_data['shipping']['firstname'] . " " . $order_data['shipping']['lastname'] . "<br/>"; }
+				if($order_data['shipping']['company']) 					{ echo $order_data['shipping']['company'] . "<br/>"; }
+				if($order_data['shipping']['street'][0]) 				{ echo $order_data['shipping']['street'][0] . "<br/>"; }
+				if($order_data['shipping']['street'][1]) 				{ echo $order_data['shipping']['street'][1] . "<br/>"; }
+				if($order_data['shipping']['city'])			{ echo $order_data['shipping']['city'] . "<br/>"; }
+				if($order_data['shipping']['region']) 		{ echo $order_data['shipping']['region'] . "<br/>" ;}
+				if($order_data['shipping']['postcode']) 		{ echo $order_data['shipping']['postcode'] . "<br/>" ;}
+				if($order_data['shipping']['country_id']) 	{ echo $order_data['shipping']['country_id'] . "<br/>" ;}
+				if($order_data['shipping']['telephone']) 		{ echo $order_data['shipping']['telephone'] . "<br/>"; }
+				if($order_data['shipping']['fax'])			{ echo $order_data['shipping']['fax']; }
+			} 
+			
+            echo $_addressShip->format('html'); 
+		?></p>
+			
+       <p><?php echo $this->__('Billing Address:');?>
+       <?php
+           $_address = new Mage_Customer_Model_Address;
+           $_address->load($order_data['bs_card_address_id']);
+           echo $_address->format('html');
+		?></p>
+        <?php
+        $paymentMethod = 'Offline Payment';
+        if(isset($order_data['payment']['cc_stored'])){
+            $paymentMethod = $order_data['payment']['cc_stored'];
+            if(strtolower($paymentMethod) != 'paypal'){
+                $paymentMethod = 'Credit Card ' . $paymentMethod;
+            }
+        }
+        ?>
+
+        <p><?php echo $this->__('Payment: ');?><?php echo $paymentMethod?></p>
+
+		
+		

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <chfraud_adminhtml_index_index>
+        <reference name="content">
+            <block type="fraudblock/adminhtml_fraudblock" name="fraudblock" />
+        </reference>
+    </chfraud_adminhtml_index_index>
+    <chfraud_adminhtml_index_edit>
+        <update handle="editor"/>
+    </chfraud_adminhtml_index_edit>
+    <chfraud_adminhtml_faillog_index>
+        <reference name="content">
+            <block type="fraudblock/adminhtml_faillog" name="faillog" />
+        </reference>
+    </chfraud_adminhtml_faillog_index>
+    <chfraud_adminhtml_faillog_edit>
+        <update handle="editor"/>
+    </chfraud_adminhtml_faillog_edit>
+</layout>

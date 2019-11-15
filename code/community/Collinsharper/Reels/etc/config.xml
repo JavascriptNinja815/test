@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Reels>
+            <version>0.1.2</version>
+        </Collinsharper_Reels>
+    </modules>
+
+    <global>
+        <models>
+            <chreels>
+                <class>Collinsharper_Reels_Model</class>
+                <resourceModel>chreels_resource</resourceModel>
+            </chreels>
+
+            <chreels_resource>
+                <class>Collinsharper_Reels_Model_Mysql4</class>
+                <entities>
+                    <reels>
+                        <table>ch_reels</table>
+                    </reels>
+                    <printqueue>
+                        <table>ch_reel_print_queue</table>
+                    </printqueue>
+                </entities>
+            </chreels_resource>
+        </models>
+
+        <resources>
+            <chreels_setup>
+                <setup>
+                    <module>Collinsharper_Reels</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chreels_setup>
+            <chreels_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </chreels_write>
+            <chreels_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </chreels_read>
+        </resources>
+
+        <blocks>
+            <chreels>
+                <class>Collinsharper_Reels_Block</class>
+            </chreels>
+        </blocks>
+
+
+        <helpers>
+            <chreels>
+                <class>Collinsharper_Reels_Helper</class>
+            </chreels>
+        </helpers>
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <chreel_record_order>
+                        <type>singleton</type>
+                        <class>chreels/order_observer</class>
+                        <method>save_reel_placed</method>
+                    </chreel_record_order>
+                </observers>
+            </sales_order_place_after>
+            <!--
+            <chreels_save_before>
+                <observers>
+                    <chreels_events_before_save>
+                        <type>singleton</type>
+                        <class>events/observer</class>
+                        <method>onBeforeSave</method>
+                    </chreels_events_before_save>
+                </observers>
+            </chreels_save_before>
+            <chframes_save_before>
+                <observers>
+                    <chframes_events_before_save>
+                        <type>singleton</type>
+                        <class>chreels/observer</class>
+                        <method>onBeforeSaveObjects</method>
+                    </chframes_events_before_save>
+                </observers>
+            </chframes_save_before>
+  -->
+        </events>
+
+
+    </global>
+
+    <frontend>
+        <routers>
+            <chreels>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Reels</module>
+                    <frontName>chreels</frontName>
+                </args>
+            </chreels>
+        </routers>
+        <layout>
+            <updates>
+                <chreels>
+                    <file>chreels.xml</file>
+                </chreels>
+            </updates>
+        </layout>
+    </frontend>
+
+    <admin>
+        <routers>
+            <chreels>
+                <use>admin</use>
+                <args>
+                    <module>Collinsharper_Reels</module>
+                    <frontName>chreels_admin</frontName>
+                </args>
+            </chreels>
+        </routers>
+    </admin>
+
+    <adminhtml>
+            <layout>
+                <updates>
+                    <chreels>
+                        <file>chreels.xml</file>
+                    </chreels>
+                </updates>
+            </layout>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <chreels_verify_transfer>
+                        <type>singleton</type>
+                        <class>chreels/verify</class>
+                        <method>verifyReelTransfersOrNotify</method>
+                    </chreels_verify_transfer>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+
+    </adminhtml>
+
+    <crontab>
+        <jobs>
+            <print_transfer_queues_reels>
+                <schedule><cron_expr>0 * * * *</cron_expr></schedule>
+                <run><model>chreels/printer::processQueueAndTransfer</model></run>
+            </print_transfer_queues_reels>
+            <transfer_queues_reels_clean>
+                <schedule><cron_expr>0 0 * * 0</cron_expr></schedule>
+                <run><model>chreels/cleaner::cleanUp</model></run>
+            </transfer_queues_reels_clean>
+            <!-- this MUST be run from system cron. not magento -->
+
+            <!-- <launch_frame_generation_service>
+                 <schedule><cron_expr>0 0 * * 0</cron_expr></schedule>
+                 <run><helper>chreels/verify::frameGenerationService</helper></run>
+             </launch_frame_generation_service>
+             -->
+        </jobs>
+    </crontab>
+
+
+</config>

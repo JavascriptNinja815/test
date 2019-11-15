@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    window.sweettooth = window.sweettooth || {};
+    sweettooth.slider = sweettooth.slider || {};
+    sweettooth._global = sweettooth._global || {};
+    
+    <?php if (Mage::getStoreConfig('onestepcheckout/general/page_style') === "material") : ?>
+    (function() {
+        var ajaxLoader = $('ajax-review');
+        var pointsSliderContainer = $$('.magestore-osc-points-spender')[0];
+        var orderReviewObjContainer = $('checkout-review-table-wrapper');
+        
+        if (ajaxLoader && pointsSliderContainer && orderReviewObjContainer) {
+            var posDifVal = parseInt(orderReviewObjContainer.offsetTop || 0) - parseInt(pointsSliderContainer.offsetTop || 0) + 20;
+            ajaxLoader.setStyle({'top':posDifVal + 'px'})
+        }
+    })();
+    <?php endif;?>
+    
+    if (!window.sweettooth._global.hasOwnProperty('auxSliderVal')) {
+        window.sweettooth._global.auxSliderVal = 0;
+    }
+    
+    if (!window.sweettooth._global.hasOwnProperty('isCheckboxAction')) {
+        window.sweettooth._global.isCheckboxAction = false;
+    }
+        
+    sweettooth.slider.afterAjax = function(response) {
+        var result = response.responseJSON;
+        var isZeroGrandTotal = result.hasOwnProperty('is_zero_grand_total') ? result.is_zero_grand_total : false;
+        var fromZeroGrandTotal = result.hasOwnProperty('from_zero_grand_total') ? result.from_zero_grand_total : false;
+        
+        if (result.hasOwnProperty('error') && result.error === true) {
+            this.logMessage(result.message);
+        } else {
+            var flagUpdatePaymentMethods = (isZeroGrandTotal || fromZeroGrandTotal) ? true : false;
+            
+            if (window.sweettooth.slider.data.isCheckboxAction || window.sweettooth._global.auxSliderVal != this.slider.getValue()) {
+                save_address_information(save_address_url, flagUpdatePaymentMethods, flagUpdatePaymentMethods, true);
+                window.sweettooth._global.auxSliderVal = this.slider.getValue();
+            }
+        }
+    };
+</script>

@@ -1,0 +1,39 @@
+<div class="sweettooth-quick-launch-success">
+    <h1>Your program is launched. Congratulations!</h1>
+    <span class="subtitle">Here are some important things to know:</span>
+    <ol>
+        <li>
+            <span>1. Customers can now earn and spend points on your store.</span>
+            <div class="screenshots">
+                <img class="left" src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/earning.png'); ?>" alt="Earning Points" />
+                <img class="right" src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/spending.png'); ?>" alt="Spending Points" />
+            </div>
+        </li>
+        <li>
+            <span>2. You can modify your program's rules at any time.</span>
+            <div class="screenshots">
+                <img class="left" src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/menu.png'); ?>" alt="Change Rules" />
+                <img class="right" src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/rule-view.png'); ?>" alt="Rules View" />
+            </div>
+        </li>
+        <li>
+            <span>3. You can add other ways for customers to earn points.</span>
+            <div class="screenshots">
+                <img class="left" src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/path.png'); ?>" alt="Behavior Rules" />
+                <img class="right larger" src="<?php echo $this->getSkinUrl('rewards/images/quickLaunch/behavior.png'); ?>" alt="Actions" />
+            </div>
+        </li>
+    </ol>
+    <h1>Make your program more visible with an explainer page</h1>
+    <span class="subtitle explainer-description">
+        If customers don't know about your loyalty program, they are less likely to participate in it.
+        Let us help you create your first loyalty explainer page. We put together a template which you
+        can use to launch an explainer page within a few minutes.
+    </span>
+    <a class="align-button" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/explainer'); ?>" title="Create an Explainer Page">
+        <button type="button">Create an Explainer Page</button>
+    </a>
+    <a class="align-button" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/dashboard/index'); ?>" title="Go To Dashboard">
+        <span type="button">Maybe Later</span>
+    </a>
+</div>

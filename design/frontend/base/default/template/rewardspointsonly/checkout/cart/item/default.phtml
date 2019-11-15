@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Cart row renderers are different between some versions of Magento and Magento's rwd theme.
+ * We're supporting everything that comes with Magento
+ */
+
+
+/*
+ * Start with common code that all templates can use
+ */
+$_item = $this->getItem();
+$item_id = $_item->getId();
+
+$redeemListId = 'points-list-redeemed-'. $item_id;
+
+/*
+ * Now, include specific templates:
+ */
+if (Mage::helper('rewards/theme')->getPackageName() === "rwd") {
+    include 'default_rwd.phtml';
+    
+} else if (Mage::helper('rewards/version')->isMageVersionAtLeast('1.8.1.0')) {
+    include 'default_m1901.phtml';
+    
+} else if (Mage::helper('rewards/version')->isMageVersionAtLeast('1.4.2.0')) {
+    include 'default_m1800.phtml';
+    
+} else {
+	// No longer officially supported:
+    include 'default_m141x.phtml';
+}
+
+?>

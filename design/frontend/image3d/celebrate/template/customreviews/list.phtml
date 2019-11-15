@@ -1,0 +1,55 @@
+<?php
+
+    $reviews = $this->listReviews();
+?>
+
+
+
+
+<div class="block latest-twitter-block">
+    <div class="block-content light">
+        <ul class="grid2"  data-masonry='{ "columnWidth": 250, "itemSelector": ".grid-item" }'>
+            <?php
+
+           foreach ($reviews as $review): ?>
+                <li class="grid-item">
+                    <p>
+                            <span style="float:left;padding-left:5px;"><strong><?php echo (string) trim($review->getTitle()); ?></strong><br/> by <?php echo $review->getNickname(); ?></span>
+                    </p>
+
+                    <p class="tweet-data">
+                        <?php echo (string) trim($review->getDetail()); ?></p>
+                    <span class="tweetSeprator"> </span>
+
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+
+    </div>
+</div>
+
+
+
+
+
+<?php /*/ ?>
+<div class="instagram-view clearer">
+
+	<?php // echo $this->getInstagramGalleryImages(); ?>
+<?php foreach ($reviews as $review): ?>
+
+
+    <div class="media-container">
+        <strong><?php echo $review->getTitle();?></strong><br />
+        <?php echo $review->getDetail();?><br />
+        <span style="text-align: right">by <?php echo $review->getNickname();?></span>
+
+        <?php //print_r($review->getData());?>
+
+
+    </div>
+<?php endforeach; ?>
+</div>
+
+<?php /*/ ?>

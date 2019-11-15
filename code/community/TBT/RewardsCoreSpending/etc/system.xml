@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Sweet Tooth
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS 
+ * License, which extends the Open Software License (OSL 3.0).
+ * The Sweet Tooth License is available at this URL: 
+ *      https://www.sweettoothrewards.com/terms-of-service
+ * The Open Software License is available at this URL: 
+ *      http://opensource.org/licenses/osl-3.0.php
+ * 
+ * DISCLAIMER
+ * 
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is 
+ * not held liable for any inconsistencies or abnormalities in the 
+ * behaviour of this code. 
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the 
+ * provided Sweet Tooth License. 
+ * Upon discovery of modified code in the process of support, the Licensee 
+ * is still held accountable for any and all billable time Sweet Tooth spent 
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension. 
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to 
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy 
+ * immediately.
+ * 
+ * @category   [TBT]
+ * @package    [TBT_Rewards]
+ * @copyright  Copyright (c) 2014 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+
+/**
+ * Helper Config
+ *
+ * @category   TBT
+ * @package    TBT_Rewards
+ * * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+-->
+
+<config>
+   <sections>
+        <rewards translate="label" module="rewards">
+            <groups>
+                <general translate="label">
+                    <fields>
+                        <canUseRedemptionsIfNotLoggedIn translate="label comment">
+                            <label>Customer Can Spend Points Before Logging In</label>
+                            <comment><![CDATA[If enabled, customers will be able to spend points before they log-in. Recommended off.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </canUseRedemptionsIfNotLoggedIn>
+                        <doIgnoreCDWhenCR translate="label comment">
+                            <label>Allow earning of catalog points while spending points in the catalog.</label>
+                            <comment><![CDATA[If not allowed, customers will not earn catalog level points when they spend points on the catalog item.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_allow</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </doIgnoreCDWhenCR>
+                        <doIgnoreCDWhenSCR translate="label comment">
+                            <label>Allow earning of catalog points while spending points in the shopping cart</label>
+                            <comment><![CDATA[If not allowed, the customer will not earn any catalog points if they spend points in the shopping cart.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_allow</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </doIgnoreCDWhenSCR>
+                        <freeshipping_when_spending_points translate="label comment">
+                            <label>Free shipping when spending points</label>
+                            <comment><![CDATA[If enabled, Sweet Tooth will give free shipping to customers when they are spending points.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </freeshipping_when_spending_points>
+                    </fields>
+                </general>
+                <display translate="label">
+                    <fields>
+                        <showCartRedemptionsWhenZero translate="label comment">
+                            <label>Always Show Cart Redemptions Row</label>
+                            <comment><![CDATA[If set to show, this will always display the points spent row in the cart even when no points are being spent.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showCartRedemptionsWhenZero>
+                        <showMiniRedeemCatalog translate="label comment">
+                            <label>Show Mini Rewards Catalog</label>
+                            <comment><![CDATA[Display the mini rewards catalog in a customer's My Points & Rewards section? Catalog spending rules must be set up for this to show products.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showMiniRedeemCatalog>
+                        <showPointsOptimizer translate="label comment">
+                            <label>Show "as low as $X with Y points" in the catalog</label>
+                            <comment><![CDATA[If enabled this will show text in the catalog that shows a customer what price they can get the product for with their points. This will only show if you have catalog spending rules present that apply to the particular product.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showPointsOptimizer>
+                    </fields>
+                </display>
+                <autointegration translate="label">
+                    <fields>
+                        <shopping_cart_under_coupon translate="label comment">
+                            <label>Shopping Cart Spending Rules Interface in Shopping Cart</label>
+                            <comment><![CDATA[
+                                <a href="http://help.sweettoothrewards.com/article/436-manually-integrating-shopping-cart-points-box" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>60</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </shopping_cart_under_coupon>
+                    </fields>
+                </autointegration>
+                <transferComments translate="label">
+                    <fields>
+                        <orderSpent translate="label comment">
+                            <label>Points Spent on Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </orderSpent>
+                        <revoked translate="label comment">
+                            <label>Transfer Revoked</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[First %s: Transfer comments.]]></comment>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </revoked>
+                        <expired translate="label comment">
+                            <label>Expired Points Balance Transfer</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[First %s: Number of days since expired.]]></comment>
+                            <sort_order>115</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expired>
+                        
+                    </fields>
+                </transferComments>
+                <expire translate="label">
+                    <label>Points Balance Expiry</label>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <is_enabled translate="label comment">
+                            <label>Points Expiry</label>
+                            <comment><![CDATA[Enable or disable point expiration. If enabled, all of a customer's points will expire if they do not earn or spend points within X days.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_expire</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </is_enabled>
+                        <delay_days translate="label comment">
+                            <label>Number of Days Before Points Balance Expires</label>
+                            <comment><![CDATA[The number of days that must pass where a customer does not earn or spend any points for their points to expire.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </delay_days>
+                        <email_warning1_template translate="label">
+                            <label>Email Template for First Warning Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning1_template>
+                        <email_warning1_days translate="label comment">
+                            <label>Number of Days Before Points Expiry to Send First Warning Email</label>
+                            <comment>
+                                <![CDATA[
+                                    <script type="text/javascript">
+                                        (function() {
+                                            var warning1email = $('rewards_expire_email_warning1_template');
+                                            var warning1days = $('rewards_expire_email_warning1_days');
+                                            var warning1daysRow = $('row_rewards_expire_email_warning1_days');
+
+                                            if (warning1days.getValue() < 0) { 
+                                                warning1email.setValue('none'); 
+                                            }
+
+                                            if (warning1email.getValue() === 'none') { 
+                                                warning1daysRow.hide(); 
+                                            }
+                                            
+                                            Event.observe(warning1email, 'change', function() {
+                                                (warning1email.getValue() === 'none') ? warning1daysRow.hide() : warning1daysRow.show(); 
+                                            });
+                                        })();
+                                    </script>
+                                ]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning1_days>
+                        <email_warning2_template translate="label">
+                            <label>Email Template for Second Warning Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_email_template</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning2_template>
+                        <email_warning2_days translate="label">
+                            <label>Number of Days Before Points Expiry to Send Second Warning Email</label>
+                            <comment>
+                                <![CDATA[
+                                    <script type="text/javascript">
+                                        (function() {
+                                            var warning2email = $('rewards_expire_email_warning2_template');
+                                            var warning2days = $('rewards_expire_email_warning2_days');
+                                            var warning2daysRow = $('row_rewards_expire_email_warning2_days');
+
+                                            if (warning2days.getValue() < 0) { 
+                                                warning2email.setValue('none'); 
+                                            }
+
+                                            if (warning2email.getValue() === 'none') { 
+                                                warning2daysRow.hide(); 
+                                            }
+                                            
+                                            Event.observe(warning2email, 'change', function() {
+                                                (warning2email.getValue() === 'none') ? warning2daysRow.hide() : warning2daysRow.show(); 
+                                            });
+                                        })();
+                                    </script>
+                                ]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning2_days>
+                        <log_when_points_expire translate="label comment">
+                            <label>Write Expiry Actions to Log</label>
+                            <comment><![CDATA[Writes to var/log/rewards_expire.log when points expire for any customer or when an e-mail is sent]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </log_when_points_expire>
+                    </fields>
+                </expire>
+                <checkout translate="label">
+                    <label><![CDATA[Checkout]]></label>
+                    <sort_order>53</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable_paypal_checkout_fee translate="label comment">
+                            <label>PayPal Standard Tax-Only Checkout Fee</label>
+                            <comment><![CDATA[If this option is enabled, a 0.01 amount (in the base currency of the store) is added to the checkout total to allow the PayPal Standard checkout to proceed when the user is discounting the product completely and only paying for the remaining tax amount. This function is needed because PayPal Standard (Website Payments Standard) does not allow checkouts to occur if the customer is only paying for the tax amount.]]></comment>
+                            <frontend_type>select</frontend_type>  
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable_paypal_checkout_fee>    
+                    </fields>
+                </checkout>
+            </groups>
+        </rewards>
+    </sections>
+</config>

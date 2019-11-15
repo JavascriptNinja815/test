@@ -1,0 +1,18 @@
+<div class="dashboard">
+    <div class="page-title page-head">
+
+        <h3><?php echo $this->__('Manage Stored Cards') ?></h3>
+    </div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+    <div class="box-account box-info account-box ad-account-info">
+        
+       <?php echo $this->getChildHtml('current_cards')?>
+        <?php /* $isEnabled=Mage::getStoreConfig('advertsystem/invite/enabled');
+        if($isEnabled == 1){
+        ?>
+        <?php echo $this->getChildHtml('invite_form');?>
+        <?php } */?>
+    </div>
+
+</div>

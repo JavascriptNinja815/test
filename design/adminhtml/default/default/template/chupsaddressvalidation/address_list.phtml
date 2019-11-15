@@ -1,0 +1,127 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: kl
+ */
+?>
+<script language="javascript">
+//<![CDATA[
+AdminOrder.addMethods({
+    updateShippingNewAddress : function(addressValue)
+    {
+        if (addressValue == 'reset') {
+            $('order-shipping_address_street0').value = '';
+            $('order-shipping_address_street1').value = '';
+            $('order-shipping_address_city').value = '';
+            $('order-shipping_address_region_id').value = '';
+            $('order-shipping_address_postcode').value = '';
+            $('order-shipping_address_country_id').value = '';
+            $('order-shipping_address_save_in_address_book').checked = false;
+        } else {
+            var arrayAddress = addressValue.split('^');
+            $('order-shipping_address_street0').value = arrayAddress[0];
+            $('order-shipping_address_street1').value = '';
+            $('order-shipping_address_city').value = arrayAddress[1];
+            $('order-shipping_address_region_id').value = arrayAddress[2];
+            $('order-shipping_address_postcode').value = arrayAddress[3];
+            $('order-shipping_address_country_id').value = arrayAddress[5];
+            $('order-shipping_address_save_in_address_book').checked = true;
+        }
+    },
+    changeAddressField: function (event) {
+<?php if ($this->getforceAddress() == true) { ?>
+        var field = Event.element(event);
+        var re = /[^\[]*\[([^\]]*)_address\]\[([^\]]*)\](\[(\d)\])?/;
+        var matchRes = field.name.match(re);
+
+        if (!matchRes) {
+            return;
+        }
+
+        var type = matchRes[1];
+        var name = matchRes[2];
+        var data;
+
+        // We will not refresh the screen if we just updateing the following
+        // prefix, firstname, middlename, lastname, suffix, company, telephone, fax
+        if (name == 'prefix' || name == 'firstname' || name == 'middlename' || name == 'lastname' ||
+            name == 'suffix' || name == 'company' || name == 'telephone' || name == 'fax') {
+            return;
+        }
+
+
+        if(this.isBillingField(field.id)){
+            data = this.serializeData(this.billingAddressContainer)
+        }
+        else{
+            data = this.serializeData(this.shippingAddressContainer)
+        }
+        data = data.toObject();
+
+        if( (type == 'billing' && this.shippingAsBilling)
+                || (type == 'shipping' && !this.shippingAsBilling) ) {
+            data['reset_shipping'] = true;
+        }
+
+        data['order['+type+'_address][customer_address_id]'] = $('order-'+type+'_address_customer_address_id').value;
+
+        if (data['reset_shipping']) {
+            // Add we need to make sure we had ALL information before we do the refresh
+            this.resetShippingMethod(data);
+        }
+        else {
+            this.saveData(data);
+            if (name == 'country_id' || name == 'customer_address_id') {
+                this.loadArea(['shipping_method', 'billing_method', 'totals', 'items'], true, data);
+            }
+        }
+<?php } else { ?>
+        return;
+<?php } ?>
+    }
+});
+
+//]]>
+
+</script>
+<div id="ups_address_selector" style="display: none;">
+<?php if (strlen($this->getMessageInfo()) > 0) { ?>
+<ul class="messages"><li class="error-msg"><ul><li><span><?php echo $this->getMessageInfo(); ?></span></li></ul></li></ul>
+<?php } ?>
+<?php
+    $addresses = $this->getAddressFromUPS();
+?>
+<ul>
+    <?php
+        foreach ($addresses as $address) {
+            $regionModel = Mage::getModel('directory/region')->loadByCode($address->PoliticalDivision1, $address->CountryCode);
+            $regionId = $regionModel->getId();
+            $jsAddressValue = $address->AddressLine."^".$address->PoliticalDivision2."^".$regionId."^".$address->PostcodePrimaryLow."^".$address->PostcodeExtendedLow."^".$address->CountryCode;
+            $displayAddressValue = $address->AddressLine." ".$address->Region." ".$address->CountryCode;
+    ?>
+    <li><span style="text-decoration: underline;cursor: pointer;" onclick="AdminOrder.prototype.updateShippingNewAddress('<?php echo $jsAddressValue; ?>')"><?php echo $displayAddressValue; ?></span></li>
+    <?php } ?>
+</ul>
+    <br/><br/>
+</div>
+<script language="javascript">
+$('order-shipping_same_as_billing').checked = false;
+order.disableShippingAddress(false);
+$('order-shipping_address_customer_address_id').value = "";
+//order.selectAddress($('order-shipping_address_customer_address_id'), 'order-shipping_address_fields');
+
+// Display the options
+$('order-shipping_address_choice').insert(  {top: $('ups_address_selector').innerHTML } );
+
+// Force customer to use UPS address
+<?php if ($this->getforceAddress() == true) { ?>
+    $('order-shipping_address_customer_address_id').disabled = false;
+    AdminOrder.prototype.updateShippingNewAddress('reset');
+<?php } else { ?>
+    $('order-shipping_address_customer_address_id').disabled = false;
+<?php } ?>
+
+</script>
+<?php
+    //print_r($this->getAddressFromUPS());
+?>

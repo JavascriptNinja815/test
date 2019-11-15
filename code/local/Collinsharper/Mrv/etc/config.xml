@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Collinsharper_Mrv>
+      <version>0.1.0</version>
+    </Collinsharper_Mrv>
+  </modules>
+  <frontend>
+    <routers>
+      <mrv>
+        <use>standard</use>
+          <args>
+            <module>Collinsharper_Mrv</module>
+            <frontName>mrv</frontName>
+          </args>
+      </mrv>
+    </routers>
+		<layout>
+		  <updates>
+			<mrv>
+			  <file>mrv.xml</file>
+			</mrv>
+		  </updates>
+		</layout>
+  </frontend>
+  <global>
+    <helpers>
+      <mrv>
+        <class>Collinsharper_Mrv_Helper</class>
+      </mrv>
+    </helpers>
+	<blocks>
+	  <mrv>
+		<class>Collinsharper_Mrv_Block</class>
+	  </mrv>
+	</blocks>
+	<models>
+	  <mrv>
+		<class>Collinsharper_Mrv_Model</class>
+		<resourceModel>mrv_mysql4</resourceModel>
+	  </mrv>
+	</models>
+    <events>
+	  <customer_login> <!-- identifier of the event we want to catch -->
+        <observers>
+          <customer_login_handler> <!-- identifier of the event handler -->
+            <type>model</type> <!-- class method call type; valid are model, object and singleton -->
+            <class>mrv/observer</class> <!-- observers class alias -->
+            <method>mrvLogin</method>  <!-- observer's method to be called -->
+            <args></args> <!-- additional arguments passed to observer -->
+          </customer_login_handler>
+        </observers>
+      </customer_login>
+        <customer_register_success> <!-- identifier of the event we want to catch -->
+            <observers>
+                <customer_register_handler> <!-- identifier of the event handler -->
+                    <type>model</type> <!-- class method call type; valid are model, object and singleton -->
+                    <class>mrv/observer</class> <!-- observers class alias -->
+                    <method>mrvRegister</method>  <!-- observer's method to be called -->
+                    <args></args> <!-- additional arguments passed to observer -->
+                </customer_register_handler>
+            </observers>
+        </customer_register_success>
+    </events>
+  </global>
+</config> 

@@ -1,0 +1,8 @@
+<?php
+    $isSecure = (bool) Mage::app()->getStore()->isCurrentlySecure();
+    $mapCartItemsPointsOnlyUrl = $this->getUrl('adminhtml/manage_order_create_pointsOnly/mapCartPointsOnly', array('_secure' => $isSecure));
+    $configurePointsOnlyUrl = $this->getUrl('adminhtml/manage_order_create_pointsOnly/configurePointsOnly', array('_secure' => $isSecure));
+?>
+<script type="text/javascript">
+    var rewardsPointsOnlyOrder = new RewardsPointsOnlyOrderCreate('<?php echo $mapCartItemsPointsOnlyUrl; ?>', '<?php echo $configurePointsOnlyUrl; ?>');
+</script>

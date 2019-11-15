@@ -1,0 +1,5 @@
+<?php
+
+class Collinsharper_Image3d_Model_Resource_Collection_Abstract extends Mage_Core_Model_Mysql4_Collection_Abstract
+{
+}

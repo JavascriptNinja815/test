@@ -1,0 +1,266 @@
+<div style="display:none;" class="preview-page-container" id="preview-page-container">
+	<img class="blank-reel preview-reel-temp" width="150" id="active-reel-preview" src="<?php echo $this->getSkinUrl('images/logo245x227.png') ?>" />
+	<img class="preview-reel-center" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'reel_builder_templates/center-dot.png'; ?>">
+	
+	<div class="preview-right-content">
+		<div class="preview-navigate">
+			<p id="nav-preview">Navigate Through Your Frames To Preview</p>
+			<p class="header-frame">Frame <span>1</span></p>
+			<div class="header-save-preview">
+				<p>
+					<a id="preview-back" href="javascript:rb.previewBackFrame()">Back</a>
+					<a id="preview-next" href="javascript:rb.previewNextFrame()">Next</a>
+				</p>
+			</div>
+		</div>
+		<div class="frame-preview-wrap">
+			<div class="frame-preview" id="frame-preview"></div>
+			<div class="frame-preview-border" style="z-index: 99"></div>
+		</div>	
+		<div class="edit-approve">
+			<a id="cancelPrevieweditmore" href="javascript:rb.cancelPreviewEditReel()">Go Back and <span>Edit More</span></a>
+			<a id="approvereel" href="javascript:rb.approveReelDialog()">
+				<img class="approve-img" src="<?php echo $this->getSkinUrl('images/approve-reel.png') ?>" />
+			</a>
+		</div>
+	</div>
+</div>
+
+
+<div class="no-display approve-message a-center">
+	<?php echo $this->getLayout()->createBlock("cms/block")->setBlockId("approve_reel")->toHtml(); ?>
+</div>
+<div class="no-display problem-preview a-center">
+	<?php echo $this->getLayout()->createBlock("cms/block")->setBlockId("preview_reel_center_error_message")->toHtml(); ?>
+</div>
+
+
+
+<style>
+@font-face {
+    font-family: 'Engschrift';
+    src: url("<?php echo $this->getSkinUrl('fonts/DINEngschriftStd.otf')?>") format("opentype");
+}
+*/
+@font-face {
+  font-family: 'Engschrift';
+  src: url("DINEngschriftStd.eot");
+  src: local("☺︎"), url("DINEngschriftStd.woff") format("woff"), url("DINEngschriftStd.otf") format("opentype");
+}
+
+/* ====================================================================================================================================== *
+ * Reel Builder - PREVIEW PAGE 
+ * ====================================================================================================================================== */
+.preview-page-container {
+  padding: 10px 20px;
+}
+.preview-page-container .blank-reel.preview-reel-temp {
+  float: left;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  margin-top: 70px;
+}
+.preview-page-container .preview-reel-center {
+  position: absolute;
+  display: block;
+  width: 150px;
+  margin-top: 70px;
+}
+.preview-page-container .preview-right-content {
+  float: left;
+  position: relative;
+  width: 40%;    
+  margin-left: -35px;
+}
+
+.preview-navigate {
+  padding: 0 15px;
+}
+.preview-navigate div {
+  display: inline-block;
+  font-family: "Engschrift", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+  text-transform: uppercase;
+}
+.preview-navigate p {
+  font-family: "Engschrift", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+}
+.preview-navigate #nav-preview {
+  font-size: 18px;
+  padding: 0 5px 5px;
+  text-transform: uppercase;
+  color: #fd7a28;
+}
+.preview-navigate .header-frame {
+  float: left;
+  font-size: 18px;
+  margin-top: 5px;
+  color: #fd7a28;
+}
+.preview-navigate .header-frame span {
+  color: #a6d7bf;
+  font-size: 36px;
+  margin-left: 5px;
+  position: relative;
+  top: 7px;
+}
+.preview-navigate .header-save-preview {
+  margin: 0 0 10px 25px;
+}
+.preview-navigate .header-save-preview p {
+  background: url("<?php echo $this->getSkinUrl('images/reelbuilder/mobile/back-next.png')?>") no-repeat;
+  height: 50px;
+  text-align: center;
+  width: 130px;
+}
+.preview-navigate .header-save-preview a {
+  color: #fff;
+  display: inline-block;
+  font-size: 18px;
+  text-decoration: none;
+}
+.preview-navigate .header-save-preview a:first-child {
+  float: left;
+  margin: 8px 0 0 12px;
+}
+.preview-navigate .header-save-preview a:last-child {
+  float: right;
+  margin: 12px 13px 0 0;
+}
+.preview-navigate .header-save-preview #h-return {
+  position: relative;
+  top: 5px;
+}
+.preview-navigate .header-save-preview #h-save {
+  margin-right: 30px;
+}
+.preview-navigate .header-return a {
+  background-color: #fd7a28;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  color: #fff;
+  display: block;
+  font-size: 21px;
+  height: 30px;
+  letter-spacing: 0.5px;
+  line-height: normal;
+  padding-top: 5px;
+  position: relative;
+  text-align: center;
+  top: 3px;
+  width: 85px;
+}
+
+.preview-right-content .frame-preview-wrap {
+  position: relative;
+}
+.preview-right-content .frame-preview {
+  background: gray url("loader.gif") no-repeat center center;
+  -webkit-border-radius: 35px;
+  -moz-border-radius: 35px;
+  -ms-border-radius: 35px;
+  -o-border-radius: 35px;
+  border-radius: 35px;
+  width: 200px;
+  height: 182px;
+  position: relative;
+  z-index: 10;
+}
+.preview-right-content .frame-preview-border {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 182px;
+  background: url("/celebrate/media/reel_builder_templates/overlay2.png");
+  z-index: 999;
+  display: block;
+  background-size: cover;
+}
+.preview-right-content .frame-preview-border2 {
+  position: absolute;
+  top: 0;
+  width: 200px;
+  height: 182px;
+  z-index: 999;
+  display: block;
+}
+.preview-right-content .frame-preview-border2:before {
+  content: '';
+  border: 10px solid #87af9b;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
+  border-radius: 70px;
+  width: 400px;
+  height: 364px;
+  margin-left: -10px;
+  display: block;
+  margin-top: -9px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.5;
+}
+.preview-right-content .frame-preview-border2:after {
+  content: '';
+  border: 10px solid #fd7a28;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
+  border-radius: 70px;
+  width: 400px;
+  height: 364px;
+  margin-right: -10px;
+  margin-bottom: -9px;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.5;
+  right: 0;
+  bottom: 0;
+}
+.preview-right-content .edit-approve {
+  margin: 20px 0;
+  margin: 30px 0 0;
+  position: relative;
+}
+.preview-right-content .edit-approve a {
+  display: inline-block;
+  font-family: "Engschrift", "Raleway", "Helvetica Neue", Verdana, Arial, sans-serif;
+  color: #a6d7bf;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  width: 25%;
+  text-decoration: none;
+}
+.preview-right-content .edit-approve a:hover {
+  text-decoration: none;
+}
+.preview-right-content .edit-approve a span {
+  display: block;
+  font-size: 130%;
+}
+.preview-right-content .edit-approve #editmore {
+  border-right: 1px solid;
+  padding: 15px 0;
+}
+.preview-right-content .edit-approve #editmore span {
+  font-size: 30px;
+  line-height: 28px;
+}
+.preview-right-content .edit-approve #approvereel {
+  margin-left: 5px;
+  margin-top: -8px;
+}
+
+</style>

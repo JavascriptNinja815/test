@@ -1,0 +1,32 @@
+<!-- load Twitter SDK only once per page -->
+<?php if (!Mage::registry('is_twitter_sdk_loaded')): ?>
+    <script type="text/javascript">
+        Event.observe(document, "dom:loaded", function() {
+            if (typeof window.twttr == 'undefined') {
+                window.twttr = (function (d,s,id) {
+                    var t, js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+                    js.src="//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+                    return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+                } (document, "script", "twitter-wjs"));
+            }
+        });
+    </script>
+    
+    <?php Mage::register('is_twitter_sdk_loaded', true); ?>
+<?php endif; ?>
+
+<!--Twitter Follow Button-->
+<?php $twitterUsername = Mage::helper('rewardssocial2')->getTwitterUsername(); ?>
+<?php if ($twitterUsername): ?>
+    <div class="sweettooth-twitter-follow sweettooth-social-button">
+        <div class="twitter-follow-wrapper">
+            <a href="https://twitter.com/<?php echo $twitterUsername; ?>" 
+                class="twitter-follow-button"
+                data-show-count="false" 
+                data-show-screen-name="true">
+                    <?php echo $this->__('Follow'); ?>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

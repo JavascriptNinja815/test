@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+	  <sections>
+		<customer translate="label" module="chupsaddressvalidation">
+		<tab>customer</tab>
+		<frontend_type>text</frontend_type>
+		<sort_order>0</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>0</show_in_store>
+            <groups>
+                <chaupsvalidation translate="label comment">
+                    <label>Address Valiadtion</label>
+                    <comment>Requires a valid USA UPS API Key.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <debug translate="label">
+                            <label>Enable debug mode?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug>
+                        <frontend_enabled translate="label">
+                        <label>Enable UPS Address Validation for Customers?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </frontend_enabled>
+                         <force_valid_frontend translate="label">
+                            <label>Force customer to use valid address?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </force_valid_frontend>
+                        <backend_enabled translate="label">
+                            <label>Enable UPS Address Validation for Admins?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </backend_enabled>
+                        <force_valid_backend translate="label">
+                            <label>Force admin to use valid address?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </force_valid_backend>
+                    </fields>
+                </chaupsvalidation>
+            </groups>
+
+		</customer>
+	  </sections>
+</config>

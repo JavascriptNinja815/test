@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="robots" content="noindex, nofollow">
+        <title></title>
+        <style>
+            body {
+                margin: 0px;
+                color:#2f2f2f;
+                font:12px/1.5em Arial, Helvetica, sans-serif;
+            }
+
+            .header {
+                height:     54px;
+                display:    block;
+                background: url('/skin/adminhtml/default/default/images/header_top_bg.gif') repeat-x #425e66;
+                text-align: right;
+                border-bottom: 1px solid #5F767F;
+            }
+
+            .logo {
+                float: left;
+                margin: 5px 20px 5px 27px;
+                height: 43px;
+            }
+
+            .nav-bar {
+                border-top: 1px solid #2d444f;
+                border-bottom: 1px solid #2d444f;
+                background: url('/skin/adminhtml/default/default/images/nav1_bg.gif') repeat-x 0 100% #666e73;
+                height: 29px;
+                width: 100%;
+            }
+
+            .content {
+                max-width: 600px;
+                margin: 50px auto auto auto;
+
+            }
+
+            .content h3 {
+                margin: .3em .5em 18px 0;
+                color: #eb5e00;
+                font-size: 1.25em;
+                border-bottom: 4px solid #dfdfdf;
+                padding-bottom: .25em;
+                width: 100%;
+            }
+
+            a {
+                color: #ea7601;
+                text-decoration: underline;
+            }
+
+            .controls {
+                text-align: center;
+            }
+
+            .controls button.approve {
+                min-width: 200px;
+                height: 30px;
+                font-size: 14px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: #ed6502 #a04300 #a04300 #ed6502;
+                padding: 1px 7px 2px 7px;
+                background: #ffac47 url('/skin/adminhtml/default/default/images/btn_bg.gif') repeat-x 0 100%;
+                color: #fff;
+                cursor: pointer;
+                text-align: center !important;
+                white-space: nowrap;
+            }
+
+            .controls button.cancel {
+                font-size: 14px;
+                height: 30px;
+                border-color: #ccc #aaa #aaa #ccc;
+                background-color: #CFCFCF;
+                background: url('/skin/adminhtml/default/default/images/btn_back_bg.gif') repeat-x 0 100%;
+                color: #555;
+                cursor: pointer;
+            }
+
+            /**
+            **  Loading Animation
+            **/
+            .loader,
+            .loader:before,
+            .loader:after {
+                border-radius: 50%;
+            }
+            .loader:before,
+            .loader:after {
+                position: absolute;
+                content: '';
+            }
+            .loader:before {
+                width: 5.2em;
+                height: 10.2em;
+                background: #FFFFFF;
+                border-radius: 10.2em 0 0 10.2em;
+                top: -0.1em;
+                left: -0.1em;
+                -webkit-transform-origin: 5.2em 5.1em;
+                transform-origin: 5.2em 5.1em;
+                -webkit-animation: load2 2s infinite ease 1.5s;
+                animation: load2 2s infinite ease 1.5s;
+            }
+            .loader {
+                color: #ea7601;
+                font-size: 11px;
+                text-indent: -99999em;
+                margin: 55px auto;
+                position: relative;
+                width: 10em;
+                height: 10em;
+                box-shadow: inset 0 0 0 1em;
+                -webkit-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            .loader:after {
+                width: 5.2em;
+                height: 10.2em;
+                background: #FFFFFF;
+                border-radius: 0 10.2em 10.2em 0;
+                top: -0.1em;
+                left: 5.1em;
+                -webkit-transform-origin: 0px 5.1em;
+                transform-origin: 0px 5.1em;
+                -webkit-animation: load2 2s infinite ease;
+                animation: load2 2s infinite ease;
+            }
+            @-webkit-keyframes load2 {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes load2 {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <img src="<?php echo Mage::getBaseUrl (Mage_Core_Model_Store::URL_TYPE_WEB); ?>skin/adminhtml/default/default/images/logo.gif" alt="Magento Logo" class="logo">
+        </div>
+        <div class="nav-bar">
+            <!-- empty -->
+        </div>
+        <div class="content">
+            <h3 class="head-dashboard">MageRewards v<?php echo Mage::helper('rewards')->getExtensionVersion(); ?> Update</h3>
+            <p>
+                Some underlying data structures have changed since MageRewards v1.9.0. <br/>
+                If you've built custom MageRewards features, this update could break your store! <br/>
+            </p>
+            <p>
+                For a detailed list of all structural changes in v1.9.0, <a href="http://support.magerewards.com/article/1867-points-transfers-in-magerewards-v1-9" target="_blank">read this article</a>.
+            </p>
+            <br/>
+            <p>
+                If you proceed, we <b>will begin to migrate</b> your data to the new structure, and <b>discard some legacy data</b>.
+                <?php if (Mage::helper('core')->isModuleEnabled('TBT_Rewardssocial')): ?>
+                    We will also update your social rewards component to the latest version and migrate all social data to this <a href="http://support.magerewards.com/article/1651-introducing-rewards-social-2-0" title="Social Rewards V2">new version</a>.
+                <?php endif; ?>
+                We <u>strongly</u> recommend doing this on a staging site first and backing up your database before proceeding to a live installation.
+            </p>
+            <div class="controls">
+                <br/>
+                <button type="button" class="approve" onclick="document.cookie='st_1900_install_confirm=true';location.reload();">Approve &amp; Start Migration</button>
+                &nbsp;&nbsp;
+                <button type="button" class="cancel" onclick="document.getElementById('cancel-box').style.display = 'block';">Cancel Migration</button>
+            </div>
+            <div id="cancel-box" style="display: none;">
+                <br/>
+                <p>
+                    To cancel the migration and return to the Admin Panel, you will need to revert your recent code changes
+                    and restore MageRewards back to v1.8.12.
+                    You can download this version again <a href="http://download.magerewards.com/tbtrewards-1.8.12.zip" target="_blank">here</a>. Refresh this page when you're ready.
+                </p>
+            </div>
+            <div class="started" style="display: none;">
+                <br/>
+                <br/>
+                <p>
+                    Data migration has started. This may take some time...
+                <div class="loader">Migrating...</div>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
+

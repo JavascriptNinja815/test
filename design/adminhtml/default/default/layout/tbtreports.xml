@@ -1,0 +1,531 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <!-- ==== common handles ==== -->
+    <skin_css>
+        <reference name="head">
+            <action method="addCss">
+                <file>tbtreports/css/skin.css</file>
+            </action>
+        </reference>
+    </skin_css>
+
+    <opentip_js>
+        <reference name="head">
+            <action method="addJs">
+                <file>tbt/reports/opentip-prototype-excanvas.min.js</file>
+            </action>
+            <action method="addCss">
+                <file>tbtreports/css/opentip.css</file>
+            </action>
+        </reference>
+    </opentip_js>
+    
+    <rewards_dashboard_head_handle>
+        <reference name="head">
+            <action method="addJs">
+                <file>tbt/reports/adminhtml/dashboard/metrics.js</file>
+            </action>
+            <action method="addCss"><name>rewards/css/nv.d3.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/d3.v3.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/nv.d3.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/pie.js</name></action>
+        </reference>
+    </rewards_dashboard_head_handle>
+
+
+    <!-- ==== controllers ==== -->
+    <!-- main magento dashboard -->
+    <adminhtml_dashboard_index>
+        <update handle="skin_css"/>
+        <reference name="rewards_dashboard_widget">
+            <block type="tbtreports/adminhtml_dashboard_widget_summary"
+                   after="rewards_dashboard_widget_notifications"
+                   name="tbtreports_dashboard_widget_summary">
+            </block>
+        </reference>
+    </adminhtml_dashboard_index>
+    
+    <adminhtml_rewardsdashboard_index>
+        <reference name="head">
+            <action method="addJs">
+                <file>tbt/reports/adminhtml/dashboard/feed.js</file>
+            </action>
+            <action method="addJs">
+                <file>tbt/reports/moment.min.js</file>
+            </action>
+        </reference>
+        <update handle="skin_css"/>
+        <update handle="opentip_js"/>
+        <update handle="rewards_dashboard_head_handle"/>
+
+
+        <!-- @todo clean up the files as well:
+        <reference name="rewards_dashboard">
+            <block type="tbtreports/adminhtml_dashboard" name="tbtreports_dashboard" template="tbtreports/adminhtml/dashboard.phtml" />
+        </reference>
+        -->
+        <reference name="rewards_dashboard">
+            <block type="adminhtml/template" name="tbtreports.adminhtml.dashboard" template="tbtreports/dashboard.phtml">
+                <block type="rewards/tracking" name="tracking.code" as="tracking_code">
+                    <action method="setData">
+                        <name>event_name</name>
+                        <value>dashboard_view</value>
+                    </action>
+                </block>
+                <block type="tbtreports/adminhtml_dashboard_metricsArea"
+                       name="tbtreports.adminhtml.dashboard.metrics.area" as="metrics_area"
+                       template="tbtreports/dashboard/metrics_area.phtml">
+
+                    <!-- Left side of the page: -->
+                    <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs"
+                           name="tbtreports.adminhtml.dashboard.metrics_tabs" as="metrics_tabs">
+                        
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_revenue_members</id>
+                            <tab translate="label">
+                                <label>Revenue from Loyalty Members</label>
+                                <url><![CDATA[*/adminhtml_metrics/revenueMembers]]></url>
+                                <class>ajax only</class>
+                                <pre>Revenue</pre>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_revenue_referred_customers</id>
+                            <tab translate="label">
+                                <label>Revenue from Referred Customers</label>
+                                <url><![CDATA[*/adminhtml_metrics/revenueReferred]]></url>
+                                <class>ajax only</class>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_orders</id>
+                            <tab translate="label">
+                                <label>Repeat Purchasers Count</label>
+                                <url><![CDATA[*/adminhtml_metrics/orders]]></url>
+                                <class>ajax only</class>
+                                <pre>Orders</pre>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_new_signups</id>
+                            <tab translate="label">
+                                <label>New Signups</label>
+                                <url><![CDATA[*/adminhtml_metrics/newSignups]]></url>
+                                <class>ajax only</class>
+                                <pre>Signups</pre>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_referral_signups</id>
+                            <tab translate="label">
+                                <label>Referral Signups</label>
+                                <url><![CDATA[*/adminhtml_metrics/referredSignups]]></url>
+                                <class>ajax only</class>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_points_earned</id>
+                            <tab translate="label">
+                                <label>Points Earned</label>
+                                <url><![CDATA[*/adminhtml_metrics/pointsEarned]]></url>
+                                <class>ajax only</class>
+                                <pre>Points Activity</pre>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_earning_distribution</id>
+                            <tab translate="label">
+                                <label>Earning Distribution</label>
+                                <url><![CDATA[*/adminhtml_metrics/earningDistribution]]></url>
+                                <class>ajax only</class>
+                            </tab>
+                        </action>
+                        <action method="addTab">
+                            <id>dashboard_metrics_tab_points_spent</id>
+                            <tab translate="label">
+                                <label>Points Spent</label>
+                                <url><![CDATA[*/adminhtml_metrics/pointsSpent]]></url>
+                                <class>ajax only</class>
+                            </tab>
+                        </action>
+                        <action method="setActiveTab">
+                            <tabId>dashboard_metrics_tab_revenue_members</tabId>
+                        </action>
+                    </block>
+                </block>
+                
+                <block type="tbtreports/adminhtml_dashboard_feedsArea"
+                       name="tbtreports.adminhtml.dashboard.feeds.area" as="feeds_area"
+                       template="tbtreports/dashboard/feeds_area.phtml">
+
+                    <!-- Right side of the page: -->
+                    <block type="tbtreports/adminhtml_dashboard_feedsArea_tabs" name="tbtreports.adminhtml.dashboard.feeds_tabs" as="feeds_tabs">
+                        <action method="addTab">
+                            <id>dashboard_feeds_tab_feed</id>
+                            <tab translate="label">
+                                <label>Live Feed</label>
+                                <url><![CDATA[*/adminhtml_feed/index]]></url>
+                                <class>ajax only</class>
+                            </tab>
+                        </action>
+                    </block>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_rewardsdashboard_index>
+    
+    <adminhtml_adminhtml_metrics_revenue>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/revenue.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue_loyalty" name="dashboard.tab.revenue.loyalty" as="revenue_loyalty">
+                <action method="setReportLabel">
+                    <label>Revenue from Loyalty Members</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>revenue_loyalty</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>price</type>
+                </action>
+            </block>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue_referredCustomers" name="dashboard.tab.revenue.referred_customers" as="revenue_referred_customers">
+                <action method="setReportLabel">
+                    <label>Revenue from Referred Customers</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>revenue_referred_customers</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>price</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_revenue>
+    
+    <adminhtml_adminhtml_metrics_orders>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_orders" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/orders.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_orders_repeatPurchase" name="dashboard.tab.orders.repeat.purchase" as="orders_repeat_purchase">
+                <action method="setReportLabel">
+                    <label>Repeat Purchasers Count</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>orders_repeat_purchase</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_orders>
+    
+    <adminhtml_adminhtml_metrics_signups>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/signups.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups_new" name="dashboard.tab.signups.new" as="signups_new">
+                <action method="setReportLabel">
+                    <label>New Signups</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>signups_new</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups_referral" name="dashboard.tab.signups.referral" as="signups_referral">
+                <action method="setReportLabel">
+                    <label>Referral Signups</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>signups_referral</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_signups>
+    
+    <adminhtml_adminhtml_metrics_activity>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/activity.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_earned" name="dashboard.tab.activity.earned" as="points_activity_earned">
+                <action method="setReportLabel">
+                    <label>Points Earned</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_earned</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>points</type>
+                </action>
+            </block>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_earningDistribution" name="dashboard.tab.activity.earning_distribution" as="points_activity_earning_distribution">
+                <action method="setReportLabel">
+                    <label>Earning Distribution</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_earning_distribution</report_code>
+                </action>
+            </block>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_spent" name="dashboard.tab.activity.spent" as="points_activity_spent">
+                <action method="setReportLabel">
+                    <label>Points Spent</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_spent</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>points</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_activity>
+    
+    <adminhtml_adminhtml_metrics_revenuemembers>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/revenue.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue_loyalty" name="dashboard.tab.revenue.loyalty" as="revenue_loyalty">
+                <action method="setReportLabel">
+                    <label>Revenue from Loyalty Members</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>revenue_loyalty</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>price</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_revenuemembers>
+    
+    <adminhtml_adminhtml_metrics_revenuereferred>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/revenue.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue_referredCustomers" name="dashboard.tab.revenue.referred_customers" as="revenue_referred_customers">
+                <action method="setReportLabel">
+                    <label>Revenue from Referred Customers</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>revenue_referred_customers</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>price</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_revenuereferred>
+    
+    <adminhtml_adminhtml_metrics_newsignups>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/signups.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups_new" name="dashboard.tab.signups.new" as="signups_new">
+                <action method="setReportLabel">
+                    <label>New Signups</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>signups_new</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_newsignups>
+    
+    <adminhtml_adminhtml_metrics_referredsignups>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/signups.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups_referral" name="dashboard.tab.signups.referral" as="signups_referral">
+                <action method="setReportLabel">
+                    <label>Referral Signups</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>signups_referral</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_referredsignups>
+        
+    <adminhtml_adminhtml_metrics_pointsearned>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/activity.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_earned" name="dashboard.tab.activity.earned" as="points_activity_earned">
+                <action method="setReportLabel">
+                    <label>Points Earned</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_earned</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>points</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_pointsearned>
+    
+    <adminhtml_adminhtml_metrics_earningdistribution>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/activity.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_earningDistribution" name="dashboard.tab.activity.earning_distribution" as="points_activity_earning_distribution">
+                <action method="setReportLabel">
+                    <label>Earning Distribution</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_earning_distribution</report_code>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_earningdistribution>
+    
+    <adminhtml_adminhtml_metrics_pointsspent>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity" name="root" output="toHtml" template="tbtreports/dashboard/metricsarea/tabs/activity.phtml">
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_spent" name="dashboard.tab.activity.spent" as="points_activity_spent">
+                <action method="setReportLabel">
+                    <label>Points Spent</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_spent</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>points</type>
+                </action>
+            </block>
+        </block>
+    </adminhtml_adminhtml_metrics_pointsspent>
+
+    <!-- BEGIN METRICS HANDLES BASED ON PERIOD SELECTED AND REPORT CODE -->
+    <adminhtml_update_metrics_revenue_loyalty_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue_loyalty" name="dashboard.tab.revenue.loyalty" as="revenue_loyalty" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Revenue from Loyalty Members</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>revenue_loyalty</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>price</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_revenue_loyalty_handle>
+    
+    <adminhtml_update_metrics_revenue_referred_customers_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_revenue_referredCustomers" name="dashboard.tab.revenue.referred_customers" as="revenue_referred_customers" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Revenue from Referred Customers</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>revenue_referred_customers</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>price</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_revenue_referred_customers_handle>
+    
+    <adminhtml_update_metrics_orders_repeat_purchase_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_orders_repeatPurchase" name="dashboard.tab.orders.repeat.purchase" as="orders_repeat_purchase" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Repeat Purchasers Count</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>orders_repeat_purchase</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_orders_repeat_purchase_handle>
+    
+    <adminhtml_update_metrics_signups_new_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups_new" name="dashboard.tab.signups.new" as="signups_new" output="toHtml">
+                <action method="setReportLabel">
+                    <label>New Signups</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>signups_new</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_signups_new_handle>
+    
+    <adminhtml_update_metrics_signups_referral_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_signups_referral" name="dashboard.tab.signups.referral" as="signups_referral" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Referral Signups</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>signups_referral</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>qty</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_signups_referral_handle>
+    
+    <adminhtml_update_metrics_activity_earned_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_earned" name="dashboard.tab.activity.earned" as="points_activity_earned" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Points Earned</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_earned</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>points</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_activity_earned_handle>
+    
+    <adminhtml_update_metrics_activity_earning_distribution_handle>
+        <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_earningDistribution" name="dashboard.tab.activity.earning_distribution" as="points_activity_earning_distribution" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Earning Distribution</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_earning_distribution</report_code>
+                </action>
+            </block>
+    </adminhtml_update_metrics_activity_earning_distribution_handle>
+    
+    <adminhtml_update_metrics_activity_spent_handle>
+            <block type="tbtreports/adminhtml_dashboard_metricsArea_tabs_activity_spent" name="dashboard.tab.activity.spent" as="points_activity_spent" output="toHtml">
+                <action method="setReportLabel">
+                    <label>Points Spent</label>
+                </action>
+                <action method="setReportCode">
+                    <report_code>activity_spent</report_code>
+                </action>
+                <action method="setTotalDisplayType">
+                    <type>points</type>
+                </action>
+            </block>
+    </adminhtml_update_metrics_activity_spent_handle>
+    <!-- END UPDATE METRICS HANDLES -->
+    
+    <adminhtml_adminhtml_feed_update>
+        <block type="tbtreports/adminhtml_dashboard_feedsArea_tabs_feed_item_transfer"
+               name="tbtreports.adminhtml.feed.item.transfer">
+        </block>
+    </adminhtml_adminhtml_feed_update>
+
+    <adminhtml_adminhtml_feed_loadprevious>
+        <block type="tbtreports/adminhtml_dashboard_feedsArea_tabs_feed_item_transfer"
+               name="tbtreports.adminhtml.feed.item.transfer">
+        </block>
+    </adminhtml_adminhtml_feed_loadprevious>
+
+    <adminhtml_adminhtml_feed_index>
+        <block type="tbtreports/adminhtml_dashboard_feedsArea_tabs_feed" name="root" output="toHtml"
+               template="tbtreports/dashboard/feedsarea/tabs/feed.phtml">
+            <block type="tbtreports/adminhtml_dashboard_feedsArea_tabs_feed_item_transfer"
+                   name="tbtreports.adminhtml.feed.item.transfer">
+            </block>
+        </block>
+    </adminhtml_adminhtml_feed_index>
+    
+    <adminhtml_adminhtml_loyalty_order_index>
+        <update handle="skin_css"/>
+    </adminhtml_adminhtml_loyalty_order_index>
+    
+    <adminhtml_adminhtml_loyalty_referral_index>
+        <update handle="skin_css"/>
+    </adminhtml_adminhtml_loyalty_referral_index>
+</layout>

@@ -1,0 +1,139 @@
+<div class="button-column">
+	<div id="image" class="mobile-tools"><p><?php echo $this->__('Image'); ?></p></div>
+	<span class="green-dash">-</span> 
+	<div id="text" class="mobile-tools"><p><?php echo $this->__('Text'); ?></p></div>
+	<span class="green-dash">-</span> 
+	<div id="reel" class="mobile-tools"><p><?php echo $this->__('Center'); ?></p></div>
+</div>
+
+<div class="tools-column">
+	<div class="tool-row" id="image-tools">
+		<div class="tool-container" id="container-options" >
+			<ul>
+				<li class="image-tool-button" id="btn-change"><?php echo $this->__('CHANGE'); ?></li>
+				<li class="image-tool-button" id="btn-adjust"><?php echo $this->__('ADJUST'); ?></li>
+				<li class="image-tool-button" id="btn-color"><?php echo $this->__('COLOR'); ?></li>
+			</ul>
+		</div>
+		<div class="tool-container" id="container-change" >
+			<ul>
+				<li class="change-options" id="change-image">
+					<a href="javasceript:void(0);">
+						<?php echo $this->__('Change Image'); ?>
+						<span></span>
+					</a>
+				</li>
+				<li class="change-options" id="delete-image">
+					<a href="javasceript:void(0);">
+						<?php echo $this->__('Delete Image'); ?>
+						<span></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="tool-container" id="container-color" >
+			<h1><?php echo $this->__('SELECT A COLOR OPTION'); ?></h1>
+			<div class="tool-row">
+				
+				<div id="color-options">
+					<input type="radio" id="rad-fullColor" name="radio" checked="checked"/><label for="rad-fullColor"><?php echo $this->__('FULL COLOR'); ?></label><span class="green-dash">-</span>
+					<input type="radio" id="rad-bw" name="radio" /><label for="rad-bw"><?php echo $this->__('B/W'); ?></label><span class="green-dash">-</span>
+					<input type="radio" id="rad-sepia" name="radio"/><label for="rad-sepia"><?php echo $this->__('Sepia Tones'); ?></label>
+				</div>
+					
+			</div>
+		</div>
+		<div class="tool-container" id="container-imageadjust" >
+			<!-- 		<h1><?php echo $this->__('ADJUST IMAGE'); ?></h1> -->
+			<div class="tool-row">
+				<ul>
+					<li>
+						<div class="slider-label"><?php echo $this->__('SCALE'); ?></div>
+						<div class="slider-container">
+							<div class="slider" id="slider-scale"></div>
+						</div>
+					</li>
+					<li><div class="slider-label"><?php echo $this->__('ROTATION'); ?></div>
+						<div class="slider-container">
+							<div class="slider"  id="slider-rotate"></div>
+						</div>
+					</li>
+					<li><div class="slider-label"><?php echo $this->__('BRIGHTNESS'); ?></div>
+						<div class="slider-container">
+							<div class="slider"  id="slider-brightness"></div>
+						</div>
+					</li>
+					<li><div class="slider-label"><?php echo $this->__('CONTRAST'); ?></div>
+						<div class="slider-container">
+							<div class="slider"  id="slider-contrast"></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="tool-row" id="text-tools">
+		<ul>
+			<li>
+				<label for="txt-reelText"><?php echo $this->__('ADD NEW TEXT'); ?></label><input type="text" name="txt-reelText" id="txt-reelText" />
+				<input type="image" id="btn-remove-text" src="<?php echo $this->getSkinUrl('images/red-cancel.png')?>" alt="remove text"/>
+				<br />
+				<div class="form-subtext">
+					<?php echo $this->__('To add more text, click on the background image, then start typing your new text in the box above.'); ?>
+				</div>
+			</li>
+			<li><label for="cmb-font" class="main-label" ><?php echo $this->__('FONT'); ?></label>
+				<select id="cmb-font" name="cmb-font">
+					<?php foreach($helper->getFonts() as $v => $l): ?>
+						<option value="<?php echo $v;?>"><?php echo $this->__($l);?></option>
+					<?php endforeach; ?>
+				</select>
+			</li>
+			<li>
+				<label class="main-label" ><?php echo $this->__('FONT SIZE'); ?></label>
+				<div id="font-size-options">
+					<div class="lbl-small-big"><?php echo $this->__('SMALL'); ?></div>
+					<input type="radio" id="rad-font-size1" name="font-size" checked="checked"/><label id="lbl-font-size1" for="rad-font-size1"><?php echo $this->__('A'); ?></label>
+					<input type="radio" id="rad-font-size2" name="font-size"/><label id="lbl-font-size2"  for="rad-font-size2"><?php echo $this->__('A'); ?></label>
+					<input type="radio" id="rad-font-size3" name="font-size"/><label id="lbl-font-size3"  for="rad-font-size3"><?php echo $this->__('A'); ?></label>
+					<input type="radio" id="rad-font-size4" name="font-size"/><label id="lbl-font-size4"  for="rad-font-size4"><?php echo $this->__('A'); ?></label>
+					<input type="radio" id="rad-font-size5" name="font-size"/><label id="lbl-font-size5"  for="rad-font-size5"><?php echo $this->__('A'); ?></label>
+					<div class="lbl-small-big"><?php echo $this->__('BIG'); ?></div>
+				</div>
+			</li>
+			<li>
+				<label id="lbl-color-options" class="main-label" ><?php echo $this->__('FONT COLOR'); ?></label>
+				<div id="font-color-options" >
+					<?php foreach($helper->getFonts() as $v => $l): ?>
+						<input type="radio" id="<?php echo $v;?>" title="<?php echo $this->__($l);?>" name="color-choice"/><label class="white" style="font-family: <?php echo $l; ?>" for="<?php echo $v;?>"></label>
+					<?php endforeach; ?>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

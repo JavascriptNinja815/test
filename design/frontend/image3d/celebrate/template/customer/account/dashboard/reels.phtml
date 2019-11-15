@@ -1,0 +1,218 @@
+<?php $activeReels = $this->helper('chreels')->getActiveCustomerReels(); ?>
+<?php $completedReels = $this->helper('chreels')->getCompletedCustomerReels();  ?>
+
+<div class="customer-reels-container">
+	<?php if(count($activeReels)): ?>
+		<div class="customer-reels in-progress">
+			<h3><?php echo $this->__('Reels in Progress:') ?></h3>
+			<ul>
+				<?php foreach($activeReels as $key => $reel): ?>
+					<?php if(!$reel->getReelName()) { $reel->setReelName("Unnamed Reel #" . $key); } ?>
+					<li class="progress-list <?php echo $reel->getIsScheduledForDelete() ? " scheduled-delete-reel " : "" ?>">
+						 <?php echo $reel->getIsScheduledForDelete() ? "<p>" . $this->__('TO BE DELETED – PLEASE COMPLETE') . "</p>" : "" ?>
+						<h4><?php echo $reel->getReelName() ?></h4>
+						<ul class="progress-li-buttons">
+							<!--<li class="reel-edit"><a class="button-link" href="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder?reel_id=<?php echo $reel->getId() ?>"><?php echo $this->__('edit') ?></a></li>-->
+							<li class="reel-edit"><a class="button-link" href="<?php echo mage::getBaseUrl(); ?>reelbuilder?reel_id=<?php echo $reel->getId() ?>"><?php echo $this->__('edit') ?></a></li>
+							<li><a class="button-link" href="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder/index/duplicate?reel_id=<?php echo $reel->getId() ?>"><?php echo $this->__('duplicate') ?></a></li>
+							<li><a class="button-link" href="javascript:showDeleteDialog(<?php echo $reel->getId() ?>)"><?php echo $this->__('delete') ?></a></li>
+						</ul>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php endif; ?>
+
+	<?php if(!count($activeReels) && !$completedReels->count()): ?>
+		<div class="customer-reels completed-reels">
+			<div class="info-box" style="margin:0 10px 10px 0;padding:10px;">
+				<h3 style="font-size:100%;"><?php echo $this->__('You haven\'t created any reels yet. Click "Create a new reel" to get started!'); ?></h3>
+			</div>
+		</div>
+	<?php endif; ?>
+
+	<?php if($completedReels->count()): ?>
+        <?php $realStaticContent = $this->getLayout()->createBlock('cms/block')->setBlockId('reel_preview_box')->toHtml();?>
+        <div id="realpreviewcontent" style="display:none;"><?php echo $realStaticContent;?></div>
+		<div class="customer-reels completed-reels">
+			<h3><?php echo $this->__('Completed Reels:') ?></h3>
+			<?php foreach($completedReels as $key => $reel): ?>
+				<?php if(!$reel->getReelName()) { $reel->setReelName("Unnamed Reel #" . $key); } ?>
+				<?php $thumb = $reel->getThumb() ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . '/'  . $reel->getThumb() : $this->getMediaUrl('reel_builder_templates/customer_reel_default.jpg'); ?>
+
+				<div class="completed-list">
+					<h4><?php echo $reel->getReelName() ?></h4>
+						<div class="completed-img-wrap">
+							<img src="<?php echo $thumb ?>"  title="<?php echo $reel->getReelName() ?>"/>
+							<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . '/reel_builder_templates/center-dot.png' ; ?>" class="center-dot" />
+						</div>
+					<ul>
+						<li><a class="button-link" href="javascript:showReelPreview('<?php echo $thumb; ?>', &quot;<?php echo $reel->getReelName() ?>&quot;)"><?php echo $this->__('preview') ?></a></li>
+						<li><a class="button-link" href="javascript:showDeleteDialog(<?php echo $reel->getId() ?>)"><?php echo $this->__('delete') ?></a></li>
+						<li><a class="button-link" href="javascript:duplicateReel(<?php echo $reel->getId() ?>)"><?php echo $this->__('Duplicate') ?></a></li>
+						<li><a id="sl" class="button-link" href="javascript:shareReel(<?php echo $reel->getId() ?>)"><?php if ( $reel->getData("is_public") ==  1 ) { echo $this->__('Unshare'); } else { echo "Share"; } ?></a></li>
+					</ul>
+					<div class="order-reel">
+						<h4><?php echo $this->__('Order This Reel') ?></h4>
+						<ul>
+							<li><input type="radio" name="order-<?php echo $reel->getId() ?>" id="reelonly-<?php echo $reel->getId() ?>" value="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reels?id=<?php echo $reel->getId() ?>" />
+								<a href="#/" onclick="jQuery('#reelonly-<?php echo $reel->getId() ?>').prop('checked', true);"><?php echo $this->getReelOnlyTitle() ?></a></li>
+							<li><input type="radio" name="order-<?php echo $reel->getId() ?>" id="reelview-<?php echo $reel->getId() ?>" value="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/viewers?id=<?php echo $reel->getId() ?>" />
+								<a  href="#/" onclick="jQuery('#reelview-<?php echo $reel->getId() ?>').prop('checked', true);"><?php echo $this->getReelAndViewerSetTitle() ?></a></li>
+							<li><input type="radio" name="order-<?php echo $reel->getId() ?>" id="imprint-<?php echo $reel->getId() ?>" value="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/imprints?id=<?php echo $reel->getId() ?>" />
+								<a  href="#/" onclick=" e.preventDefault();jQuery('#imprint-<?php echo $reel->getId() ?>').prop('checked', true);"><?php echo $this->getImprintedReelTitle() ?></a></li>
+							<li class="last-button"><a class="button-link" rel="order-<?php echo $reel->getId() ?>" onClick="return chNavigate(this);" href="javascript:void(0);"><?php echo $this->__('Add to Cart') ?></a></li>
+							<li class="points-learnmore-container">
+								<img src="<?php echo $this->getSkinUrl('images/logo50px.png') ?>" class="points-logo" width="50" />
+								<a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>how-to-earn-points">
+									<p class="earnpoints-text"><?php echo $this->__('Earn Points!') ?></p>
+									<p class="learnmore-text"><?php echo $this->__('Learn More') ?></p>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
+
+	<?php endif; ?>
+
+</div>
+<script>
+
+	jQuery(document).ready(function() {
+
+	var winWidth = jQuery(window).width();
+	var useMobile = true;
+
+	jQuery('.reel-edit').each( function(idx, e) {
+		var currentHref = jQuery(e).find('a').attr('href');
+		var newHref = currentHref.replace('reelbuilder', 'reelbuilder/index/mobile');
+		if(winWidth < 925 && useMobile) {
+			jQuery(e).find('a').attr('href', newHref);
+		}
+	});
+        jQuery('ul.messages').prependTo('div.col2-left-layout');
+        var ua = window.navigator.userAgent;
+        var uav = 0;
+        var browserNeedsUpgrade = false;
+        var msie = ua.indexOf("MSIE");
+        if (msie > 0) {    // If Internet Explorer, return version number
+                uav = parseInt (ua.substring (msie+5, ua.indexOf (".", msie )));
+        }
+        if(uav > 0 && uav < 9) {
+                browserNeedsUpgrade = true;
+        }
+
+        if(browserNeedsUpgrade) {
+            jQuery('.reel-edit').hide();
+        }
+    });
+
+	function chNavigate(ele)
+	{
+		var test = jQuery("input[name='" + jQuery(ele).attr('rel') + "']:checked").val();
+		if(test == undefined) {
+			alert(" please select an option");
+			return false;
+		}
+		document.location.href = test;
+		return false;
+	}
+
+	function chConfirmAction(what)
+	{
+		var txt = '<?php echo $this->__('Are you sure you want to delete this reel, there is no way to undo this?');?>';
+		if(what != "delete") {
+
+		}
+		return confirm(txt);
+	}
+
+	function showDeleteDialog(reelId)
+	{
+		jQuery('<div><?php echo $this->__('Are you sure you want to delete this reel, there is no way to undo this?');?></div>').dialog({
+			autoOpen: true,
+			modal: true,
+			title: "Delete Completed Reel",
+			dialogClass:'deleteReel',
+			height: 'auto',
+			resizable: false,
+			width: 'auto',
+			buttons : {
+				"Cancel" : function() {
+					jQuery(this).dialog("close");
+				},
+				"Delete!" : function() {
+					jQuery(this).dialog("close");
+					document.location.href = "<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder/index/delete?reel_id=" + reelId;
+				}
+
+			}
+		});
+		jQuery(".ui-dialog-titlebar").hide();
+
+	}
+
+	function duplicateReel(reelId)
+	{
+		document.location.href = "<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder/index/duplicate?reel_id=" + reelId;
+		console.log("Duplicate Reel Fired!");
+	}
+
+	function shareReel(reelId)
+	{
+		jQuery('body').append('<div class="share-load" style="background: #666666 url(/retroviewer/skin/frontend/image3d/celebrate/css/images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat;opacity: .5;width:100%;height:100%;position:fixed;z-index:999;left:0;top:0;"><img style="position:absolute;left:0;right:0;top:40%;margin: 0 auto;" src="/retroviewer/skin/frontend/image3d/celebrate/images/ajax-loader.gif"></div>');
+		//document.location.href = "<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder/index/share?reel_id=" + reelId;
+		var formKey = "<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>";
+		new Ajax.Request("<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder/index/share/reel_id/" + reelId, {
+			method: 'GET',
+			onComplete: function(transport) {
+				jQuery('.share-load').hide();
+				var resultx = jQuery.parseJSON(transport.responseText);
+				if (resultx.shared_reel) {
+					var sharedUrl = "<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/reelbuilder/index/viewshare?reel_id=" + reelId + '&noframe=1';
+					jQuery('<iframe src="' + sharedUrl + '" >').dialog({
+						autoOpen: true,
+						modal: true,
+						title: "Share Reel",
+						dialogClass:'deleteReel',
+						height: '550',
+						resizable: false,
+						width: '600'
+						/* buttons : {
+							"Close": function () {
+								jQuery(this).dialog("close");
+							}
+						}*/
+					});
+					jQuery("#sl").text("<?php echo $this->__("Unshare");?>");
+
+				} else {
+					jQuery('<div><?php echo $this->__('Reel was successfully unshared');?></div>').dialog({
+						autoOpen: true,
+						modal: true,
+						title: "Share Reel",
+						dialogClass:'deleteReel',
+						height: 'auto',
+						resizable: false,
+						width: 'auto'
+						/* buttons : {
+							 "Close" : function() {
+							 jQuery(this).dialog("close");
+							 }
+						 } */
+					});
+					jQuery("#sl").text("<?php echo $this->__("Share");?>");
+					//jQuery(".ui-dialog-titlebar").hide();
+
+				}
+		}});
+
+
+
+		console.log("Share Reel Fired!");
+	}
+
+
+</script>

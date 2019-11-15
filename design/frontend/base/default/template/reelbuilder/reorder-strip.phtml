@@ -1,0 +1,28 @@
+<?php
+$_frame_list = array(
+	'apple',
+	'pineapple',
+	'orange',
+	'yellow',
+	'green',
+	'banana',
+	'watermelon',
+);
+?>
+
+<div class="reorder-strip-container">
+<h2 class="step"><?php echo $this->__('Step 1'); ?></h2>  
+<?php echo $this->__('Select the frame you want to edit. Drag a frame to rearrange the order.'); ?>
+
+	<ul class="frame-list frame-list-sort" id="frame-list-sort">
+		<?php  $active = ' filmstrip-frame-active ';   ?>
+		<?php foreach($_frame_list as $notK => $idx): $fi= $notK+1; ?>
+			<li rel="<?php echo $idx; ?>" data-frame-id="<?php echo $fi; ?>" data-frame-entity-id="" class="framesli frames <?php echo $active; $active = ''; ?>">
+				<div class="frame-indentifier-wrap">
+					<span class="frame_identifier" style="text-align: center;"><?php echo "Frame " . $fi; ?></span>
+				</div>
+
+			</li>
+		<?php endforeach;?>
+	</ul>
+</div>

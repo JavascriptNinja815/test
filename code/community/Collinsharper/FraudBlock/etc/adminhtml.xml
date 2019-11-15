@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <sales>
+            <children>
+                <fraudblock translate="title" module="fraudblock">
+                    <title>Fraud Tools</title>
+                    <sort_order>100</sort_order>
+                    <!-- <action>chfraud_admin/adminhtml_index</action> -->
+                    <children>
+                        <fraudblock translate="title" module="fraudblock">
+                            <title>Fraud Ban</title>
+                            <sort_order>100</sort_order>
+                            <action>chfraud_admin/adminhtml_index</action>
+                        </fraudblock>
+                        <paymentfaillog translate="title" module="fraudblock">
+                            <title>Failure Log</title>
+                            <sort_order>100</sort_order>
+                            <action>chfraud_admin/adminhtml_faillog</action>
+                        </paymentfaillog>
+                    </children>
+                </fraudblock>
+            </children>
+        </sales>
+    </menu>
+
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <fraudblock>
+                                <title>Manage Fraud Ban</title>
+                            </fraudblock>
+                        </children>
+                    </sales>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <translate>
+        <modules>
+            <Collinsharper_Fraudblock>
+                <files>
+                    <default>Collinsharper_Fraudblock.csv</default>
+                </files>
+            </Collinsharper_Fraudblock>
+        </modules>
+    </translate>
+</config>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Udevix
+ *
+ * @author     UdevixTeam <udevix@gmail.com>
+ * @copyright  Copyright (c) 2015-2016 Udevix
+ */
+-->
+<config>
+    <modules>
+        <Udevix_GoogleTagManager>
+            <version>1.0.4</version>
+        </Udevix_GoogleTagManager>
+    </modules>
+    <global>
+        <blocks>
+            <udevix_google_tag_manager>
+                <class>Udevix_GoogleTagManager_Block</class>
+            </udevix_google_tag_manager>
+        </blocks>
+        <helpers>
+            <udevix_google_tag_manager>
+                <class>Udevix_GoogleTagManager_Helper</class>
+            </udevix_google_tag_manager>
+        </helpers>
+        <events>
+            <checkout_cart_add_product_complete>
+                <observers>
+                    <udevix_gtm_checkout_cart_add_product_complete>
+                        <type>singleton</type>
+                        <class>Udevix_GoogleTagManager_Model_Observer</class>
+                        <method>cartAddProductComplete</method>
+                    </udevix_gtm_checkout_cart_add_product_complete>
+                </observers>
+            </checkout_cart_add_product_complete>
+        </events>
+        <models>
+            <udevix_google_tag_manager>
+                <class>Udevix_GoogleTagManager_Model</class>
+            </udevix_google_tag_manager>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <udevix_google_tag_manager>
+                    <file>google_tag_manager.xml</file>
+                </udevix_google_tag_manager>
+            </updates>
+        </layout>
+    </frontend>
+    <default>
+        <udevix_gtm>
+            <udevix_gtm_group>
+                <enable>0</enable>
+                <container_id></container_id>
+            </udevix_gtm_group>
+            <udevix_gtm_remarketing_group>
+                <enable_remarketing>0</enable_remarketing>
+            </udevix_gtm_remarketing_group>
+            <udevix_gtm_transaction_group>
+                <enable_transaction>1</enable_transaction>
+                <transaction_affiliation>My store</transaction_affiliation>
+                <enable_adwords_conversion>0</enable_adwords_conversion>
+                <enable_pixel>0</enable_pixel>
+            </udevix_gtm_transaction_group>
+        </udevix_gtm>
+    </default>
+</config>

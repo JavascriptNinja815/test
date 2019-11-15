@@ -1,0 +1,15 @@
+<?php $launchDate = $this->getLastLaunchDate(); ?>
+
+<?php if (Mage::helper('rewards')->storeHasRewardRules() && $launchDate): ?>
+    <div class="quick-launch-notice">
+        <ul class="messages">
+            <li class="success-msg">
+                <span>
+                    You used Quick-Launch on <strong><?php echo $launchDate; ?></strong>
+                    to launch a basic program. See the original confirmation page 
+                    <a href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/quickLaunch/success'); ?>" title="Quick Launch">here</a>.
+                </span>
+            </li>
+        </ul>
+    </div>
+<?php endif; ?>

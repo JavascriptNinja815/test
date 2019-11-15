@@ -1,0 +1,166 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
+<?php $_shippingRateGroups = $this->getShippingRates(); ?>
+<?php if (!$_shippingRateGroups): ?>
+    <?php $noshipment_message = $this->getLayout()->createBlock('cms/block')->setBlockId('no_shipment_message')->toHtml(); ?>
+    <?php if (strlen($noshipment_message) > 0): ?>
+        <p><?php echo $noshipment_message; ?></p>
+    <?php else: ?>
+        <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
+    <?php endif; ?>
+    <?php else: ?>
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('checkout_shipping_message')->toHtml() ?><br />
+    <?php
+    $shipping_country_code = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getCountry();
+    if ($shipping_country_code != 'US') {
+    echo $this->getLayout()->createBlock('cms/block')->setBlockId('checkout_shipping_international_message')->toHtml();
+    } ?><br />
+
+    <?php
+    //TODO: CHRIS HARPER: Check if APO can also be in the second street field and add logic to check both street fields for APO
+	$shipping_street = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getStreet();
+        $_isPOBox = preg_match("/(?i)\b(?:p(?:ost)?\.?\s*[o0](?:ffice)?\.?\s*b(?:[o0]x)?|b[o0]x)/", $shipping_street[0]);
+    if (strpos($shipping_street[0],'APO') !== false) {
+        echo $this->getLayout()->createBlock('cms/block')->setBlockId('shipping_method_additional_information')->toHtml();
+    }?><br />
+    <dl class="sp-methods">
+    <?php $shippingCodePrice = array(); ?>
+	<?php
+	//2017-03-15
+	$checkCustomShipping = false;
+	foreach($_shippingRateGroups as $code => $_rates)
+	{
+	    foreach($_rates as $key => $_rate)
+	    {
+		if($_rate->getCode() == 'chcustomshippingmodule_method0')
+	    	{
+			$checkCustomShipping = true;
+	    	}
+	    }
+            if ($_isPOBox && ($code == 'ups')) {
+                unset($_shippingRateGroups[$code]);
+            }
+	}
+	if($checkCustomShipping)
+	{
+	   foreach($_shippingRateGroups as $code => $_rates)
+	   {
+		foreach($_rates as $key => $_rate)
+	    	{
+			if($_rate->getCode() == 'flatrate_flatrate' || $_rate->getCode() == 'ups_08')
+		    	{
+					if(count($_shippingRateGroups[$code]) == 1)
+					{
+						unset($_shippingRateGroups[$code]);
+					}
+					else
+					{
+						unset($_shippingRateGroups[$code][$key]);
+					}
+		    	}
+	    	}
+	   }
+	}
+	//end 2017-03-15
+    ?>
+    <?php 
+    $storeId = Mage::app()->getStore()->getStoreId();
+    $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
+        <?php //if ($_isPOBox && $code == 'ups') { continue; } ?>
+        <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+        <dd>
+            <ul>
+            <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                <li>
+                   <?php if ($_rate->getErrorMessage()): ?>
+                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                   <?php else: ?>
+                        <?php if ($_sole) : ?>
+                        <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                        <?php else: ?>
+                        <?php //$methodDescription = Mage::getStoreConfig('carriers/ups/'.$_rate->getCode(), $storeId);?>
+                        <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio"/>
+
+                        <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                                lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                            //]]>
+                        </script>
+                        <?php endif; ?>
+
+                        <?php endif; ?>
+                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                        <?php /*if($methodDescription !=""):?>
+						<span class="description"> <?php echo $methodDescription;?></span>
+						<?php endif;*/ ?>
+                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                        <?php echo $_excl; ?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                        <?php endif; ?>
+                        </label>
+                   <?php endif ?>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        </dd>
+    
+    <?php endforeach; ?>
+    </dl>
+<script type="text/javascript">
+//<![CDATA[
+    <?php if (!empty($shippingCodePrice)): ?>
+        var shippingCodePrice = {<?php echo implode(',',$shippingCodePrice); ?>};
+    <?php endif; ?>
+
+    $$('input[type="radio"][name="shipping_method"]').each(function(el){
+        Event.observe(el, 'click', function(){
+            if (el.checked == true) {
+                var getShippingCode = el.getValue();
+                <?php if (!empty($shippingCodePrice)): ?>
+                    var newPrice = shippingCodePrice[getShippingCode];
+                    if (!lastPrice) {
+                        lastPrice = newPrice;
+                        quoteBaseGrandTotal += newPrice;
+                    }
+                    if (newPrice != lastPrice) {
+                        quoteBaseGrandTotal += (newPrice-lastPrice);
+                        lastPrice = newPrice;
+                    }
+                <?php endif; ?>
+                checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+                return false;
+            }
+       });
+    });
+//]]>
+</script>
+<?php endif; ?>

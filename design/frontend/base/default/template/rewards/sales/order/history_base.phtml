@@ -1,0 +1,100 @@
+<?php
+/**
+ * Sweet Tooth
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS
+ * License, which extends the Open Software License (OSL 3.0).
+ *
+ * The Open Software License is available at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is
+ * not held liable for any inconsistencies or abnormalities in the
+ * behaviour of this code.
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the
+ * provided Sweet Tooth License.
+ * Upon discovery of modified code in the process of support, the Licensee
+ * is still held accountable for any and all billable time Sweet Tooth spent
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension.
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy
+ * immediately.
+ *
+ * @category   [TBT]
+ * @package    [TBT_RewardsOnly]
+ * @copyright  Copyright (c) 2014 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * Customer My Orders
+ *
+ * @category   design
+ * @package    base_default
+ * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+?>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<?php $_orders = $this->getOrders(); ?>
+<div class="page-title">
+    <h1><?php echo $this->__('My Orders') ?></h1>
+</div>
+<?php echo $this->getPagerHtml(); ?>
+<?php if($_orders->getSize()): ?>
+<table class="data-table" id="my-orders-table">
+    <col width="1" />
+    <col width="1" />
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Order #') ?></th>
+            <th><?php echo $this->__('Date') ?></th>
+            <th><?php echo $this->__('Ship To') ?></th>
+            <?php // REWARDS BEGIN ?>
+            <th><span class="nobr"><?php echo $this->__('Points Total') ?></span></th>
+            <?php // REWARDS END ?>
+            <th><span class="nobr"><?php echo $this->__('Order Total') ?></span></th>
+            <th><span class="nobr"><?php echo $this->__('Order Status') ?></span></th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($_orders as $_order): ?>
+        <tr>
+            <td><?php echo $_order->getRealOrderId() ?></td>
+            <td><span class="nobr"><?php echo $this->formatDate($_order->getCreatedAtStoreDate()) ?></span></td>
+            <td><?php echo $_order->getShippingAddress() ? $this->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?></td>
+            <?php // REWARDS BEGIN ?>
+            <td><?php echo $_order->getTotalSpentPointsAsString() ?></td>
+            <?php // REWARDS END ?>
+            <td><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></td>
+            <td><em><?php echo $_order->getStatusLabel() ?></em></td>
+            <td class="a-center">
+                <span class="nobr"><a href="<?php echo $this->getViewUrl($_order) ?>"><?php echo $this->__('View Order') ?></a>
+                    <?php /*<span class="separator">|</span><a href="<?php echo $this->getTrackUrl($_order) ?>"><?php echo $this->__('Track Order') ?></a>&nbsp;*/ ?>
+                    <?php if ($this->helper('sales/reorder')->canReorder($_order)) : ?>
+                    <span class="separator">|</span> <a href="<?php echo $this->getReorderUrl($_order) ?>" class="link-reorder"><?php echo $this->__('Reorder') ?></a>
+                <?php endif ?>
+                </span>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('my-orders-table');</script>
+<?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have placed no orders.'); ?></p>
+<?php endif ?>

@@ -1,0 +1,40 @@
+<?php
+
+/*
+ * Include common stuff first:
+ */
+$_item = $this->getItem();
+$item_id = $_item->getId();
+
+// Fetch points redemption data
+$hasRedeemed = $this->hasRedemptions();
+$redeem_list_id = 'points-list-redeemed-'. $item_id;
+$redeemed_points_data = $this->getRedemptionData();
+$is_points_only = false;
+if ($hasRedeemed) {
+	$points_only = Mage::getModel('rewardsonly/catalog_product')->wrap2($this->getProduct())
+	->getSimplePointsCost(Mage::getSingleton('rewards/session')->getCustomer());
+
+	if (!empty($points_only)) {
+		$is_points_only = true;
+	}
+}
+
+
+/*
+ * include specific templates:
+ */
+if (Mage::helper('rewards/theme')->getPackageName() === "rwd") {
+    include 'downloadable_rwd.phtml';
+    
+} else if (Mage::helper('rewards/version')->isMageVersionAtLeast('1.8.1.0')) {
+    	 include 'downloadable_m1901.phtml';
+
+} else if (Mage::helper('rewards/version')->isMageVersionAtLeast('1.7.0.0')) {
+    	 include 'downloadable_m1800.phtml';
+    	 
+} else {
+	include 'downloadable_m1620.phtml';
+}
+
+?>

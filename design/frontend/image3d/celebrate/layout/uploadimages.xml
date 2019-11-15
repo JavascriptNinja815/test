@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<layout>
+	<catalog_product_view>
+		<reference name="head">
+		<!-- Collins Harper duplicate jqueryr inclusion -->
+<!--
+			<action method="addJS" ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/jquery-1.7.2.min.js</script></action>
+			<action method="addJS" ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/jqueryQw.noconflict.js</script></action>
+			-->
+			<!--action method="addJs"  ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/media/fancybox/jquery.fancybox-1.3.4.pack.js</script></action-->
+			<!--action method="addJS" ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/uploadimages/uploadfields.js</script></action-->
+			<action method="addJS" ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/uploadimages/jquery.uploadfields.js</script><params><![CDATA[name="jquery_004"]]></params></action>
+			<action method="addJS" ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/uploadimages/load.js</script><params><![CDATA[name="jquery_004"]]></params></action>
+			<action method="addJS" ifconfig="uploadimages/settings/enabled" value="1"><script>belvg/uploadimages/scripts/jflow.plus.js</script><params><![CDATA[name="jquery_004"]]></params></action>
+			<action method="addCSS" ifconfig="uploadimages/settings/enabled" value="1"><stylesheet>css/belvg/styles/jflow.style.css</stylesheet></action>
+			<action method="addCSS" ifconfig="uploadimages/settings/enabled" value="1"><stylesheet>css/belvg/styles/style.css</stylesheet></action>
+			<!--action method="addItem" ifconfig="uploadimages/settings/enabled" value="1"><type>js_css</type><name>belvg/media/fancybox/jquery.fancybox-1.3.4.css</name></action-->
+			<action method="addCSS" ifconfig="uploadimages/settings/enabled"><stylesheet>css/belvg/uploadimages.css</stylesheet></action>
+		</reference>
+		<reference name="content">
+			<block type="uploadimages/form" name="uploadimages.form" template="uploadimages/form.phtml"></block>
+			<block type="uploadimages/slider" name="uploadimages.slider" template="uploadimages/slider.phtml"></block>
+		</reference>
+	</catalog_product_view>
+</layout>

@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Contacts>
+            <version>0.1.0</version>
+        </Collinsharper_Contacts>
+    </modules>
+
+    <global>
+        <models>
+            <chcontacts>
+                <class>Collinsharper_Contacts_Model</class>
+            </chcontacts>
+            <sales>
+                <rewrite>
+                    <order_shipment>Collinsharper_Contacts_Model_Shipment</order_shipment>
+                </rewrite>
+            </sales>
+        </models>
+        <helpers>
+            <chcontacts>
+                <class>Collinsharper_Contacts_Helper</class>
+            </chcontacts>
+        </helpers>
+        <blocks>
+            <chcontacts>
+                <class>Collinsharper_Contacts_Block</class>
+            </chcontacts>
+        </blocks>
+        <resources>
+            <chcontacts_setup>
+                <setup>
+                    <module>Collinsharper_Contacts</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chcontacts_setup>
+            <chcontacts_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </chcontacts_write>
+            <chcontacts_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </chcontacts_read>
+        </resources>
+        <template>
+            <email>
+                <contacts_specialcontact_specialformstore_template translate="label" module="chcontacts">
+                    <label>Special Form Submission for Store</label>
+                    <file>chcontacts/specialcontactstore.html</file>
+                    <type>text</type>
+                </contacts_specialcontact_specialformstore_template>
+                <contacts_specialcontact_specialformcustomer_template translate="label" module="chcontacts">
+                    <label>Special Form Submission for Customer</label>
+                    <file>chcontacts/specialcontactcustomer.html</file>
+                    <type>text</type>
+                </contacts_specialcontact_specialformcustomer_template>
+
+                <chcontacts_email_stereo_order_template translate="label" module="chcontacts">
+                    <label>Stereo Order Inquiry Template</label>
+                    <file>chcontacts/stereo.html</file>
+                    <type>html</type>
+                </chcontacts_email_stereo_order_template>
+
+                <chcontacts_email_market_estimate_template translate="label" module="chcontacts">
+                    <label>Market Estimate Email Template</label>
+                    <file>chcontacts/marketestimate.html</file>
+                    <type>html</type>
+                </chcontacts_email_market_estimate_template>
+
+                <chcontacts_email_market_order_template translate="label" module="chcontacts">
+                    <label>Market Order Email Template</label>
+                    <file>chcontacts/marketorder.html</file>
+                    <type>html</type>
+                </chcontacts_email_market_order_template>
+            </email>
+        </template>
+
+    </global>
+
+    <frontend>
+        <routers>
+            <chcontacts>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Contacts</module>
+                    <frontName>chcontacts</frontName>
+                </args>
+            </chcontacts>
+        </routers>
+    </frontend>
+
+    <crontab>
+        <jobs>
+            <collinsharper_contacts_email_ship>
+                <schedule>
+                    <cron_expr>*/30 * * * *</cron_expr>
+                    <!--Disable this cron job -->
+                    <!--<cron_expr></cron_expr>-->
+                </schedule>
+                <run>
+                    <model>chcontacts/observer::sendShipmentEmail</model>
+                </run>
+            </collinsharper_contacts_email_ship>
+        </jobs>
+    </crontab>
+
+</config>

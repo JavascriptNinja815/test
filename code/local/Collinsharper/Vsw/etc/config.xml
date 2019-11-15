@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Vsw>
+            <version>0.1.0</version>
+        </Collinsharper_Vsw>
+    </modules>
+    <global>
+        <models>
+            <vsw>
+                <class>Collinsharper_Vsw_Model</class>
+            </vsw>
+        </models>
+
+        <helpers>
+            <vsw>
+                <class>Collinsharper_Vsw_Helper</class>
+            </vsw>
+        </helpers>
+
+        <blocks>
+            <vsw>
+                <class>Collinsharper_Vsw_Block</class>
+            </vsw>
+        </blocks>
+
+    </global>
+
+    <frontend>
+        <routers>
+            <vsw>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Vsw</module>
+                    <frontName>vsw</frontName>
+                </args>
+            </vsw>
+        </routers>
+        <layout>
+            <updates>
+                <Collinsharper_Vsw module="Collinsharper_Vsw">
+                    <file>ch_vsw.xml</file>
+                </Collinsharper_Vsw>
+            </updates>
+        </layout>
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <collinsharper_vsw_on_order_success>
+                        <class>Collinsharper_Vsw_Model_Observer</class>
+                        <method>setVswFeatureLinkOnOrderSuccessPageView</method>
+                    </collinsharper_vsw_on_order_success>
+                </observers>
+            </checkout_onepage_controller_success_action>
+            <checkout_multishipping_controller_success_action>
+                <observers>
+                    <collinsharper_vsw_on_order_success>
+                        <class>Collinsharper_Vsw_Model_Observer</class>
+                        <method>setVswFeatureLinkOnOrderSuccessPageView</method>
+                    </collinsharper_vsw_on_order_success>
+                </observers>
+            </checkout_multishipping_controller_success_action>
+        </events>
+    </frontend>
+
+
+</config>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    <sections>
+        <rewards translate="label" module="rewardssocial">
+            <groups>
+                <transferComments>
+                    <fields>
+                        <facebookLike translate="label comment">
+                            <label><![CDATA[Facebook Like]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </facebookLike>
+                        <facebookProductShare translate="label comment">
+                            <label><![CDATA[Facebook Product Share]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>171</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </facebookProductShare>
+                        <twitterTweet translate="label comment">
+                            <label><![CDATA[Twitter Tweet]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>172</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </twitterTweet>
+                        <pinterestPin translate="label comment">
+                            <label><![CDATA[Pinterest Pin]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>173</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </pinterestPin>
+                        <googlePlusOne translate="label comment">
+                            <label><![CDATA[Google +1]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>174</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </googlePlusOne>
+                        <twitterFollow translate="label comment">
+                            <label><![CDATA[Twitter Follow]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>175</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </twitterFollow>
+                        <referralShare translate="label comment">
+                            <label><![CDATA[Shares Referral Link]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>176</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </referralShare>
+                        <purchaseShareOnFacebook translate="label comment">
+                            <label><![CDATA[Shares Purchase on Facebook]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>180</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </purchaseShareOnFacebook>
+                        <purchaseShareOnTwitter translate="label comment">
+                            <label><![CDATA[Shares Purchase on Twitter]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>183</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </purchaseShareOnTwitter>
+                    </fields>
+                </transferComments>
+                <InitialTransferStatus translate="label">
+                    <fields>
+                        <AfterFacebookLike translate="label">
+                            <label>Facebook Like</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterFacebookLike>
+                        <AfterFacebookProductShare translate="label">
+                            <label>Facebook Product Share</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterFacebookProductShare>
+                        <AfterTwitterTweet translate="label">
+                            <label>Twitter Tweet</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterTwitterTweet>
+                        <AfterPinterestPin translate="label">
+                            <label>Pinterest Pin</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterPinterestPin>
+                        <AfterGooglePlusOne translate="label">
+                            <label>Google +1</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterGooglePlusOne>
+                        <AfterTwitterFollow translate="label">
+                            <label>Twitter Follow</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterTwitterFollow>
+                        <AfterReferralShare translate="label">
+                            <label>Shares Referral Link</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </AfterReferralShare>
+                        <afterPurchaseShareOnFacebook translate="label">
+                            <label>Purchase Share on Facebook</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </afterPurchaseShareOnFacebook>
+                        <afterPurchaseShareOnTwitter translate="label">
+                            <label>Purchase Share on Twitter</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>93</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>rewardssocial2/adminhtml_system_config_form_field_disableIfV1Active</frontend_model>
+                        </afterPurchaseShareOnTwitter>
+                    </fields>
+                </InitialTransferStatus>
+                <rewardssocial2 translate="label">
+                    <label>Social Rewards</label>
+                    <sort_order>111</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <frontend_model>rewardssocial2/adminhtml_system_config_form_fieldset_disableIfV1Active</frontend_model>
+                    <fields>
+                        <auto_integrate translate="label comment">
+                            <label>Automatically Integrate with Supported Social Buttons</label>
+                            <comment>
+                                <![CDATA[<span id="auto-integrate-enabled-comment">Will add a JS file to every page to integrate with supported social buttons. <a href="http://support.magerewards.com/article/1627-rewards-social-2-0-admin-functionality#automatic" target="_blank" title="Social Rewards Script">Learn More</a></br></br></span>]]>
+                                    <![CDATA[<span id="auto-integrate-disabled-comment"><span style="color: red;">No buttons will earn rewards unless manually integrated!</span> <a href="http://support.magerewards.com/article/1627-rewards-social-2-0-admin-functionality#automatic" target="_blank" title="Social Rewards Script">Learn More</a></br></br></span>]]>
+                                <![CDATA[
+                                    <script type="text/javascript">
+                                        (function() {
+                                            var autoIntegrate = $('rewards_rewardssocial2_auto_integrate');
+                                            var enabledComment = $('auto-integrate-enabled-comment');
+                                            var disabledComment = $('auto-integrate-disabled-comment');
+
+                                            (autoIntegrate.getValue() > 0) ? disabledComment.hide() : enabledComment.hide();
+                                            Event.observe(autoIntegrate, 'change', function() {
+                                                if (autoIntegrate.getValue() > 0) {
+                                                    enabledComment.show();
+                                                    disabledComment.hide();
+                                                } else {
+                                                    enabledComment.hide();
+                                                    disabledComment.show();
+                                                }
+                                            });
+                                        })();
+                                    </script>
+                                ]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </auto_integrate>
+                        <twitter_username translate="label comment">
+                            <label>Store's Twitter Username</label>
+                            <comment><![CDATA[Used for Twitter Follow buttons]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </twitter_username>
+                        <twitter_message translate="label comment">
+                            <label>Default Tweet Message</label>
+                            <comment><![CDATA[Default message when tweeting about a CMS page, product or category]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </twitter_message>
+                        <homepage_buttons translate="label">
+                            <label>Buttons Available on Homepage</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <frontend_size>4</frontend_size>
+                            <source_model>rewardssocial2/system_config_source_homepage</source_model>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </homepage_buttons>
+                        <catalog_buttons translate="label">
+                            <label><![CDATA[Buttons Available on Catalog & Product Pages]]></label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rewardssocial2/system_config_source_catalog</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </catalog_buttons>
+                        <purchase_buttons translate="label">
+                            <label>Buttons Available After Purchase</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rewardssocial2/system_config_source_purchase</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </purchase_buttons>
+                        <referral_buttons translate="label">
+                            <label>Buttons Available when Referring Friends</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rewardssocial2/system_config_source_refer</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </referral_buttons>
+                        <text_content_separator>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>rewardssocial2/system_config_html</frontend_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </text_content_separator>
+                        <daily_limit>
+                            <label>Limit Daily Earnings</label>
+                            <frontend_type>rewards_checkbox_text</frontend_type>
+                            <backend_model>rewardssocial2/system_config_backend_securityLimit</backend_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </daily_limit>
+                        <weekly_limit>
+                            <label>Limit Weekly Earnings</label>
+                            <frontend_type>rewards_checkbox_text</frontend_type>
+                            <backend_model>rewardssocial2/system_config_backend_securityLimit</backend_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weekly_limit>
+                        <monthly_limit>
+                            <label>Limit Monthly Earnings</label>
+                            <frontend_type>rewards_checkbox_text</frontend_type>
+                            <backend_model>rewardssocial2/system_config_backend_securityLimit</backend_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </monthly_limit>
+                        <yearly_limit>
+                            <label>Limit Yearly Earnings</label>
+                            <frontend_type>rewards_checkbox_text</frontend_type>
+                            <backend_model>rewardssocial2/system_config_backend_securityLimit</backend_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </yearly_limit>
+                        <lifetime_limit>
+                            <label>Limit Lifetime Earnings</label>
+                            <frontend_type>rewards_checkbox_text</frontend_type>
+                            <backend_model>rewardssocial2/system_config_backend_securityLimit</backend_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lifetime_limit>
+                    </fields>
+                </rewardssocial2>
+            </groups>
+        </rewards>
+    </sections>
+</config>

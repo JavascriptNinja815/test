@@ -1,0 +1,24 @@
+
+<script type="text/javascript">
+    document.observe("dom:loaded", function() {
+        <?php if ($this->getProduct() && $this->getProduct()->getTypeId() === 'configurable') : ?>
+        if (typeof RewardsPointsOnly !== 'undefined') {
+            var rewardsPointsOnlyConfigurableConfigJson = JSON.parse('<?php echo $this->getConfigurablePointsJsonConfig($this->getProduct());?>');
+            var rewarsPointsOnlyConfigurable = new RewardsPointsOnly.Configurable(spConfig, rewardsPointsOnlyConfigurableConfigJson);
+        }
+        <?php endif; ?>
+
+        <?php if ($this->getProduct() && $this->getProduct()->getTypeId() === 'grouped') : ?>
+        if (typeof RewardsPointsOnly !== 'undefined') {
+            var rewardsPointsOnlyGroupedConfigJson = JSON.parse('<?php echo $this->getGroupedPointsJsonConfig($this->getProduct());?>');
+            var rewarsPointsOnlyGrouped = new RewardsPointsOnly.Grouped(rewardsPointsOnlyGroupedConfigJson);
+        }
+        <?php endif; ?>
+
+        <?php if ($this->getProduct() && $this->getProduct()->getId()) : ?>
+        if (typeof RewardsPointsOnly !== 'undefined') {
+            var rewardsPointsOnlyMain = new RewardsPointsOnly.Main(<?php echo $this->getProduct()->getId();?>, <?php echo $this->getCustomerPointsBalanceAvailable();?>);
+        }
+        <?php endif; ?>
+    });
+</script>

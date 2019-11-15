@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Toolsxss>
+            <version>0.1.0</version>
+        </Collinsharper_Toolsxss>
+    </modules>
+
+    <global>
+        <models>
+            <chtoolsxss>
+                <class>Collinsharper_Toolsxss_Model</class>
+            </chtoolsxss>
+        </models>
+        <helpers>
+            <chtoolsxss>
+                <class>Collinsharper_Toolsxss_Helper</class>
+            </chtoolsxss>
+        </helpers>
+        <blocks>
+            <chtoolsxss>
+                <class>Collinsharper_Toolsxss_Block</class>
+            </chtoolsxss>
+        </blocks>
+        <resources>
+            <chtoolsxss_setup>
+                <setup>
+                    <module>Collinsharper_Toolsxss</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chtoolsxss_setup>
+            <chtoolsxss_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </chtoolsxss_write>
+            <chtoolsxss_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </chtoolsxss_read>
+        </resources>
+
+        <events>
+            <controller_front_init_before>
+                <observers>
+                    <xss_clean>
+                        <type>model</type>
+                        <class>chtoolsxss/observer</class>
+                        <method>cleanXSS</method>
+                    </xss_clean>
+                </observers>
+            </controller_front_init_before>
+        </events>
+    </global>
+
+    <frontend>
+        <routers>
+            <collinsharpertoolsxss>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Toolsxss</module>
+                    <frontName>collinsharpertoolsxss</frontName>
+                </args>
+            </collinsharpertoolsxss>
+        </routers>
+    </frontend>
+
+
+</config>

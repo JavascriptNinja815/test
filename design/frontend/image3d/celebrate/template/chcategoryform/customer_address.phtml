@@ -1,0 +1,135 @@
+<?php $prefix = $this->getPrefix();
+$customer = Mage::getSingleton('customer/session')->getCustomer();
+$hasAddresses = $customer->getAddressesCollection()->count();
+$helper = new Collinsharper_Beanstreamprofiles_Helper_Data;
+mage::log(__FILE__ . "We gots a prefox " . $prefix . " addresses " . $hasAddresses ); ?>
+<?php if($this->getTitle()): ?>
+<div class="page-title">
+    <h1><?php echo $this->getTitle() ?></h1>
+</div>
+<?php endif; ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php if ($hasAddresses): ?>
+    <div action="<?php echo $this->getSaveUrl() ?>" id="<?php echo $prefix; ?>customer-address-select">
+
+        <li class="wide">
+            <label for="<?php echo $prefix; ?>-address-select"><?php echo $this->__('Select an address from your address book or enter a new address.') ?></label>
+            <div class="input-box">
+                <?php echo $helper->getAddressesHtmlSelect('billing', $prefix, true) ?>
+            </div>
+        </li>
+    </div>
+
+<?php endif; ?>
+
+<div action="<?php echo $this->getSaveUrl() ?>" id="<?php echo $prefix; ?>customer-address" <?php if($hasAddresses): ?> style="display:none;"<?php endif; ?>>
+    <div class="fieldset">
+    <?php echo $this->getBlockHtml('formkey')?>
+    <input type="hidden" name="<?php echo $prefix; ?>success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+    <input type="hidden" name="<?php echo $prefix; ?>error_url" value="<?php echo $this->getErrorUrl() ?>" />
+        <h2 class="legend"><?php echo $this->__('Contact Information') ?></h2>
+        <li><label for="<?php echo $prefix; ?>email"><?php echo $this->__('Email') ?></label>
+            <div class="input-box">
+                <input type="text" id="<?php echo $prefix; ?>email" name="<?php echo $prefix; ?>email" value="<?php echo $this->escapeHtml($this->getAddress()->getEmail()) ?>" class="input-text validate-email">
+            </div>
+        </li>
+        <ul class="form-list">
+            <li class="fields">
+                <?php echo str_replace('firstname', $prefix.'firstname', str_replace('lastname', $prefix.'lastname', $this->getNameBlockHtml())) ?>
+            </li>
+            <li class="wide">
+                <label for="<?php echo $prefix; ?>company"><?php echo $this->__('Company') ?></label>
+                <div class="input-box">
+                    <input type="text" name="<?php echo $prefix; ?>company" id="<?php echo $prefix; ?>company" title="<?php echo $this->__('Company') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label for="<?php echo $prefix; ?>telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="<?php echo $prefix; ?>telephone" value="<?php echo $this->escapeHtml($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text  <?php echo $this->helper('customer/address')->getAttributeValidationClass('telephone') ?>" id="<?php echo $prefix; ?>telephone" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="<?php echo $prefix; ?>fax"><?php echo $this->__('Fax') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="<?php echo $prefix; ?>fax" id="<?php echo $prefix; ?>fax" title="<?php echo $this->__('Fax') ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getFax()) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('fax') ?>" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Address') ?></h2>
+        <ul class="form-list">
+        <?php $_streetValidationClass = $this->helper('customer/address')->getAttributeValidationClass('street'); ?>
+            <li class="wide">
+                <label for="<?php echo $prefix; ?>street_1" class="required"><em>*</em><?php echo $this->__('Street Address') ?></label>
+                <div class="input-box">
+                    <input type="text" name="<?php echo $prefix; ?>street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="<?php echo $prefix; ?>street_1" class="input-text <?php echo $_streetValidationClass ?>" />
+                </div>
+            </li>
+        <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+            <li class="wide">
+                <div class="input-box">
+                    <input type="text" name="<?php echo $prefix; ?>street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="<?php echo $prefix; ?>street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" />
+                </div>
+            </li>
+        <?php endfor; ?>
+            <?php if ($this->helper('customer/address')->isVatAttributeVisible()) : ?>
+            <li class="wide">
+                <label for="<?php echo $prefix; ?>vat_id"><?php echo $this->__('VAT Number') ?></label>
+                <div class="input-box">
+                    <input type="text" name="<?php echo $prefix; ?>vat_id" value="<?php echo $this->escapeHtml($this->getAddress()->getVatId()) ?>" title="<?php echo $this->__('VAT Number') ?>" id="<?php echo $prefix; ?>vat_id" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('vat_id') ?>" />
+                </div>
+            </li>
+            <?php endif; ?>
+            <li class="fields">
+                <div class="field">
+                    <label for="<?php echo $prefix; ?>city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="<?php echo $prefix; ?>city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="<?php echo $prefix; ?>city" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="<?php echo $prefix; ?>region_id" class="required"><em>*</em><?php echo $this->__('State/Province') ?></label>
+                    <div class="input-box">
+                        <select id="<?php echo $prefix; ?>region_id" name="<?php echo $prefix; ?>region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+                           <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                        </select>
+                        <script type="text/javascript">
+                        //<![CDATA[
+                            $('<?php echo $prefix; ?>region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
+                        //]]>
+                        </script>
+                        <input type="text" id="<?php echo $prefix; ?>region" name="<?php echo $prefix; ?>region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label for="<?php echo $prefix; ?>zip" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="<?php echo $prefix; ?>postcode" value="<?php echo $this->escapeHtml($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="<?php echo $prefix; ?>zip" class="input-text validate-zip-international <?php echo $this->helper('customer/address')->getAttributeValidationClass('postcode') ?>" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="<?php echo $prefix; ?>country" class="required"><em>*</em><?php echo $this->__('Country') ?></label>
+                    <div class="input-box">
+                        <?php echo $this->getCountryHtmlSelect(null, $prefix.'country_id', $prefix.'country'); ?>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var dataForm = new VarienForm('customer-address', true);
+    new RegionUpdater('<?php echo $prefix; ?>country', '<?php echo $prefix; ?>region', '<?php echo $prefix; ?>region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, '<?php echo $prefix; ?>zip');
+//]]>
+</script>

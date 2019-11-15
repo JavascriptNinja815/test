@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <chinquiry_adminhtml_index_index>
+        <reference name="content">
+            <block type="chinquiry/adminhtml_inquiry" name="chinquiry" />
+        </reference>
+    </chinquiry_adminhtml_index_index>
+    <chinquiry_adminhtml_index_edit>
+        <update handle="editor"/>
+    </chinquiry_adminhtml_index_edit>
+</layout>

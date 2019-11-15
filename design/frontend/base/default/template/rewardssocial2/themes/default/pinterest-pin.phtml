@@ -1,0 +1,27 @@
+<!-- load Pinterest SDK only once per page -->
+<?php if (!Mage::registry('is_pinterest_sdk_loaded')): ?>
+    <script type="text/javascript">
+        (function(d){
+            var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');
+            p.type = 'text/javascript';
+            p.async = true;
+            p.src = '//assets.pinterest.com/js/pinit.js';
+            f.parentNode.insertBefore(p, f);
+        }(document));
+    </script>
+    
+    <?php Mage::register('is_pinterest_sdk_loaded', true); ?>
+<?php endif; ?>
+
+<!--Pinterest Pin Button-->
+<?php $imageUrl = Mage::helper('rewardssocial2')->getPinnableImageUrl(); ?>
+<?php if ($imageUrl): ?>
+    <div class="sweettooth-pinterest-pin sweettooth-social-button">
+        <a href="//pinterest.com/pin/create/button/?url=<?php echo urlencode(Mage::helper('core/url')->getCurrentUrl()); ?>&media=<?php echo urlencode($imageUrl); ?>"
+            data-pin-config="beside"
+            data-pin-do="buttonPin"
+            data-pin-count="none">
+                <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
+        </a>
+    </div>
+<?php endif; ?>

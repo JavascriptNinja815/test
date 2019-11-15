@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <chupsaddressvalidation_adminhtml_chupsaddressvalidationbackend_index>
+	<reference name="content">
+	  <block type="chupsaddressvalidation/adminhtml_chupsaddressvalidationbackend" name="chupsaddressvalidationbackend" template="chupsaddressvalidation/chupsaddressvalidationbackend.phtml"/>
+	</reference>
+  </chupsaddressvalidation_adminhtml_chupsaddressvalidationbackend_index>
+</layout>

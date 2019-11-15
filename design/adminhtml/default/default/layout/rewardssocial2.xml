@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<layout version="1.0.0">
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>rewardssocial2/css/social.css</stylesheet>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+    <adminhtml_dashboard_index>
+        <update handle="skin_css"/>
+        <reference name="rewards_dashboard_widget">
+            <block type="rewardssocial2/adminhtml_dashboard_widget_social" after="rewards_dashboard_widget_notifications" name="social.notifications" />
+        </reference>
+    </adminhtml_dashboard_index>
+    <adminhtml_adminhtml_social_migration>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>rewardssocial2/css/migrations.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="migartion.info" template="rewardssocial2/migration/info.phtml" />
+        </reference>
+    </adminhtml_adminhtml_social_migration>
+</layout>

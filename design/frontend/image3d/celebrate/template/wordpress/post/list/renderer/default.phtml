@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @category    Fishpig
+ * @package     Fishpig_Wordpress
+ * @license     http://fishpig.co.uk/license.txt
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php $post = $this->getPost() ?>
+<div class="post-list-item">
+	<h2><a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a></h2>
+	<?php echo $this->getBeforePostContentHtml() ?>
+	
+	<div class="post-entry entry">
+
+	<!-- OLD CODE WITH FEATURED IMAGE ON HOMEPAGE
+	<div class="post-entry entry<?php if ($post->getFeaturedImage): ?> post-entry-with-image<?php endif; ?>">
+	-->
+
+		<?php if ($post->isViewableForVisitor()): ?>
+			<!--<?php if (0 && $featuredImage = $post->getFeaturedImage()): ?>
+				<div class="featured-image left">
+					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><img src="<?php echo $featuredImage->getAvailableImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"/></a>
+				</div>
+			<?php endif; ?>-->
+<?php  $isHomePage = preg_match('/blog$/', trim(Mage::helper('core/url')->getCurrentUrl(),"/")); ?>
+
+			<?php if ($isHomePage || $this->displayExcerptInFeed() || $post->hasMoreTag()): ?>
+				<?php 
+$exCount = 24;
+$string = $post->getPostExcerpt();
+$part = strip_tags(preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "",$post->getPostExcerpt()));
+ $exWords = explode(' ',  $part);
+ //$exWords = explode(' ',  ($post->getPostContent()));
+ if (count($exWords) > $exCount) {
+  $exWords = array_slice($exWords, 0, $exCount);
+  $string = implode(' ', $exWords);
+ }
+echo $string . ' ... ';
+if($isHomePage): ?>
+<a href="<?php echo $post->getPermalink() ?>"><?php echo $this->__('Read More'); ?></a>
+<?php endif;  ?>
+			<?php else: ?>
+				<?php echo 'ALL ' . $post->getPostContent() ?>
+			<?php endif; ?>
+		<?php else: ?>
+			<?php echo $this->getPasswordProtectHtml($post) ?>
+		<?php endif; ?>
+	</div>
+	<?php echo $this->getAfterPostContentHtml() ?>
+</div>

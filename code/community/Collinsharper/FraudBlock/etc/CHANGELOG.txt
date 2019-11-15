@@ -1,0 +1,12 @@
+
+add in code to keep track iof customer IP - if different country - notify
+
+Notify on email change
+And stop brute force attachs on customer accounts
+  
+  forgotPasswordPost
+  // limit by ip X time on accoutn switches
+  loginPostAction
+  // limit by account / ip 
+
+

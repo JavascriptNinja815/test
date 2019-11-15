@@ -1,0 +1,30 @@
+<!-- load Facebook SDK only once per page -->
+<?php if (!Mage::registry('is_facebook_sdk_loaded')): ?>
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    
+    <?php Mage::register('is_facebook_sdk_loaded', true); ?>
+<?php endif; ?>
+
+<!--Facebook Share Button-->
+<?php $actionType = $this->getActionType(); ?>
+<?php $url = Mage::helper('rewardssocial2')->fetchTargetUrl($actionType, $this->getProduct()); ?>
+<div class="sweettooth-facebook-share sweettooth-social-button"
+    <?php if ($actionType === 'facebook_share_purchase'): ?>
+        data-product="<?php echo $this->getProduct()->getId(); ?>"
+        data-order="<?php echo $this->getOrderId(); ?>"
+    <?php endif; ?>
+    >
+    <div class="fb-share-button"
+        data-href="<?php echo $url; ?>" 
+        data-layout="button">
+    </div>
+</div>

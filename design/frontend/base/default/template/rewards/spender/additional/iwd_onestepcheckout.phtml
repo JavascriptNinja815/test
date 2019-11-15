@@ -1,0 +1,14 @@
+<script type="text/javascript">
+    window.sweettooth = window.sweettooth || {};
+    sweettooth.slider = sweettooth.slider || {};
+    
+    sweettooth.slider.afterAjax = function(response) {
+        var result = response.responseJSON;
+        
+        if (result.hasOwnProperty('error') && result.error === true) {
+            this.logMessage(result.message);
+        } else {
+            IWD.OPC.Checkout.pullReview();
+        }
+    };
+</script>

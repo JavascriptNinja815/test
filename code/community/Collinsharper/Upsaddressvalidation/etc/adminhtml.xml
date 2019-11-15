@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+	<config>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<customer>
+							<children>
+								<config>
+									<children>
+										<chaupsvalidation translate="title" module="chupsaddressvalidation">
+											<title>UPS Address Validation Section</title>
+											<sort_order>0</sort_order>
+										</chaupsvalidation>
+									</children>
+								</config>
+							</children>
+						</customer>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</config>

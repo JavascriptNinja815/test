@@ -1,0 +1,172 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+//$customOptionsBlock = new Mage_Catalog_Block_Product_View_Options;
+
+?>
+
+<?php $_product = $this->getProduct();
+
+
+$customOptionsBlock =  $this->getLayout()->createBlock('catalog/product_view_options_type_text');
+$customOptionsBlock->setProduct($_product);
+
+
+$customOptionTextFile = 'catalog/product/view/options/type/text.phtml';
+$customOptionSelectFile = 'catalog/product/view/options/type/select.phtml';
+
+$customOptionsBlock->setTemplate($customOptionTextFile); // $customOptionSelectFile
+
+
+;
+
+?>
+
+<?php $_options = Mage::helper('core')->decorateArray($this->getOptions()); ?>
+<?php if ($_product->isSaleable()):?>
+    <?php if (count($_options)): ?>
+        <?php $helper = Mage::helper('collinsharper_chcategoryforms'); ?>
+            <?php if($formCategoryJson = $helper->getFormProductData($_product)):
+            $_options = $helper->getKeyedOptionArray($_options);
+            $_customOptions = $helper->getKeyedOptionArray(Mage::helper('core')->decorateArray($_product->getOptions()));
+            ?>
+        <script type="text/javascript">
+            //<![CDATA[
+            var chForm = new productForm();
+            var chFormJson = <?php echo json_encode($formCategoryJson); ?>;
+            jQuery( document ).ready(function() {
+                chForm.setFormData(chFormJson);
+                chForm.formAction = '<?php echo $this->getUrl('chcategoryforms/index/process/', array("_secure"=>true)); ?>';
+
+                <?php  echo (isset($formCategoryJson['initial']['step_js']) ? $formCategoryJson['initial']['step_js'] : ''); ?>
+
+            });
+            //]]>
+                </script>
+            <div class="formdescrption"><?php echo  $formCategoryJson['initial']['step_description']; ?></div>
+<ul class="form-slide form-slide-agree opc" style="display: block;">
+            <ul class="form-list">
+            <?php foreach($formCategoryJson['steps'] as $stepIdNum => $step):?>
+                <?php $stepIdNum++; ?>
+                    <?php $stepId = isset($step['step_id']) && $step['step_id'] ? $step['step_id'] : strtolower(preg_replace('/[^a-z0-9]/i', '', $step['step_name'])); ?>
+                <li class="wide section"> 
+                    <div class="step-title chformtitle_<?php echo ($stepIdNum) . ' steptitle_' . $stepId; ?>" style="display:none" id="chformtitle_<?php echo $stepId; ?>" >
+
+                     <!--   <span class="number"><?php echo ($stepIdNum); ?></span> -->
+                        <h2 class="step-name"><?php echo $step['step_name']; ?></h2>
+                     <!--   <a href="#"><?php echo $this->__('Edit'); ?></a> -->
+                        <div class="step-description"><?php echo $step['step_description']; ?></div>
+                    </div>
+                    <div class="step chformstep_<?php echo ($stepIdNum) . ' step_' . $stepId; ?>" style="display:none" id="chformstep_<?php echo $stepId; ?>">
+                        <?php foreach ($step['step_options'] as $stepOptionId => $stepOptionName): ?>
+                        <?php $_option = isset($_options[$stepOptionId]) ? $_options[$stepOptionId]  : false ?>
+                        <?php if (!$_option || !$_option->getSelections()):
+                            mage::log(__FILE__ . " failed to find step option " . print_r($step,1)); ?>
+                            <?php continue; ?>
+                            <?php endif; ?>
+                        <?php echo $this->getOptionHtml($_option) ?>
+                        <?php endforeach; ?>
+
+                        <?php
+
+                        foreach ($step['step_custom_options'] as $stepOptionId => $stepOptionName): ?>
+                        <?php $_option = isset($_customOptions[$stepOptionId]) ? $_customOptions[$stepOptionId]  : false ?>
+                        <?php if (!$_option):
+                            mage::log(__FILE__ . " failed to find CUSTOM step option " . print_r($step,1)); ?>
+                            <?php continue; ?>
+                            <?php endif; ?>
+                            <div id="<?php echo strtolower(preg_replace('/[^a-z0-9]+/i','', 'custom option' . $stepOptionName)); ?>" style="display:none" class="custom-options"><?php
+                                $customOptionsBlock->setTemplate($customOptionTextFile);
+
+                                    // WE ONLY support text fields.
+                                if($_option->getType() == 'drop_down') {
+                              //      $customOptionsBlock->setTemplate($customOptionSelectFile);
+                                }
+
+                                $optBlock = $customOptionsBlock
+                                ->setOption($_option)
+                                ->toHtml();
+                            echo str_replace('onchange="opConfig.reloadPrice()"','', $optBlock);
+                            ?></div>
+                        <?php endforeach; ?>
+
+                        <div class="step-price-box">$0.00</div>
+
+                        <div class="buttons">
+                        <?php if(isset($step['step_buttons']) && strlen(trim($step['step_buttons'])) > 3): ?>
+                            <?php echo str_replace('__STEPNUMBER__', $stepIdNum, str_replace('__STEPID__', 'chformstep_'.$stepId, $step['step_buttons'])); ?>
+                        <?php else: ?>
+                        <?php if($stepIdNum != 0): ?>
+                            <div class="step-back-buttons sprites-arrow-back">
+                                <button type="button" title="<?php echo $this->__('Back');?>" class="button btn-back" onclick="chForm.backStep(<?php echo ($stepIdNum); ?>, this)"><span><span><?php echo $this->__('Back');?></span></span></button>
+                            </div>
+                                <?php endif; ?>
+                            <div class="step-addtoorder-buttons">
+                                <button type="button" title="<?php echo $this->__('Add to Order');?>" class="button btn-addtoroder" onclick="chForm.nextStep(<?php echo ($stepIdNum); ?>, 'chformstep_<?php echo $stepId; ?>')"><span><span><?php echo $this->__('Add to Order');?></span></span></button>
+                            </div>
+                <?php if(1 || $stepIdNum != (count($step['step_options'])-1)):
+                            //TODO HIDE THIS ONLY IF ITS NOT REQURIED
+                            ?>
+                            <div class="step-skip-buttons sprites-arrow-skip">
+                                <button type="button" title="<?php echo $this->__('Skip');?>" class="button btn-skip" onclick="chForm.skipStep(<?php echo ($stepIdNum); ?>, this)"><span><span><?php echo $this->__('Skip');?></span></span></button>
+                            </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+
+
+            </ul>
+</ul>
+
+                <?php endif;?>
+
+    <div id="total_column">
+        <ul>
+            <li>
+                <h1><?php echo $this->__('Item');?></h1>
+               <!-- <h1><?php echo $this->__('Quantity');?></h1> -->
+                <h1><?php echo $this->__('Price');?></h1>
+            </li>
+            <li id="formtotals">
+                <hr>
+                <h1><?php echo $this->__('Total');?></h1>
+                <span class="total_price"></span>
+            </li>
+        </ul>
+    </div>
+    <?php else: ?>
+        <p><?php echo $this->__('No options of this product are available.') ?></p>
+    <?php endif; ?>
+<?php endif;?>
+
+
+
+<div id="b2be_thankyou" style="display:none">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('b2b_estimate_thankyou')->toHtml(); ?>
+</div>
+

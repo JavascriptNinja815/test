@@ -1,0 +1,41 @@
+<layout version="0.1.0">
+	<nocatalog_product_view>
+        <reference name="head">
+			<action method="addItem"><type>skin_js</type><name>js/reelbuilder.js</name></action>
+        </reference>
+    </nocatalog_product_view>
+
+    <reelbuilder_index_viewshare>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column.phtml</template>
+            </action>
+        </reference>
+        <reference name="head">
+            <block name="share_head" type="core/text"></block>
+        </reference>
+        <reference name="content">
+            <block name="share" type="core/text"></block>
+        </reference>
+    </reelbuilder_index_viewshare>
+
+    <reelbuilder_index_viewshare_no_frame>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/empty.phtml</template>
+            </action>
+            <action method="addBodyClass"><className>cnt_body</className></action>
+        </reference>
+    </reelbuilder_index_viewshare_no_frame>
+
+    <default>
+        <reference name="footer.before">
+            <block type="core/template" name="newsletter_giftcard" template="page/html/newsletter_giftcard.phtml">
+                <block type="core/template" name="header_newsletter" as="headerNewsletter" template="page/html/header_newsletter.phtml" />
+            </block>
+        </reference>
+    </default>
+
+</layout>
+
+

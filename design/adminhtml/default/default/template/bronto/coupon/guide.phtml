@@ -1,0 +1,73 @@
+<?php if ($this->isBrontoSection('bronto_coupon')): ?>
+
+    /**
+     * Introduce them to the guide and provide instructions
+     */
+    guiders.createGuider({
+        buttons: [
+            {name: "<?php echo $this->__("Let's Get Started!") ?>", onclick: guiders.next},
+            {name: "<?php echo $this->__("No Thanks") ?>", onclick: guiders.hideAll}
+        ],
+        buttonCustomHTML: dontShowButtonHtml,
+        description: "<?php echo $this->__('This module provides you quick access to add your Bronto Coupon Manager Account ID.') ?>",
+        id: "start",
+        next: "bronto_coupon-site_hash",
+        overlay: true, closeOnEscape: true,
+        title: "Bronto Extension - <?php echo $this->__('Coupon Manager') ?>",
+        width: 600
+    });
+
+    /**
+     * Submit Script
+     */
+    guiders.createGuider({
+        attachTo: '#bronto_coupon_settings_site_hash',
+        buttons: [
+            {name: "<?php echo $this->__('Back') ?>"},
+            {name: "<?php echo $this->__('Next') ?>", onclick: function() {
+                if (jQuery('#bronto_popup_settings_site_hash').val() == '') {
+                    alert("Don't forget to add your site hash!");
+                } else {
+                    guiders.next();
+                }
+            }},
+            {name: "<?php echo $this->__('Close') ?>"}
+        ],
+        autoFocus: true,
+        highlight: '#bronto_coupon_settings_site_hash',
+        overlay: true, closeOnEscape: true,
+        description: "<?php echo $this->__('Once you have your Coupon Manager Account ID, you can simply paste it here.') ?>",
+        id: "bronto_coupon-site_hash",
+        next: "bronto_coupon-save_config_first",
+        position: 1,
+        title: "<?php echo $this->__('Pasting your Account ID') ?>",
+        width: 250
+    });
+
+    /**
+     * Save Configuration
+     */
+    guiders.createGuider({
+        attachTo: 'button.save',
+        buttons: [
+            {name: "<?php echo $this->__('Back') ?>"},
+            {name: "<?php echo $this->__('Save Config') ?>", onclick: function() {
+                configForm.submit()
+            }},
+            {name: "<?php echo $this->__('Next') ?>"}
+        ],
+        autoFocus: true,
+        highlight: 'button.save',
+        overlay: true, closeOnEscape: true,
+        description: "<?php echo $this->__("Now that you have added your site hash, you need to save it.  Click `Save Config` now.") ?>",
+        id: "bronto_coupon-save_config_first",
+        next: "scope",
+        position: 5,
+        title: "<?php echo $this->__('Save Config') ?>"
+    });
+
+    <?php if ($this->canShowGuide()): ?>
+        guiders.show('start');
+    <?php endif; ?>
+
+<?php endif; ?>

@@ -1,0 +1,164 @@
+<?php
+$_inquiry = $this->getInquiry();
+$org_inquiry_info = trim($_inquiry->getData( 'post_data' ));
+$order_data = unserialize( $org_inquiry_info );
+$orderData = new Varien_Object($order_data);
+
+
+$orderType = 'stereo';
+$billingAddressContent = '';
+    ?>
+<style>
+    .columns #chinquiry_form .form-list {
+        width: 100%;
+    }
+    #chinquiry_form .form-list td.label {
+        width: 10%;
+    }
+    #chinquiry_form .form-list td.label label {
+        width: 120px;
+    }
+</style>
+
+
+
+    <div class="box-left">
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account"><?php echo $this->__('Billing Information') ?></h4>
+            </div>
+            <div class="fieldset">
+                <div class="hor-scroll">
+                    <?php
+                    $billing = new Varien_Object($orderData->getData('shipping'));
+                    $billingAddressContent =  Mage::getSingleton('chinquiry/source_inquirytype')->getAddressBlock($billing, '', $orderData->getData('shipping_address_id'));
+                    echo $billingAddressContent;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-right">
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account">Shipping Information</h4>
+            </div>
+            <div class="fieldset">
+                <div class="hor-scroll">
+                    <?php
+echo $billingAddressContent;
+
+
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="box-left">
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-account">Payment Information</h4>
+            </div>
+            <div class="fieldset">
+                <div class="hor-scroll">
+                    <?php
+						echo isset($order_data['payment']['cc_stored']) ? "CC on file: " . $order_data['payment']['cc_stored'] : "Offline Payment";
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="box-right">
+    <!--Account Information-->
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-account"><?php echo Mage::helper('sales')->__('Account Information') ?></h4>
+         </div>
+        <div class="fieldset">
+            <div class="hor-scroll">
+                <table cellspacing="0" class="form-list">
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('sales')->__('Customer Name') ?></label></td>
+                        <td class="value">
+                            <?php if (isset($order_data['customer_id'])) : ?>
+                                <a href="<?php echo  $this->getUrl('*/customer/edit', array('id'=>$order_data['customer_id'])); ?>" target="_blank"><strong><?php echo $this->htmlEscape($order_data['customer_name']) ?></strong></a>
+                            <?php else: ?>
+                                <strong><?php echo $this->htmlEscape($order_data['customer_name']) ?></strong>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label"><label><?php echo Mage::helper('sales')->__('Email') ?></label></td>
+                        <td class="value"><a href="mailto:<?php echo $order_data['customer_email'] ?>"><strong><?php echo $order_data['customer_email'] ?></strong></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="clear"></div>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-account"><?php echo $this->__('Information'); ?></h4>
+    </div>
+    <div class="fieldset">
+    <div class="hor-scroll">
+        <?php if ( $order_data['bundle_option'][27] == 69 ): ?>
+            <p><?php echo $this->__('Reels & Viewers'); ?></p>
+            <p><?php echo $this->__('How many reel and view sets would you like to
+            order?: '); ?> <?php echo $order_data['bundle_option_qty'][27]; ?></p>
+            <p><?php echo $this->__('What colour viewers would you like?: '); ?> <?php echo $order_data['options'][28]; ?></p>
+            <p><?php echo $this->__('Would you like custom imprint on your viewers? '); ?>
+                <?php echo ( isset($order_data['options'][29]) && $order_data['options'][29] == true ) ? $this->__('yes'): $this->__('no'); ?> </p>
+        <?php elseif ( $order_data['bundle_option'][27] == 70 ): ?>
+            <p><?php echo $this->__('Just Reels') ?></p>
+            <p><?php echo $this->__('How many reels would you like to order?: '); ?>
+                <?php echo $order_data['bundle_option_qty'][27]; ?></p>
+        <?php endif; ?>
+
+    <p><?php echo $this->__('How will you send your images?: '); ?> <?php echo $order_data['image_transfer']; ?></p>
+
+<?php //if(strstr($order_data['image_transfer'], 're-ordering') === false): ?>
+    <p><?php echo $this->__('What would you like in center of reel?: '); ?> <?php echo $order_data['q108_whatWould108'] ?></p>
+    <?php if(isset($order_data['q107_107'])): ?>
+        <p>Center art will be mailed.</p>
+    <?php endif; ?>
+    <p><?php echo $this->__('Center Art Caption: '); ?> <?php echo $order_data['centerart_caption']; ?></p>
+
+    <p><?php echo $this->__('Center Art Caption2: ');?> <?php echo $order_data['centerart_caption_2']; ?></p>
+
+	<?php if($order_data['image_transfer'] == 'I will be uploading separate right and left "Stereo Pairs"') {?>
+		<p><?php echo $this->__('Frame 1 Caption: ');?> <?php echo $order_data['frame1_caption']; ?></p>
+		<p><?php echo $this->__('Frame 2 Caption: ');?>  <?php echo $order_data['frame2_caption']; ?></p>
+		<p><?php echo $this->__('Frame 3 Caption: ');?>  <?php echo $order_data['frame3_caption']; ?></p>
+		<p><?php echo $this->__('Frame 4 Caption: ');?>  <?php echo $order_data['frame4_caption']; ?></p>
+		<p><?php echo $this->__('Frame 5 Caption: ');?>  <?php echo $order_data['frame5_caption']; ?></p>
+		<p><?php echo $this->__('Frame 6 Caption: ');?>  <?php echo $order_data['frame6_caption']; ?></p>
+		<p><?php echo $this->__('Frame 7 Caption: ');?>  <?php echo $order_data['frame7_caption']; ?></p>
+	<?php } elseif ($order_data['image_transfer'] == 'I will be uploading MPO files from a stereo camera') { ?>
+		<p><?php echo $this->__('Frame 1 Caption: ');?> <?php echo $order_data['frame1_caption_mpo']; ?></p>
+		<p><?php echo $this->__('Frame 2 Caption: ');?>  <?php echo $order_data['frame2_caption_mpo']; ?></p>
+		<p><?php echo $this->__('Frame 3 Caption: ');?>  <?php echo $order_data['frame3_caption_mpo']; ?></p>
+		<p><?php echo $this->__('Frame 4 Caption: ');?>  <?php echo $order_data['frame4_caption_mpo']; ?></p>
+		<p><?php echo $this->__('Frame 5 Caption: ');?>  <?php echo $order_data['frame5_caption_mpo']; ?></p>
+		<p><?php echo $this->__('Frame 6 Caption: ');?>  <?php echo $order_data['frame6_caption_mpo']; ?></p>
+		<p><?php echo $this->__('Frame 7 Caption: ');?>  <?php echo $order_data['frame7_caption_mpo']; ?></p>
+	<?php } elseif ($order_data['image_transfer'] == 'I will be sending my images on a CD through the mail') { ?>
+		<p><?php echo $this->__('Frame 1 Caption: ');?> <?php echo $order_data['frame1_caption_mail']; ?></p>
+		<p><?php echo $this->__('Frame 2 Caption: ');?>  <?php echo $order_data['frame2_caption_mail']; ?></p>
+		<p><?php echo $this->__('Frame 3 Caption: ');?>  <?php echo $order_data['frame3_caption_mail']; ?></p>
+		<p><?php echo $this->__('Frame 4 Caption: ');?>  <?php echo $order_data['frame4_caption_mail']; ?></p>
+		<p><?php echo $this->__('Frame 5 Caption: ');?>  <?php echo $order_data['frame5_caption_mail']; ?></p>
+		<p><?php echo $this->__('Frame 6 Caption: ');?>  <?php echo $order_data['frame6_caption_mail']; ?></p>
+		<p><?php echo $this->__('Frame 7 Caption: ');?>  <?php echo $order_data['frame7_caption_mail']; ?></p>
+	<?php }?>
+		<p><?php echo $this->__('Shipping Method: ');?>  <?php echo $order_data['q88_howWould']; ?></p>
+		<p><?php echo $this->__('Notes: ');?>  <?php echo $order_data['q94_notesOr']; ?></p>
+    <?php  //endif;?>
+
+    </div>
+    </div>
+</div>

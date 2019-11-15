@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout>
+    <chreels_adminhtml_index_index>
+        <reference name="content">
+            <block type="chreels/adminhtml_reels" name="chreels" />
+        </reference>
+    </chreels_adminhtml_index_index>
+    <chreels_adminhtml_index_edit>
+		<reference name="chreels_edit">
+ <action method="addButton"><id>login</id><data helper="widgentologin/button/getButtonData" /><level>-1</level><sort>0</sort><area helper="widgentologin/button/getButtonArea" /></action>
+            <action method="grid">
+                <block type="chreels/adminhtml_reels" name="frames" />
+            </action>
+        </reference>
+    </chreels_adminhtml_index_edit>
+	<chreels_adminhtml_printqueue_index>
+        <reference name="content">
+            <block type="chreels/adminhtml_printqueue" name="printqueue" />
+        </reference>
+    </chreels_adminhtml_printqueue_index>
+    <chreels_adminhtml_printqueue_edit>
+        <update handle="editor"/>
+    </chreels_adminhtml_printqueue_edit>
+</layout>

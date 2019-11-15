@@ -1,0 +1,140 @@
+<?php $helper = Mage::getModel('chimage3d/reelassembly'); ?>
+<div class="reelbuilder-wrapping-paper" id="reelbuilder-wrapping-paper">
+	<div class="image-notice"></div>
+		
+	<div class="edit-frame" id="edit-frame">
+		<div class="outer-frame">
+			<canvas id="reelBuilderCanvas" width="<?php echo $helper->getConstant('CANVAS_WIDTH'); ?>" height="<?php echo $helper->getConstant('CANVAS_HEIGHT'); ?>"></canvas>
+		</div>
+
+		<div class="preview-unfinished-reel" style="display:none">
+
+			<h3><?php echo $this->__('Denied! (politely.)');?></h3>
+			<?php echo $this->__('Your reel has missing frames.');?>
+			<?php echo $this->__('Please add images to all areas before previewing.');?>
+		</div>
+
+		<div class="preview-open-centeredit" style="display:none">
+
+                        <h3><?php echo $this->__('Denied! (politely.)');?></h3>
+                        <?php echo $this->__('Please select DONE EDITING before previewing.');?>
+                </div>
+
+		<div class="preview-empty-center" style="display:none">
+			<?php $emptyCenterMessage = Mage::app()->getLayout()->createBlock('cms/block')->setBlockId('empty_center_warning')->toHtml();?>
+			<?php echo $this->__($emptyCenterMessage);?>
+                </div>
+	</div>
+
+	<div class="edit-frame" id="center-art-canvas" style="display:none">
+		<div class="outer-canter-frame">
+			<canvas id="centerReelBuilderCanvas" width="<?php echo $helper->getConstant('CENTER_CANVAS_WIDTH'); ?>" height="<?php echo $helper->getConstant('CENTER_CANVAS_HEIGHT'); ?>"></canvas>
+		</div>
+		<div class="help-buttons guidelines-link">
+			<a href="javascript:rb.doneEditCenterArtClick();"><?php echo $this->__('Done Editing Center Image') ?></a>
+		</div>
+	</div>
+
+	<?php echo $this->getChildHtml('reelbuilder_editpreview_reel'); ?>
+	<?php echo $this->getChildHtml('reelbuilder_edithelp'); ?>
+</div>
+
+<div class="no-display approve-message a-center">
+	<?php echo $this->getLayout()->createBlock("cms/block")->setBlockId("approve_reel")->toHtml(); ?>
+</div>
+<div class="no-display problem-preview a-center">
+	<?php echo $this->getLayout()->createBlock("cms/block")->setBlockId("preview_reel_center_error_message")->toHtml(); ?>
+</div>
+
+<script>
+	var RB_AJAX_URL = '<?php echo $this->getUrl('reelbuilderCb/index'); ?>';
+	var RB_AJAX_URL = BASE_URL + 'reelbuilderCb/';
+	var ONE_PIXEL_PNG = '<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX . Collinsharper_Image3d_Model_Reelajaxhandler::ONE_PIXEL_PNG; ?>';
+	var FRAME_WIDTH = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::FRAME_WIDTH; ?>;
+	var FRAME_HEIGHT = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::FRAME_HEIGHT; ?>;
+	var THUMB_WIDTH = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::THUMB_WIDTH; ?>;
+	var THUMB_HEIGHT = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::THUMB_HEIGHT; ?>;
+	var CENTER_WIDTH = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::CENTER_WIDTH; ?>;
+	var CENTER_HEIGHT = <?php echo (int)Collinsharper_Image3d_Model_Reelassembly::CENTER_HEIGHT; ?>;
+	var CANVAS_MASK = '<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX . Collinsharper_Image3d_Model_Reelassembly::CANVAS_MASK; ?>';
+	var CENTER_CANVAS_MASK = '<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX . Collinsharper_Image3d_Model_Reelassembly::CENTER_CANVAS_MASK; ?>';
+	var CANVAS_DIM_MODIFIER = '<?php echo Collinsharper_Image3d_Model_Reelassembly::CANVAS_DIM_MODIFIER; ?>';
+	var CENTER_CANVAS_DIM_MODIFIER = '<?php echo Collinsharper_Image3d_Model_Reelassembly::CENTER_CANVAS_DIM_MODIFIER; ?>';
+	var CANVAS_TEXT_DRAG_BLEED = '<?php echo $helper->getConstant('CANVAS_TEXT_DRAG_BLEED'); ?>';
+	var DEFAULT_TEXT = '<?php echo Collinsharper_Image3d_Model_Reelassembly::DEFAULT_TEXT; ?>';
+	var MAX_UPLOAD_MUX = <?php echo Collinsharper_Image3d_Helper_Image::MAX_UPLOAD_MUX; ?>;
+	var FRAME_WORD = '<?php echo $this->__('Frame'); ?>';
+	var MSG_CONFIRM_DELETE_FRAME = '<?php echo $this->__('Are you sure you would like to delete this frame?'); ?>';
+	var MSG_CONFIRM_UNSAVED_FRAME = '<?php echo $this->__('You have unsaved changes on this frame that will be lost. Do you want to continue without saving?'); ?>';
+	var MSG_MUSTBE_LOGGED_IN = '<?php echo $this->__('You are going to have to login or create an account to save your reel'); ?>';
+	var MSG_APPROVE_REEL = '<?php echo $this->__('Once a reel is approved you cannot make any more changes to it. Do you want to continue?'); ?>';
+	var MSG_PROBLEM_PREVIEW = '<?php echo $this->__('There was a problem generating your reel preview, please refresh your page and try again or contact customer support.'); ?>';
+	var MSG_PROBLEM_IMAGE = '<?php echo $this->__('There was a problem saving your image, please refresh your page and try again or contact customer support.'); ?>';
+	var MSG_IMAGE_BEEN_RESIZED = '<?php echo $this->__('Image has been resized.'); ?>';
+	var MSG_UPLOADING_IMAGES = '<?php echo $this->__('Please wait while we upload your image.'); ?>';
+	var MSG_GENERIC = '<?php echo $this->__('Please wait.'); ?>';
+	var MSG_LOW_RES_IMAGE = '<?php echo $this->__('Image is less than 400 pixels. Image may be pixelated.'); ?>';
+	var MSG_CHANGE_FRAME = '<?php echo $this->__('Changed to Frame '); ?>';
+	var MSG_CHANGE_FRAME_FORCE = '<?php echo $this->__('Please edit frames in order. Changed to frame '); ?>';
+	var MSG_BROWSER_UPGRADE = '<?php echo $this->__('Your browser is outdated and insecure. Please upgrade your browser.<br /> <h2>Note: this application may not work on your current configuration.</h2>'); ?>';
+	var MSG_GENERATION_START = '<?php echo $this->__('Checking your images..'); ?>';
+	var MSG_GENERATION_COMPLETE = '<?php echo $this->__('All set!!'); ?>';
+	var MSG_LIMITED_UPLOAD_FILES = '<?php echo $this->__('Sorry you can only upload jpeg file!'); ?>';
+
+	var MSG_REORDER_REORDER = '<?php echo $this->__('Please create frames before re-ordering.'); ?>';
+	var MAX_POST_SIZE = Number(<?php echo $helper->iniGetBytes('post_max_size'); ?>);
+	var _FrameRegex = new RegExp(FRAME_WORD + ' \\d+', 'gi');
+	var _stockArtTree = <?php echo ($this->helper('chimage3d/stockart')->getStockArt(true)); ?>;
+
+</script>
+<script id="stock-art-template" type="text/x-handlebars-template">
+	<div id="stock-art-div" title="Browse {{currentName}}">
+		<div class="stock-art">
+			<div class="stock-header">
+				<p><?php echo $this->__('TAP AN IMAGE TO ADD TO YOUR FRAME');?></p>
+			</div>
+			<div class="directory-tree stock-options-container">
+				{{#if currIsDir}}
+				<p><?php echo $this->__('Choose A Category');?></p>
+				{{else}}
+				<p><?php echo $this->__('Choose One');?></p>
+					{{/if}}
+				<ul>
+					{{#each listItems}}
+					{{#if this.is_dir}}
+					<li>
+						{{#if this.thumb}}
+						<a href="javascript:void(0)" onClick="stockArt.showDialog('{{@key}}')"><img width="95" src="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{thumb}}" title="{{@key}}" /></a>
+						{{/if}}
+						<a class="stock-options" href="javascript:void(0)" onClick="javascript:stockArt.showDialog('{{@key}}')" data-path="{{path}}">{{@key}}</a>
+					</li>
+					{{/if}}
+					{{/each}}
+					{{#each listItems.children}}
+					{{#if this.is_dir}}
+					<li>
+						{{#if this.thumb}}
+						<a href="javascript:void(0)" onClick="stockArt.showDialog('{{@key}}')"><img width="95" src="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{thumb}}" title="{{@key}}" /></a>
+						{{/if}}
+						<a class="stock-options" href="javascript:stockArt.showDialog('{{@key}}')" data-path="{{path}}">{{@key}}</a>
+					</li>
+					{{/if}}
+					{{/each}}
+				</ul>
+			</div>
+			<div class="stock-image-list">
+				<ul>
+					{{#each listItems.children}}
+					{{#unless this.is_dir}}
+					<!-- need thumb code... .. -->
+					<li>
+						<a href="javascript:void(0)" onClick="rb.loadStockArt('<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{path}}');"><img width="95" src="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{#if this.thumb}}{{thumb}}{{else}}{{path}}{{/if}}" data-full-image="<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/media/{{path}}" title="{{@key}}" /></a>
+					</li>
+					{{/unless}}
+					{{/each}}
+				</ul>
+			</div>
+			<a class="stock-backlink" href="javascript:stockArt.showDialog('-1')" data-path="-1"><?php echo $this->__('Go Back');?></a>
+		</div>
+	</div>
+</script>

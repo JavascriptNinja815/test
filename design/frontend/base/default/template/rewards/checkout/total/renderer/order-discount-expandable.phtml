@@ -1,0 +1,71 @@
+<?php if ((float) $this->getSource()->getDiscountAmount()): ?>
+
+<?php
+$summaryHelper = Mage::helper('rewards/sales_discount_summary');
+$hasRewardsDiscounts = $summaryHelper->hasRewardsDiscountMap($this->getSource());
+$shouldDisplayBoth = (bool) ($this->getTotal($this->getCode())->getValue() != $this->getSource()->getBaseDiscountAmount());
+?>
+
+<?php if ($hasRewardsDiscounts) : ?>
+    <?php foreach ($summaryHelper->getRewardsDiscountMap($this->getSource()) as $rewardsDiscountRow) : ?>
+    <tr class="rewards-cart-discounts-summary" style="display: none;background-color: rgba(120, 120, 120, 0.1);">
+        <td class="a-right"><?php echo $this->__("Rewards") . ': ' . $rewardsDiscountRow['label'];?></td>
+        <td class="a-right" style="">
+            <?php echo Mage::helper('core')->formatPrice($rewardsDiscountRow['base_discount_amount'] * (-1));?>
+            <?php if ($shouldDisplayBoth) : ?>
+                <br>
+                <span class="price">
+                    <?php echo '[' . $summaryHelper->getOrderCurrencyPrice($rewardsDiscountRow['discount_amount'] * (-1), $this->getSource()) . ']';?>
+                </span>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+
+    <?php
+    list($otherDiscountAmount, $otherBaseDiscountAmount) = $summaryHelper->getOtherDiscountAmount($this->getSource(), true);
+    ?>
+
+    <?php if ($otherDiscountAmount > 0) : ?>
+    <tr class="rewards-cart-discounts-summary" style="display: none;background-color: rgba(120, 120, 120, 0.1);">
+        <td class="a-right"><?php echo $this->__("Other");?></td>
+        <td class="a-right" style="">
+            <?php echo Mage::helper('core')->formatPrice($otherBaseDiscountAmount * (-1));?>
+            <?php if ($shouldDisplayBoth) : ?>
+                <br>
+                <span class="price">
+                    <?php echo '[' . $summaryHelper->getOrderCurrencyPrice($otherDiscountAmount * (-1), $this->getSource()) . ']';?>
+                </span>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <tr class="rewards-cart-discounts-summary" style="display: none;background-color: rgba(120, 120, 120, 0.1);">
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+<?php endif; ?>
+
+<?php
+$totalLabel = $summaryHelper
+    ->getTotalLabel($this->getTotal($this->getCode()), $this->getSource());
+?>
+
+<tr <?php if ($hasRewardsDiscounts) : ?>class="rewards-cart-discounts-summary-header summary-total" onclick="expandDetails(this, '.rewards-cart-discounts-summary')"<?php endif;?>>
+    <td colspan="<?php echo $this->getColspan(); ?>" style="<?php echo $this->getTotal($this->getCode())->getStyle() ?>" class="a-right">
+        <div <?php if ($hasRewardsDiscounts) : ?>class="rewards-summary-collapse"<?php endif;?>>
+            <?php echo $this->escapeHtml($totalLabel); ?>
+        </div>
+    </td>
+    <td style="<?php echo $this->getTotal($this->getCode())->getStyle() ?>" class="a-right">
+        <?php if ($this->getRenderingArea() == $this->getTotal($this->getCode())->getArea()): ?><strong><?php endif; ?>
+            <?php echo $this->helper('core')->formatPrice($this->getTotal($this->getCode())->getBaseValue()); ?>
+        <?php if ($this->getRenderingArea() == $this->getTotal($this->getCode())->getArea()): ?></strong><?php endif; ?>
+        <?php if ($shouldDisplayBoth) : ?>
+            <br><?php echo '[' . $summaryHelper->getOrderCurrencyPrice($this->getTotal($this->getCode())->getValue(), $this->getSource()) . ']'; ?>
+        <?php endif; ?>
+    </td>
+</tr>
+
+<?php endif; ?>

@@ -1,0 +1,26 @@
+<!-- load Facebook SDK only once per page -->
+<?php if (!Mage::registry('is_facebook_sdk_loaded')): ?>
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    
+    <?php Mage::register('is_facebook_sdk_loaded', true); ?>
+<?php endif; ?>
+
+<!--Facebook Like Button-->
+<div class="sweettooth-facebook-like sweettooth-social-button">
+    <fb:like
+        href="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>"
+        send="false"
+        layout="button"
+        show_faces="false"
+        action="like">
+    </fb:like>
+</div>

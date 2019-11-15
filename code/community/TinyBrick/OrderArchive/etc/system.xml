@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<tabs>
+        <tinybrick translate="label" module="orderarchive">
+            <label>TinyBrick</label>
+            <sort_order>101</sort_order>
+        </tinybrick>
+    </tabs>
+ 	<sections>
+        <toe>
+            <groups>
+                <orderarchive translate="label" module="orderarchive">
+                    <label>Order Archive</label>
+                    <sort_order>670</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <activate_archive_orders translate="label">
+                            <label>Allow for Archiving of Orders</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </activate_archive_orders>
+
+                        <activate_delete_orders translate="label">
+                            <label>Allow for Permanent Deletion of Orders?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </activate_delete_orders>
+                    </fields>
+                </orderarchive>
+            </groups>
+        </toe>
+    </sections>    	
+</config>

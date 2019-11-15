@@ -1,0 +1,208 @@
+<?php if ($this->hasRedemptionData() && $this->showCartRedeemBox() && Mage::helper('checkout/cart')->getItemsCount() > 0): ?>
+    <?php $disableSliderJs = false; ?>
+    <div class="rewards-box-spend-minicart sweettooth-point-spender <?php echo $this->getAdditionalSelectors(); ?> points-spender-theme-<?php echo Mage::helper('rewards/theme')->getPackageName(); ?>">
+        <h2><?php echo $this->__('Spend your points'); ?></h2>
+        <div class="box-content">
+            <?php if ($this->needsLogin()): ?>
+                <?php $disableSliderJs = true; ?>
+                <span class="no_points_to_spend">
+                    <?php
+                        $msg = $this->__("You need to [[log-in]] to use your points.");
+                        echo str_replace("[[", "<a href='" . $this->getUrl('customer/account/login') . "'>", str_replace("]]", "</a>", $msg));
+                    ?>
+                </span>
+            <?php else: ?>
+                <?php if ($this->showPointsSlider()): ?>
+                    <!-- Cart Slider -->
+                    <?php if ($this->customerHasUsablePoints() && $this->getMaxSpendablePoints() != 0): ?>
+                        <?php if ($this->hasNonDbpsCartRules()): ?>
+                            <h2 class="minicart-slider-header"><?php echo $this->__('Slide to spend your points'); ?>: </h2>
+                        <?php endif; ?>
+                        <div class="cartSlider">
+                            <div class="slider">
+                                <table cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="vertical-align:middle" class="btn-slider-reduce-points-container">
+                                                <img class="btn-slider-reduce-points" alt="<?php echo $this->__('Spend one point less'); ?>"
+                                                     src="<?php echo $this->getSkinUrl('images/rewards/slider/decr_points.gif'); ?>"
+                                                     id="slider_reduce_points"
+                                                     style="position:relative; top:9px;" />
+                                            </td>
+                                            <td>
+                                                <div class="sliderRail" id="sliderRail">
+                                                    <a style="left: 0%;" class="sliderHandle ui-slider-handle ui-state-default" id="sliderHandle"></a>
+                                                </div>
+                                            </td>
+                                            <td style="vertical-align: middle" class="btn-slider-reduce-points-container">
+                                                <img class="btn-slider-increase-points"
+                                                     alt="<?php echo $this->__('Spend one point more'); ?>"
+                                                     src="<?php echo $this->getSkinUrl('images/rewards/slider/incr_points.gif'); ?>"
+                                                     id="slider_increase_points"
+                                                     style="position:relative; top:9px;" />
+                                            </td>
+                                            <td valign="bottom" class="cartSlider_cell">
+                                                <div align="center" id="slider-wait" style="display: none;">
+                                                    <img src="<?php echo $this->getSkinUrl('images/rewards/loading/loading1.gif') ?>" class="v-middle" alt="" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div id="sliderCaption"></div>
+                                <input type="hidden" name="redemption_uses" id="redemption_rule_uses"/>
+                            </div>
+                        </div>
+                        <div class="maximize-points">
+                            <input type="checkbox" name="use_all_points" id="use_all_points"/>
+                            <label for="use_all_points"><?php echo $this->__('Maximize my discount with points'); ?></label>
+                        </div>
+                    <?php else: ?>
+                        <?php $disableSliderJs = true; ?>
+                        <?php if ($this->getMaxSpendablePoints() != 0): ?>
+                            <span class="points_slider_msg no-slider-message"><?php echo $this->__("You can't spend any more points in this cart."); ?></span>
+                        <?php elseif ($this->isCustomerLoggedIn()): ?>
+                            <span class="no_points_to_spend no-slider-message"><?php echo $this->__("You don't currently have any points to spend."); ?></span>
+                        <?php else: ?>
+                            <span class="no_points_to_spend no-slider-message"><?php echo $this->__("You need to log-in to spend points."); ?></span>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php $disableSliderJs = true; ?>
+                <?php endif; ?>
+
+                <?php if ($this->hasNonDbpsCartRules() && $this->customerHasUsablePoints()): ?>
+                    <!-- All other rules -->
+                    <?php $redemptionList = $this->collectShoppingCartRedemptions(); ?>
+                    <div class="more-ways-to-spend <?php if ($this->showPointsSlider()): ?> more-ways-to-spend-also<?php endif; ?>" >
+                        <?php if ($this->showPointsSlider()): ?>
+                            <h2 class="more-ways-to-spend-header">
+                                <?php if ($disableSliderJs): ?>
+                                    <?php echo $this->__('Ways to spend points'); ?>:
+                                <?php else: ?>
+                                    <?php echo $this->__('More ways to spend points'); ?>:
+                                <?php endif ;?>
+                            </h2>
+                        <?php endif; ?>
+                        
+                        <!-- Applied Rule Listing -->
+                        <?php foreach ($redemptionList['sorted_applied'] as $ruleIndex => $redemption): ?>
+                            <?php if ($redemption['is_dbps']) { continue; } ?>
+                            <div class="<?php if (!$redemption['is_coupon']) { echo 'cart_redemption_item'; } ?>">
+                                <input type="checkbox" name="applied_cart_rule[]" id="applied_cart_rule_<?php echo $ruleIndex;?>" value="<?php echo $redemption['rule_id']; ?>" checked="checked" 
+                                    <?php if ($redemption['is_coupon']): ?>
+                                       <?php echo 'onclick="discountForm.submit(true)"'; ?>
+                                    <?php endif; ?>
+                                />
+                                <label for="applied_cart_rule_<?php echo $ruleIndex;?>">
+                                    <?php if (isset($redemption['caption']) && !empty($redemption['caption'])): ?>
+                                        <?php echo $redemption['caption']; ?>
+                                    <?php else: ?>
+                                        <?php echo $this->__('Spend <b>%s</b>, Get <b>%s</b>', $redemption['points_cost'], $redemption['action_str']) ?>
+                                    <?php endif; ?>
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <!-- Applicable Rule Listing -->
+                        <?php foreach ($redemptionList['sorted_applicable'] as $ruleIndex => $redemption): ?>
+                            <?php if ($redemption['is_dbps']) continue; ?>
+                            <div class="cart_redemption_item">
+                                <input type="checkbox" name="applicable_cart_rule[]" id="applicable_cart_rule_<?php echo $ruleIndex;?>" value="<?php echo (string) $redemption['rule_id']; ?>" />
+                                <label for="applicable_cart_rule_<?php echo $ruleIndex;?>">
+                                    <?php if (isset($redemption['caption']) && !empty($redemption['caption'])): ?>
+                                        <?php echo $redemption['caption']; ?>
+                                    <?php else: ?>
+                                        <?php echo $this->__('Spend <b>%s</b>, Get <b>%s</b>', $redemption['points_cost'], $redemption['action_str']) ?>
+                                    <?php endif; ?>
+                                </label>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php elseif(!$this->showPointsSlider()): ?>
+                    <span class="points_slider_msg no-slider-message"><?php echo $this->__("You can't spend any more points in this cart."); ?></span>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+
+        <?php echo $this->getChildHtml('additional.spender.js.before'); ?>
+        
+        <script type="text/javascript">
+            var currency_map  = <?php echo $this->getCurrencyMapJson(); ?>;
+
+            function feignPriceChange() {
+
+            }
+
+        </script>
+        <script type="text/javascript">
+            (function() {
+                var sliderInfo = {
+                    min: <?php echo (string) $this->getMinSpendablePoints(); ?>,
+                    max: <?php echo (string) $this->getMaxSpendablePoints(); ?>,
+                    step: <?php echo (string) $this->getPointsStep(); ?>,
+                    currentValue: <?php echo (string) $this->getCurrentSpendingPoints(); ?>
+                };
+
+                var urls = {
+                    slider: '<?php echo $this->getUrl('rewards/cart_redeem/changePointsSpending', array('_forced_secure' => $this->getRequest()->isSecure())) ?>',
+                    checkboxAdd: '<?php echo $this->getUrl("rewards/cart_redeem/cartadd", array('_forced_secure' => $this->getRequest()->isSecure())) ?>',
+                    checkboxRemove: '<?php echo $this->getUrl("rewards/cart_redeem/cartremove", array('_forced_secure' => $this->getRequest()->isSecure())) ?>'
+                };
+                
+                <?php if ($disableSliderJs): ?>
+                    sweettooth.slider.data.useSlider = false;
+                <?php endif; ?>
+                    
+                var showElementWhenCreatingSlider = '<?php echo $this->getElementThatHasToBeVisible(); ?>';
+                sweettooth.slider.init(sliderInfo, urls, showElementWhenCreatingSlider);
+
+                var sliderAjaxTimeout = false;
+                var sliderAjaxTimeoutDelay = 500;
+
+                /**
+                 * Sets the value in the input box and what is displayed to the user.
+                 * @param value
+                 * @return
+                 */
+                RedemptionSlider.prototype.setExternalValue = function (value) {
+                    var points = value * this.points_per_use;
+
+                    // Setting Slider caption
+                    var pointsLabel = (points == 1) ? "<?php echo $this->__('Point'); ?>" : "<?php echo $this->__('Points'); ?>";
+                    this.sliderCaption.innerHTML = "<?php echo $this->__('You Will Spend'); ?>" + ": " + points + " " + pointsLabel;
+
+                    if (this.sliderValuebox.value != this.getUses()) {
+                        this.sliderValuebox.value = this.getUses();
+                        $('use_all_points').checked = sweettooth.slider.slider.isMaxed();
+
+                        if (sliderAjaxTimeout) {
+                            clearTimeout(sliderAjaxTimeout);
+                        }
+                        sliderAjaxTimeout = setTimeout(function() {
+                            sweettooth.slider.updateSlider(points);
+                        }, sliderAjaxTimeoutDelay);
+                    }
+                };
+            })();
+            
+            //compatibility with aw ajax cart pro event
+            document.observe("aw_ajaxcartpro_cart_update", function(event) {
+                var pleaseWaitLoader = $('shopping-cart-totals-table').select('payment-please-wait');
+                if (!pleaseWaitLoader || pleaseWaitLoader.length == 0) {
+                    $('shopping-cart-totals-table').insert({after: $('payment-please-wait')});
+                    if($('payment-please-wait')) { $('payment-please-wait').hide(); }
+                }
+                
+                sweettooth.slider.reloadSlider();
+            });
+        </script>
+    </div>
+<?php elseif ($this->getDefaultMessage()): ?>
+    <div class="rewards-box-spend-minicart sweettooth-point-spender <?php echo $this->getAdditionalSelectors(); ?> points-spender-theme-<?php echo Mage::helper('rewards/theme')->getPackageName(); ?>">
+        <h2><?php echo $this->__('Spend your points'); ?></h2>
+        <div class="box-content">
+            <span><?php echo $this->getDefaultMessage(); ?></span>
+        </div>
+    </div>
+<?php endif; ?>

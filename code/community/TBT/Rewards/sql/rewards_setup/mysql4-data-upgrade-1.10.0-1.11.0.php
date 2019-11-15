@@ -1,0 +1,3 @@
+<?php
+
+Mage::getConfig()->cleanCache();

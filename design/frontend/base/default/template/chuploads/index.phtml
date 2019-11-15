@@ -1,0 +1,199 @@
+<?php
+$items = $this->getCollection();
+
+?>
+<div>
+    <?php // this didnt do anything.. //echo $this->getMessagesBlock()->getGroupedHtml(); ?>
+</div>
+<script>
+
+    var _uploadFiles = false;
+
+    jQuery
+        ( document ).ready(function() {
+            jQuery('#filename').on('change', prepareUpload);
+        //    jQuery('#chupload').on('submit', uploadFiles);
+        });
+
+
+
+    var confirmDelete = function(imgId)
+    {
+        var test = confirm("<?php echo $this->__('Are you sure you would like to delete this file?'); ?>");
+        if(!test) {
+            return false;
+        }
+
+        document.location = '<?php echo $this->getUrl('chuploads/index/delete/', array('_secure'=>true, 'action' => 'delete', 'img_id' => 'replace_id')); ?>'.replace('replace_id', imgId);
+    };
+    var showRow = function() {
+        $('addfilerow').toggle();
+    };
+
+    var prepareUpload = function(event)
+    {
+        _uploadFiles = event.target.files;
+    }
+
+    var uploadFiles = function(event) {
+        console.log('upload');
+
+        if(event) {
+            event.stopPropagation(); // Stop stuff happening
+            event.preventDefault(); // Totally stop stuff happening
+        }
+
+        jQuery('#uploadbutton').innerHTML = 'Uploading...';
+
+            //grab all form data
+            var data = new FormData($(this)[0]);
+
+
+//        var data = new FormData(jQuery('#chupload'));
+//
+//
+//        jQuery.each(_uploadFiles, function(key, value)
+//        {
+//            data.append(key, value);
+//        });
+
+
+        jQuery.ajax({
+            url: '<?php echo $this->getUrl('chuploads/index/update/', array('_secure'=>true, 'action' => 'upload')); ?>',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+      //      contentType:attr( "enctype", "multipart/form-data" ),
+      contentType: "multipart/form-data" ,
+            processData: false, // Don't process the files
+            //contentType: false,
+            success: function(data, textStatus, jqXHR)
+            {
+                if(typeof data.error === 'undefined')
+                {
+                    // Success so call function to process the form
+//                    submitForm(event, data);
+                    jQuery('#uploadbutton').innerHTML = 'Complete';
+                    //document.location.reload();
+
+                }
+                else
+                {
+                    // Handle errors here
+                    console.log('ERRORS: ' + data.error);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                // STOP LOADING SPINNER
+            }
+        });
+
+        //http://abandon.ie/notebook/simple-file-uploads-using-jquery-ajax
+      // get the form serialize it.
+        // do ajax post with add and the data
+    };
+
+
+
+</script>
+<div class="my-uploads"><div class="dashboard">
+    <div class="page-title">
+        <h1><?php echo $this->__('FTP Upload');?></h1>
+    </div>
+
+    <div class="create-new-container">
+
+        <div id="create-new-text-2" class="create-new-text">
+            <p><?php echo $this->__('Upload a new');?> <span><?php echo $this->__('File');?></span></p>
+        </div>
+        <a href="javascript:showRow()"><?php echo $this->__('CLICK HERE');?></a>
+    </div>
+
+
+        <form id="chupload" name="chupload" action="<?php echo $this->getUrl('chuploads/index/update/', array('_secure'=>true)); ?>" enctype="multipart/form-data" encoding="multipart/form-data" method="POST">
+            <div id="addfilerow" style="display:none">
+                <input type="hidden" name="action" value="upload">
+                File: <input type="file" name="filename" id="filename" /> <br />
+                <label><?php echo $this->__('Associate with Order'); ?></label>
+                <select name="order_ids[]" id="order_ids" multiple size="5">
+                    <?php foreach($this->getOrderList() as $opt): ?>
+
+                        <option value="<?php echo $opt->getId(); //getEntityId(); ?>"><?php echo $opt->getId() .' ' . $opt->getCreatedAt() . ' ' . $opt->getGrandTotal(); ?> </option>
+                    <?php endforeach; ?>
+                </select>
+                <br />
+                <?php
+
+                /*    <label><?php echo $this->__('Associate with Quote'); ?></label>
+                <select name="quote_ids[]" id="quote_ids" multiple size="5">
+                    <?php foreach($this->getQuoteList() as $opt): ?>
+
+                        <option value="<?php echo $opt->getIncrementId(); //getQuoteId(); ?>"><?php echo $opt->getIncrementId(); ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <br />
+                */
+                ?>
+                <textarea name="comment" rows="12" cols="5" maxlength="255"></textarea>
+                <!--  <a href="javascript:uploadFiles(false);" id="uploadbutton"><?php echo $this->__('add');?></a>
+
+
+          onClick="jQuery('#chupload').submit()"
+          -->
+                <button  id="uploadbutton" title="add" name="add"><?php echo $this->__('add');?></button>
+
+
+            </div>
+        </form>
+
+
+        <?php if(!$items->count()): ?>
+    <p><?php echo $this->__('You have no existing items.');?></p>
+    <?php else: ?>
+    <table class="data-table orders" id="my-orders-table">
+        <colgroup>
+            <col width="1" style="width: 15%;">
+            <col width="1" style="width: 10%;">
+            <col width="1" style="width: 10%;">
+            <col width="1" style="width: 20%;">
+            <col width="1" style="width: 20%;">
+            <col width="1" style="width: 15%;">
+            <col width="1" style="width: 10%;">
+        </colgroup><thead>
+    <tr class="first last">
+        <th class="image">&nbsp;</th>
+        <th class="number"><?php echo $this->__('Orders');?></th>
+        <th class="number"><?php echo $this->__('Quotes');?></th>
+        <th class="ship"><?php echo $this->__('Filename');?></th>
+        <th class="ship"><?php echo $this->__('Comment');?></th>
+        <th class="date"><span class="nobr"><?php echo $this->__('Created');?></span></th>
+        <th class="view">&nbsp;</th>
+    </tr>
+    </thead>
+        <tbody>
+        <?php foreach($items as $k => $item): ?>
+        <tr class="<?php echo $k == 0 ? 'first' : ''; ?> <?php echo $k%1 ? 'odd' : 'even'; ?>">
+            <td class="image"><img src="<?php echo $this->getThumbnailPath($item);?>" style="erinhasfun" /></td>
+            <td class="number"><?php echo $item->getOrderIds();?></td>
+            <td class="number"><?php echo $item->getQuoteIds();?></td>
+            <td class="ship"><?php echo $item->getFilename();?></td>
+            <td class="ship"><?php echo $item->getComment();?></td>
+            <td class="date"><?php echo $item->getCreatedAt();?></td>
+            <td class="a-center view last">
+                <span class="nobr"><a href="javascript:confirmDelete(<?php echo $item->getEntityId(); ?>);"><?php echo $this->__('Delete');?></a>
+                                                         <!--   <span class="separator">|</span> -->
+                                </span>
+            </td>
+        </tr>
+            <?php endforeach; ?>
+
+        </tbody>
+    </table>
+    <?php endif; ?>
+
+</div>
+</div>

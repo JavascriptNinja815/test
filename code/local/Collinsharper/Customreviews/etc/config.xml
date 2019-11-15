@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Collinsharper_Customreviews>
+            <version>0.0.1</version>
+        </Collinsharper_Customreviews>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <customreviews>
+                    <file>collinsharper/customreviews.xml</file>
+                </customreviews>
+            </updates>
+        </layout>
+    </frontend>
+    <global>
+        <blocks>
+            <customreviews>
+                <class>Collinsharper_Customreviews_Block</class>
+            </customreviews>
+        </blocks>
+    </global>
+</config>

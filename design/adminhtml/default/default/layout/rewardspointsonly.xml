@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<layout>
+    <!-- Catalog Price Rule -->
+    <adminhtml_manage_promo_pointsonly_index>
+        <reference name="content">
+            <block type="rewardspointsonly/manage_promo_pointsOnly" name="rewardspointsonly_manage_promo_pointsonly"/>
+        </reference>
+    </adminhtml_manage_promo_pointsonly_index>
+    
+    <adminhtml_manage_promo_pointsonly_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+        </reference>
+        <reference name="left">
+            <block type="rewardspointsonly/manage_promo_pointsOnly_edit_tabs" name="rewardspointsonly_manage_promo_pointsonly_edit_tabs">
+                <block type="rewardspointsonly/manage_promo_pointsOnly_edit_tab_main" name="rewardspointsonly_manage_promo_pointsonly_edit_tab_main"/>
+                <block type="rewardspointsonly/manage_promo_pointsOnly_edit_tab_conditions" name="rewardspointsonly_manage_promo_pointsonly_edit_tab_conditions"/>
+                <block type="rewardspointsonly/manage_promo_pointsOnly_edit_tab_actions" name="rewardspointsonly_manage_promo_pointsonly_edit_tab_actions"/>
+                <action method="addTab"><name>main_section</name><block>rewardspointsonly_manage_promo_pointsonly_edit_tab_main</block></action>
+                <action method="addTab"><name>conditions_section</name><block>rewardspointsonly_manage_promo_pointsonly_edit_tab_conditions</block></action>
+                <action method="addTab"><name>actions_section</name><block>rewardspointsonly_manage_promo_pointsonly_edit_tab_actions</block></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="rewardspointsonly/manage_promo_pointsOnly_edit" name="rewardspointsonly_manage_promo_pointsonly_edit"/>
+        </reference>
+    </adminhtml_manage_promo_pointsonly_edit>
+    
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addJs" ifconfig="rewards/general/pointsonly_enabled"><file>tbt/rewardspointsonly/adminhtml/RewardsPointsOnlyOrderCreate.js</file></action>
+        </reference>
+        <block type="adminhtml/template" template="rewardspointsonly/sales/order/create/js.phtml" name="rewardspointsonly_js_create" />
+        <reference name="js">
+            <action method="insert" ifconfig="rewards/general/pointsonly_enabled">
+                <block>rewardspointsonly_js_create</block>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+    
+    <!-- Admin Order View page -->
+    <adminhtml_sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/adminhtml_sales_order_view_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/view/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>simple</type>
+                <block>rewardspointsonly/adminhtml_sales_order_view_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/view/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/adminhtml_sales_order_view_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/view/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/adminhtml_sales_order_view_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/view/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <!-- Admin Invoice Create page -->
+    <adminhtml_sales_order_invoice_new>
+        <reference name="order_items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>simple</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <!-- Admin Invoice Create > Update qty -->
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="order_items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>simple</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/create/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <!-- Admin Invoice View page -->
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_items">
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>default</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/view/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>simple</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/view/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>configurable</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/view/items/renderer/default.phtml</template>
+            </action>
+            <action method="addItemRender" ifconfig="rewards/general/layoutsactive">
+                <type>downloadable</type>
+                <block>rewardspointsonly/adminhtml_sales_items_renderer_default</block>
+                <template>rewardspointsonly/sales/order/invoice/view/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    
+    <PRODUCT_TYPE_bundle>
+        <reference name="product.composite.fieldset.bundle">
+            <action method="addRenderer"><type>select</type><block>rewardspointsonly/adminhtml_catalog_product_type_bundle_option_select</block></action>
+            <action method="addRenderer"><type>multi</type><block>rewardspointsonly/adminhtml_catalog_product_type_bundle_option_multi</block></action>
+            <action method="addRenderer"><type>radio</type><block>rewardspointsonly/adminhtml_catalog_product_type_bundle_option_radio</block></action>
+            <action method="addRenderer"><type>checkbox</type><block>rewardspointsonly/adminhtml_catalog_product_type_bundle_option_checkbox</block></action>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+    
+    <PRODUCT_TYPE_configurable>
+        <reference name="product.composite.fieldset.configurable">
+            <block type="rewardspointsonly/adminhtml_catalog_product_view_additionalOptionsJs" name="rewardspointsonly_additional_js" template="rewardspointsonly/catalog/product/view/additional_options_js.phtml" output="toHtml" />
+        </reference>
+    </PRODUCT_TYPE_configurable>
+    
+    <PRODUCT_TYPE_grouped>
+        <reference name="product.composite.fieldset.grouped">
+            <action ifconfig="rewards/general/layoutsactive" method="addPriceBlockType">
+                 <type>simple</type>
+                 <block>rewardspointsonly/adminhtml_catalog_product_price</block>
+            </action>
+        </reference>
+    </PRODUCT_TYPE_grouped>
+</layout>

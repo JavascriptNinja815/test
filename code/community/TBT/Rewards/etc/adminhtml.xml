@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <rewards module="rewards" translate="title">
+            <title><![CDATA[<span class="stadmin-menu_main">Rewards</span>]]></title>
+            <sort_order>75</sort_order>
+            <children>
+                <dashboard module="rewards" translate="title">
+                    <title>Dashboard</title>
+                    <sort_order>15</sort_order>
+                    <action>adminhtml/rewardsDashboard/index/</action>
+                </dashboard>
+                <rules module="rewards" translate="title">
+                    <title>Reward Rules</title>
+                    <sort_order>20</sort_order>
+                    <children>
+                        <distribution module="rewards" translate="title">
+                            <title>Earning Rules</title>
+                            <sort_order>10</sort_order>
+                            <children>
+                                <quote module="rewards" translate="title">
+                                    <title>Shopping Cart</title>
+                                    <sort_order>20</sort_order>
+                                    <action>adminhtml/manage_promo_quote/index/type/1/</action>
+                                </quote>
+                                <special module="rewards" translate="title">
+                                    <title>Customer Behavior</title>
+                                    <sort_order>30</sort_order>
+                                    <action>adminhtml/manage_special/index/type/1/</action>
+                                </special>
+                            </children>
+                        </distribution>
+                        <redemption module="rewards" translate="title">
+                            <title>Spending Rules</title>
+                            <sort_order>20</sort_order>
+                            <children>
+                                <quote module="rewards" translate="title">
+                                    <title>Shopping Cart</title>
+                                    <sort_order>20</sort_order>
+                                    <action>adminhtml/manage_promo_quote/index/type/2/</action>
+                                </quote>
+                            </children>
+                        </redemption>
+                    </children>
+                </rules>
+                <customer module="rewards" translate="title">
+                    <title>Customer Points</title>
+                    <action>/manage_customer_points</action>
+                    <sort_order>30</sort_order>
+                    <children>
+                        <customer module="rewards" translate="title">
+                            <title>Customer Point Balances</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/manage_customer_points</action>
+                        </customer>
+                        <transfers module="rewards" translate="title">
+                            <title>Point Transfers</title>
+                            <action>adminhtml/manage_transfer</action>
+                            <sort_order>20</sort_order>
+                            <children>
+                                <othertransfers module="rewards" translate="title">
+                                    <title>Manage Transfers</title>
+                                    <sort_order>0</sort_order>
+                                    <action>adminhtml/manage_transfer</action>
+                                </othertransfers>
+                                <createtransfer module="rewards" translate="title">
+                                    <title>Create New Transfer</title>
+                                    <sort_order>40</sort_order>
+                                    <action>adminhtml/manage_transfer/new</action>
+                                </createtransfer>
+                            </children>
+                        </transfers>
+                        <import module="rewards" translate="title">
+                            <title>Import Points</title>
+                            <action>adminhtml/points_import</action>
+                            <sort_order>30</sort_order>
+                        </import>
+                    </children>
+                </customer>
+                <cfg module="rewards" translate="title">
+                    <title>Configuration</title>
+                    <action>adminhtml/system_config/edit/section/rewards/</action>
+                    <sort_order>80</sort_order>
+                    <children>
+                        <currency module="rewards" translate="title">
+                            <title>Points Currency</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/manage_currency</action>
+                        </currency>
+                        <cfg module="rewards" translate="title">
+                            <title>Other Configuration</title>
+                            <action>adminhtml/system_config/edit/section/rewards/</action>
+                            <sort_order>20</sort_order>
+                        </cfg>
+                    </children>
+                </cfg>
+            </children>
+        </rewards>
+    </menu>
+    
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <rewards module="rewards" translate="title">
+                        <title>Customer Rewards</title>
+                        <sort_order>75</sort_order>
+                        <children>
+                            <dashboard module="rewards" translate="title">
+                                <title>MageRewards Dashboard</title>
+                                <sort_order>10</sort_order>
+                            </dashboard>
+                            <rules module="rewards" translate="title">
+                                <title>Point Rules</title>
+                                <sort_order>20</sort_order>
+                                <children>
+                                    <distribution module="rewards" translate="title">
+                                        <title>Earning Rules</title>
+                                        <sort_order>10</sort_order>
+                                        <children>
+                                            <quote module="rewards" translate="title">
+                                                <title>Shopping Cart Earning Rules</title>
+                                                <sort_order>20</sort_order>
+                                            </quote>
+                                            <special module="rewards" translate="title">
+                                                <title>Customer Behavior Earning Rules</title>
+                                                <sort_order>30</sort_order>
+                                            </special>
+                                        </children>
+                                    </distribution>
+                                    <redemption module="rewards" translate="title">
+                                        <title>Spending Rules</title>
+                                        <sort_order>20</sort_order>
+                                        <children>
+                                            <quote module="rewards" translate="title">
+                                                <title>Shopping Cart Redeeming Rules</title>
+                                                <sort_order>20</sort_order>
+                                            </quote>
+                                        </children>
+                                    </redemption>
+                                </children>
+                            </rules>
+                            <customer module="rewards" translate="title">
+                                <title>Customer Points</title>
+                                <sort_order>30</sort_order>
+                                <children>
+                                    <customer module="rewards" translate="title">
+                                        <title>Customer Point Balances</title>
+                                        <sort_order>10</sort_order>
+                                    </customer>
+                                    <transfers module="rewards" translate="title">
+                                        <title>Point Transfers</title>
+                                        <sort_order>20</sort_order>
+                                        <children>
+                                            <othertransfers module="rewards" translate="title">
+                                                <title>Manage Transfers</title>
+                                                <sort_order>0</sort_order>
+                                            </othertransfers>
+                                            <createtransfer module="rewards" translate="title">
+                                                <title>Create New Transfer</title>
+                                                <sort_order>40</sort_order>
+                                            </createtransfer>
+                                        </children>
+                                    </transfers>
+                                </children>
+                            </customer>
+                            <cfg module="rewards" translate="title">
+                                <title>Configuration</title>
+                                <sort_order>80</sort_order>
+                                <children>
+                                    <currency module="rewards" translate="title">
+                                        <title>Points Currency</title>
+                                        <sort_order>10</sort_order>
+                                    </currency>
+                                    <cfg module="rewards" translate="title">
+                                        <title>Configuration</title>
+                                        <sort_order>20</sort_order>
+                                    </cfg>
+                                </children>
+                            </cfg>
+                        </children>
+                    </rewards>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <rewards>
+                                        <title>Rewards Section</title>
+                                    </rewards>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

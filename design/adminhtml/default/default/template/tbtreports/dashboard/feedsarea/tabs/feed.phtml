@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var $this TBT_Reports_Block_Adminhtml_Dashboard_FeedsArea_Tabs_Feed
+ */
+$initialTransfersCount = 30;
+$feedItemBlock = $this->getChild('tbtreports.adminhtml.feed.item.transfer');
+$feedObjects = $this->getItems($initialTransfersCount);
+
+$showNonEmptyEndOfList = count($feedObjects) > 0 && count($feedObjects) < $initialTransfersCount;
+$showEmptyEndOfList = count($feedObjects) == 0;
+
+?>
+<div id="dashboard-feeds">
+    <div id="feed-items-reel">
+        <script type="text/javascript">
+            sweettooth.Dashboard.Feed.init({
+                updateUrl:      "<?php echo $this->getUrl('*/adminhtml_feed/update'); ?>",
+                previousUrl:    "<?php echo $this->getUrl('*/adminhtml_feed/loadPrevious'); ?>",
+                updateText: {
+                    singular:   "<?php echo $this->__('%s New Update', '%s'); ?>",
+                    plural:     "<?php echo $this->__('%s New Updates', '%s'); ?>",
+                },
+                bottomLink: {
+                    label:  "<?php echo $this->__("See All Point Transactions"); ?>",
+                    url:    "<?php echo $this->getUrl('adminhtml/manage_transfer/index'); ?>",
+                }
+            });
+
+            <?php foreach ($feedObjects as $feedObject): ?>
+                <?php $feedItemBlock->setItemObject($feedObject); ?>
+                sweettooth.Dashboard.Feed.push({
+                    id:         "<?php echo $feedItemBlock->getId(); ?>",
+                    message:    "<?php echo addslashes($feedItemBlock->getMessage()); ?>",
+                    classes:    "<?php echo addslashes(implode(' ', $feedItemBlock->getClasses())); ?>",
+                    timestamp:  "<?php echo addslashes($feedItemBlock->getTimestamp()); ?>"
+                });
+            <?php endforeach; ?>
+
+            sweettooth.Dashboard.Feed.renderAllItems();
+        </script>
+
+        <div id="feed-item-load-previous" style="display: <?php echo (($showNonEmptyEndOfList || $showEmptyEndOfList)? 'none' : 'block'); ?>">
+            <a><?php echo $this->__("Previous 20"); ?></a>
+        </div>
+
+        <div id="feed-items-end-of-list">
+            <div class="end-condition non-empty-list" style="display: <?php echo ($showNonEmptyEndOfList? 'block' : 'none'); ?>">
+                <div class="end-of-list-title "><?php echo $this->__("No Further Activity"); ?></div>
+                <p>
+                    We have a few inside tips on how to increase your loyalty program participation.
+                    <div class="bold a-center">
+                        <a href="https://www.magerewards.com/blog/how-to-increase-loyalty-program-participation/" target="_blank">Learn How</a>
+                    </div>
+                </p>
+            </div>
+            <div class="end-condition empty-list" style="display: <?php echo ($showEmptyEndOfList? 'block' : 'none'); ?>">
+                <div class="end-of-list-title"><?php echo $this->__("No Activity Yet!"); ?></div>
+                <div class="end-of-list-explainer">
+                    <p>Go ahead and test out your new loyalty program, as a customer would experience them on your store.</p>
+                    <br />
+                    <p>
+                        Now, you just need to get the word out about your new Loyalty Program! <br/>
+                        <div class="bold a-center">
+                            <a href="https://www.magerewards.com/blog/how-to-increase-loyalty-program-participation/" target="_blank">Learn How</a>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="feeds-bottom-link"></div>
+</div>

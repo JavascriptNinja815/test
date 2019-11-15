@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_BrontoNotification>
+            <version>0.1.0</version>
+        </Collinsharper_BrontoNotification>
+    </modules>
+    <global>
+        <helpers>
+            <brontonotification>
+                <class>Collinsharper_BrontoNotification_Helper</class>
+            </brontonotification>
+        </helpers>
+        <models>
+            <brontonotification>
+                <class>Collinsharper_BrontoNotification_Model</class>
+                <resourceModel>brontonotification_mysql4</resourceModel>
+            </brontonotification>
+        </models>
+        <resources>
+            <customerattribute1412800801_setup>
+                <setup>
+                    <module>Collinsharper_BrontoNotification</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </customerattribute1412800801_setup>
+            <customerattribute1412800801_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </customerattribute1412800801_write>
+            <customerattribute1412800801_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </customerattribute1412800801_read>
+        </resources>
+        <events>
+            <customer_save_before>
+                <observers>
+                    <chbronto_customer_save_before>
+                        <type>model</type>
+                        <class>brontonotification/observer</class>
+                        <method>customerSaveBefore</method>
+                    </chbronto_customer_save_before>
+                </observers>
+            </customer_save_before>
+            <chreels_save_before>
+                <observers>
+                    <chbronto_reel_save_after>
+                        <type>model</type>
+                        <class>brontonotification/observer</class>
+                        <method>reelSaveAfter</method>
+                    </chbronto_reel_save_after>
+                </observers>
+            </chreels_save_before>
+        </events>
+
+    </global>
+
+    <frontend>
+        <routers>
+            <brontonotification>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_BrontoNotification</module>
+                    <frontName>brontonotification</frontName>
+                </args>
+            </brontonotification>
+        </routers>
+    </frontend>
+
+    <!-- run once a week just to make sure we dont miss anything? -->
+
+    <crontab>
+        <jobs>
+            <brontonotification_sendnofification>
+                <schedule><cron_expr>0 0 1 * *</cron_expr></schedule>
+                <run><model>brontonotification/observer::updateAllBits</model></run>
+            </brontonotification_sendnofification>
+	    <!--<brontonotification_sendemails>
+                <schedule><cron_expr>0 2 * * *</cron_expr></schedule>
+                <run><model>brontonotification/emailcron::sendEmails</model></run>
+            </brontonotification_sendemails>-->
+        </jobs>
+    </crontab>
+</config>

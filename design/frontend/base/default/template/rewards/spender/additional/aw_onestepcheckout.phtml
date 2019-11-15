@@ -1,0 +1,68 @@
+<script type="text/javascript">
+    window.sweettooth = window.sweettooth || {};
+    sweettooth.slider = sweettooth.slider || {};
+
+    sweettooth.slider.beforeAjax = function() {
+        /**
+         * Add Loader Block
+         */
+        AWOnestepcheckoutCore.addLoaderOnBlock($('aw-onestepcheckout-review-cart'),{
+            '48px': 'aw-onestepcheckout-overlay aw-onestepcheckout-overlay-48',
+            '24px': 'aw-onestepcheckout-overlay aw-onestepcheckout-overlay-24',
+            '16px': 'aw-onestepcheckout-overlay aw-onestepcheckout-overlay-16'
+        });
+        
+        /**
+         * Disable Checkout Place Order button
+         */
+        $('aw-onestepcheckout-place-order-button').addClassName('aw-onestepcheckout-place-order-button-disabled');
+        $('aw-onestepcheckout-place-order-button').disabled = true;
+        $$('.aw-onestepcheckout-place-order-amount').first().hide();
+        $$('.aw-onestepcheckout-place-order-process').first().show();
+    };
+
+    sweettooth.slider.afterAjax = function(response) {
+        var result = response.responseJSON;
+        
+        if (result.hasOwnProperty('error') && result.error === true) {
+            this.logMessage(result.message);
+        } else {
+            var fetchTotalsUrl = '<?php echo $this->getUrl('rewards/awonestepcheckout_redeem/fetchAjaxTotalBlocks', array('_forced_secure' => $this->getRequest()->isSecure())) ?>';
+            new Ajax.Request(fetchTotalsUrl, {
+                onSuccess: function (t) {
+                    var resultTotals = JSON.parse(t.responseText);
+                    if (resultTotals.hasOwnProperty('error') && resultTotals.error === true) {
+                        this.logMessage(resultTotals.errorMessage);
+                        return;
+                    }
+                    
+                    if (resultTotals.hasOwnProperty('checkoutReviewHtml')) {
+                        var checkoutTotalsHtml = resultTotals.checkoutReviewHtml;
+                        $('aw-onestepcheckout-review-cart').replace(checkoutTotalsHtml);
+                    }
+                    
+                    if (resultTotals.hasOwnProperty('grandTotal')) {
+                        $$('.aw-onestepcheckout-place-order-amount').first().update(resultTotals.grandTotal);
+                    }
+                }
+            });
+        }
+        
+        /**
+         * Enable Checkout Place Order button
+         */
+        $('aw-onestepcheckout-place-order-button').removeClassName('aw-onestepcheckout-place-order-button-disabled');
+        $('aw-onestepcheckout-place-order-button').disabled = false;
+        $$('.aw-onestepcheckout-place-order-amount').first().show();
+        $$('.aw-onestepcheckout-place-order-process').first().hide();
+    
+        /**
+         * Remove Loader Block
+         */
+        AWOnestepcheckoutCore.removeLoaderFromBlock($('aw-onestepcheckout-review-cart'),{
+            '48px': 'aw-onestepcheckout-overlay aw-onestepcheckout-overlay-48',
+            '24px': 'aw-onestepcheckout-overlay aw-onestepcheckout-overlay-24',
+            '16px': 'aw-onestepcheckout-overlay aw-onestepcheckout-overlay-16'
+        });
+    };
+</script>

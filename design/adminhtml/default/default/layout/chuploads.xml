@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <adminhtml_customer_edit>
+    <reference name="customer_edit_tabs">
+            <action method="addTab"><name>chupload_action</name><block>collinsharper_chcustomeruploads/adminhtml_customer_edit_tab_action</block></action>
+              </reference>
+  </adminhtml_customer_edit>
+
+
+    <adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+
+            <!-- collins harper -->
+            <action method="addTab">
+                <name>order_chuploads</name>
+                <block>collinsharper_chcustomeruploads/adminhtml_sales_order_view_tab_action</block>
+            </action>
+            <!-- collins harper -->
+        </reference>
+    </adminhtml_sales_order_view>
+
+
+ <adminhtml_qquoteadv_edit>
+     <reference name="sales_order_tabs">
+
+         <!-- collins harper -->
+         <action method="addTab">
+             <name>order_chuploads</name>
+             <block>collinsharper_chcustomeruploads/adminhtml_sales_order_view_tab_action</block>
+         </action>
+         <!-- collins harper -->
+     </reference>
+</adminhtml_qquoteadv_edit>
+
+</layout>
+

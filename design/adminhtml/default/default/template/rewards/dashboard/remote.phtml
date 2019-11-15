@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @var $this TBT_Rewards_Block_Manage_Dashboard_Remote
+ */
+?>
+<div class="remote-content"><!-- Remote Content --></div>
+<script type="application/javascript">
+    new Ajax.Request(
+        '<?php echo $this->getRemoteUrl(); ?>',
+        {
+            onSuccess: function(t) {
+                // Treat response as JSON-Value
+                var html = t.responseJSON ? t.responseJSON : "";
+                var selector = '.rewards_dashboard_contents .remote-content';
+                var blockToRender = $$(selector).first();
+                blockToRender.insert(html);
+            }
+        }
+    );
+</script>

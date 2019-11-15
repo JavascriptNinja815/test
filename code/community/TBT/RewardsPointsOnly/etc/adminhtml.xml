@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <rewards>
+            <children>
+                <rules>
+                    <children>
+                        <redemption>
+                            <children>
+                                <pointsonly module="rewardspointsonly" translate="title">
+                                    <title>Points Only Rules</title>
+                                    <sort_order>10</sort_order>
+                                    <action>adminhtml/manage_promo_pointsOnly/</action>
+                                </pointsonly>
+                            </children>
+                        </redemption>
+                    </children>
+                </rules>
+            </children>
+        </rewards>
+    </menu>
+    
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <rewards>
+                        <children>
+                            <rules>
+                                <children>
+                                    <redemption>
+                                        <children>
+                                            <pointsonly module="rewardspointsonly" translate="title">
+                                                <title>Points Only Rules</title>
+                                                <sort_order>10</sort_order>
+                                            </pointsonly>
+                                        </children>
+                                    </redemption>
+                                </children>
+                            </rules>
+                        </children>
+                    </rewards>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

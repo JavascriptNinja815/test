@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <trustmark translate="title" module="Mcafeesecure_Trustmark">
+            <title>McAfee SECURE</title>
+            <sort_order>55</sort_order>
+            <children>
+                <manage translate="title" module="Mcafeesecure_Trustmark">
+                    <title>Settings</title>
+                    <action>Mcafeesecure_Trustmark/adminhtml_trustmark/index</action>
+                    <sort_order>55</sort_order>
+                </manage>
+            </children>
+        </trustmark>
+    </menu>
+</config>

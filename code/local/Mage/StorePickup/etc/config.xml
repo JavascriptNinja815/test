@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+   <default>
+        <carriers>
+            <storepickupmodule>
+                    <active>1</active>
+					     <allowed_methods>pickup</allowed_methods>
+						<methods>pickup</methods>
+                    <sallowspecific>0</sallowspecific>
+<model>Mage_StorePickup_Model_Carrier_ShippingMethod</model>
+                    <name>Store Pickup</name>
+                    <title>Store Pickup</title>
+                    <specificerrmsg>
+This shipping method is currently unavailable.
+If you would like to ship using this shipping
+method, please contact us.
+                    </specificerrmsg>
+                    <handling_type>F</handling_type>
+            </storepickupmodule>
+        </carriers>
+    </default>
+	<modules>
+<!-- declare module's version information -->
+    <Mage_StorePickup>
+<!-- this version number will be used for database upgrades -->
+      <version>0.1.0</version>
+    </Mage_StorePickup>
+  </modules>
+ 
+  <global>
+<!-- declare model group for new module -->
+    <models>
+<!-- model group alias to be used in Mage::getModel() -->
+      <storepickupmodule>
+<!-- base class name for the model group -->
+        <class>Mage_StorePickup_Model</class>
+      </storepickupmodule>
+    </models>
+ 
+<!-- declare resource setup for new module -->
+    <resources>
+<!-- resource identifier -->
+      <storepickupmodule_setup>
+<!-- specify that this resource is a setup resource and used for upgrades -->
+        <setup>
+<!-- which module to look for install/upgrade files in -->
+          <module>Mage_StorePickup</module>
+        </setup>
+<!-- specify database connection for this resource -->
+        <connection>
+<!-- do not create new connection, use predefined core setup connection -->
+          <use>core_setup</use>
+        </connection>
+      </storepickupmodule_setup>
+    </resources>
+  </global>
+</config>

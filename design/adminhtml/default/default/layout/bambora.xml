@@ -1,0 +1,29 @@
+﻿<?xml version="1.0"?>
+<!--
+/**
+ * Copyright Bambora | Checkout, (c) 2016.
+ * This program is free software. You are allowed to use the software but NOT allowed to modify the software. 
+ * It is also not legal to do any changes to the software and distribute it in your own name / brand. 
+ */
+-->
+<layout version="1.0">
+
+  <default module="page" translate="label">
+    <label>All Pages</label>
+    <reference name="head">
+      <action method="addCss">
+        <stylesheet>css/bambora/bamboraadminhtml.css</stylesheet>
+      </action>
+    </reference>
+  </default>
+
+  <adminhtml_sales_order_view>
+    <reference name="sales_order_tabs">
+      <action method="addTab">
+        <name>bambora_online_info</name>
+        <block>bambora/adminhtml_sales_order_view_tab_info</block>
+      </action>
+    </reference>
+  </adminhtml_sales_order_view>
+  
+</layout>

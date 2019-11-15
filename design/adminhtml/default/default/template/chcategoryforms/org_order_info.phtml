@@ -1,0 +1,71 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Kit Lee
+ * Date: 10/15/2014
+ * Time: 11:22 AM
+ */
+
+$help = mage::helper('collinsharper_chcategoryforms/order');
+
+$org_order_info = $this->getOrder()->getData( 'post_data' );
+if ( $org_order_info != null ) {
+	$order_data = unserialize( $org_order_info );
+}
+$order_data = $help->getOrderData($this->getOrder());
+$orderType = $help->getOrderType($this->getOrder());
+?>
+<?php if ( is_array( $order_data ) && $orderType ):  ?>
+		<div class="clear"></div>
+		<div class="entry-edit">
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-products"><?php echo Mage::helper( 'sales' )->__( 'Image 3D Details' ) ?></h4>
+			</div>
+		</div>
+		<div class="org-order-info-collateral">
+			<dl class="collateral-tabs tab-list" id="collateral-tabs" style="height: 105px;">
+				<?php if ( $orderType == Collinsharper_Chcategoryforms_Helper_Order::STEREO_ORDER ): ?>
+					<dt class="tab first" style="z-index: 3;"><span>Stereo Order Details</span></dt>
+					<dd class="tab-container" style="display: none;">
+						<div class="tab-content">
+                            <?php echo $this->getChildHtml('org_order_info.stereo'); ?>
+                        </div>
+					</dd>
+				<?php endif; ?>
+				<?php if ( $orderType == Collinsharper_Chcategoryforms_Helper_Order::B2B_ESTIMATE ): ?>
+					<dt class="tab" style="z-index: 3;"><span>B2B Estimate</span></dt>
+					<dd class="tab-container" style="display: none;">
+						<div class="tab-content">
+                            <?php echo $this->getChildHtml('org_order_info.btb_estimate'); ?>
+                        </div>
+					</dd>
+				<?php endif; ?>
+				<?php if ( $orderType == Collinsharper_Chcategoryforms_Helper_Order::B2B_ORDER ): ?>
+					<dt class="tab last active" style="z-index: 4;"><span>B2B Order</span></dt>
+					<dd class="tab-container" style="display: none;">
+						<div class="tab-content">
+                            <?php echo $this->getChildHtml('org_order_info.btb_order'); ?>
+                        </div>
+					</dd>
+				<?php endif; ?>
+
+
+			</dl>
+			<script type="text/javascript">
+				//<![CDATA[
+				var collateralTabs = new Enterprise.Tabs('collateral-tabs');
+				//Event.observe(window, 'load', function() {
+				Event.observe(window, 'doc:ready', function () {
+
+					collateralTabs.select();
+					$('collateral-tabs').down('dt').click();
+				});
+				jQuery(document).readyt(function () {
+					jQuery('#collateral-tabs dt span').click();
+				});
+
+				//]]>
+			</script>
+		</div>
+		<div class="clear"></div>
+	<?php endif; ?>

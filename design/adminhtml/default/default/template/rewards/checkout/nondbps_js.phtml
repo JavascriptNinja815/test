@@ -1,0 +1,17 @@
+<script type="text/javascript">
+    toggleCartRule = function(checkbox_elem) {
+        var add_rule_url = '<?php echo Mage::getModel('adminhtml/url')->getUrl('adminhtml/manage_sales_order/cartadd', array('_forced_secure' => $this->getRequest()->isSecure())); ?>';
+        var remove_rule_url = '<?php echo Mage::getModel('adminhtml/url')->getUrl('adminhtml/manage_sales_order/cartremove', array('_forced_secure' => $this->getRequest()->isSecure())); ?>';
+        var url = '';
+        var rid = checkbox_elem.value;
+        checkbox_elem.disabled =  true;
+        if(checkbox_elem.checked) {
+            url = add_rule_url + 'rids/' + rid;
+        } else {
+            url = remove_rule_url + 'rids/' + rid;
+        }
+        $(checkbox_elem).next().innerHTML = CAPTION_REFRESHING_CART;
+        window.location = url;
+        return true;
+    };
+</script>

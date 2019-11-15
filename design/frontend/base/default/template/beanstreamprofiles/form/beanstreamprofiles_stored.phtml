@@ -1,0 +1,36 @@
+<fieldset class="form-list">
+    <?php $_code=$this->getMethodCode() ; ?>
+    <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+		<li>
+		            <div class="input-box">
+					 <label for="<?php echo $_code ?>_cc_owner"><?php echo $this->__('Secure Cards') ?> <span class="required">*</span></label><br/>
+			<option value=""></option>
+
+			<?php $rid = ''; foreach($this->getStoredCards() as $card) : ?>
+			<input type="radio"  class="radio validate-one-required-by-name stored_cc" id="<?php echo $_code ?>_cc_owner_<?php echo $rid ?>" name="payment[cc_owner]" value="<?php echo $card['data_key']; ?>" <?php echo $card['default_card'] == 1? "checked=checked" : ""; ?>  />CC Last 4 <?php echo str_pad($card['cc_last4'],4,"0",STR_PAD_LEFT); ?> - <?php echo date('F Y',strtotime('20'.substr($card['card_expiry_MMYY'],-2).'-'.substr($card['card_expiry_MMYY'],0,2).'-01')); ?><br />
+			
+			<?php if($rid =='') { $rid = 0; } $rid+=1; endforeach; ?>
+
+		<input type="hidden" id="<?php echo $_code ?>_cc_type" name="payment[cc_type]" value="VI">
+		<input type="hidden" id="<?php echo $_code ?>_cc_number" name="payment[cc_number]" value="4242424242424242">
+		<input type="hidden" id="<?php echo $_code ?>_expiration" name="payment[cc_exp_month]" value="01">
+		<input type="hidden" id="<?php echo $_code ?>_expiration_yr" name="payment[cc_exp_year]" value="2099">
+		<?php if (Mage::getStoreConfig('payment/beanstreamprofilesstored/usecvv')): ?>
+            </div>
+        </li>
+        <li>
+            <div class="input-box">
+                <label for="<?php echo $_code ?>_cc_cid"><?php echo $this->__('Card Verification Number') ?> <span class="required">*</span></label><br />
+                <div class="v-fix"><input type="text" title="<?php echo $this->__('Card Verification Number') ?>" class="required-entry input-text validate-cc-cvn" id="<?php echo $_code ?>_cc_cid" name="payment[cc_cid]" style="width:3em;" value="" /></div>
+                &nbsp;
+                <a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>
+            </div>
+        </li>
+
+		<?php else: ?>
+			<input type="hidden" id="<?php echo $_code ?>_cc_cid" name="payment[cc_cid]" value="123">
+            </div>
+		</li>
+		<?php endif; ?>
+    </ul>
+</fieldset>

@@ -1,0 +1,31 @@
+<config>    
+    <modules>
+        <Matt_Nopobox>
+            <version>1.1.1</version>
+        </Matt_Nopobox>
+    </modules>
+	<global>
+		<helpers>
+			<nopobox>
+				<class>Matt_Nopobox_Helper</class>
+			</nopobox>
+		</helpers>
+        <models>
+          <sales>
+              <rewrite>
+                  <quote_address>Matt_Nopobox_Model_Quote_Address</quote_address>
+              </rewrite>
+          </sales>
+       </models>
+    </global> 
+    <default>
+    	<nopobox>
+    		<option>
+    			<active>0</active>
+    			<allowspecific>0</allowspecific>
+    			<cerror>To this country , We can not send the shipping address contains PO box.</cerror>
+    			<aerror>We can not send the shipping address contains PO box.</aerror>
+    		</option>
+    	</nopobox>
+    </default>
+</config>

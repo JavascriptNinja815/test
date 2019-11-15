@@ -1,0 +1,20 @@
+<div id="email-preferences" class="box-account box-info <?php if (Mage::helper('rewards/theme')->getPackageName() == 'enterprise') { echo 'info-box'; } ?>" style="display: none">
+    <div class="box-head">
+        <h2 class="box-title"><?php echo $this->__('Email Preferences'); ?></h2>
+    </div>
+    <div class="box-content">
+        <form method="post" action="<?php echo $this->getActionUrl(); ?>">
+            <div class="email-options">
+                <input id="email-preference" type="checkbox" name="email-preference" <?php if ($this->hasEmailsEnabled()) { echo 'checked'; } ?> />
+                <label for="email-preference"><?php echo $this->getLabel(); ?></label>
+            </div>
+            <div class="submit-preference">
+                <button type="submit" title="Save" class="button btn-cart">
+                    <span>
+                        <span>Save</span>
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

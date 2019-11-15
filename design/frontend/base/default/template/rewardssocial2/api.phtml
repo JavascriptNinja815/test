@@ -1,0 +1,267 @@
+<?php $helper = Mage::helper('rewardssocial2'); ?>
+<?php if (!$helper->isRewardsSocialV1Enabled()): ?>
+    <script type="text/javascript">
+        (function(window) {
+            window.sweettooth = window.sweettooth || {};
+
+            sweettooth._server = sweettooth._server || {};
+            sweettooth._server.social = sweettooth._server.social || {};
+            sweettooth._server.social.urls = sweettooth._server.social.urls || {};
+
+            <?php $isSecure = Mage::app()->getStore()->isCurrentlySecure(); ?>
+            sweettooth._server.social.urls.registerEvent = '<?php echo Mage::getUrl('rewardssocial2/social/registerEvent/', array('_secure' => $isSecure)); ?>';
+            sweettooth._server.social.urls.fetchProductUrl = '<?php echo Mage::getUrl('rewardssocial2/social/fetchProductUrl/', array('_secure' => $isSecure)); ?>';
+            sweettooth._server.social.urls.socialIntegrationJs = '<?php echo $helper->getIntegrationJsUrl(); ?>';
+            sweettooth._server.social.urls.currentPageUrl = '<?php echo $helper->getCurrentUrl(false); ?>';
+
+            sweettooth._server.social.forceActionType = false;
+            sweettooth._server.social.forceActionData = false;
+            
+            sweettooth._server.social.points = {
+                facebook_like: '<?php echo $helper->getPointsPrediction('facebook_like'); ?>',
+                facebook_share: '<?php echo $helper->getPointsPrediction('facebook_share'); ?>',
+                twitter_follow: '<?php echo $helper->getPointsPrediction('twitter_follow'); ?>',
+                twitter_tweet: '<?php echo $helper->getPointsPrediction('twitter_tweet'); ?>',
+                google_plusone: '<?php echo $helper->getPointsPrediction('google_plusone'); ?>',
+                pinterest_pin: '<?php echo $helper->getPointsPrediction('pinterest_pin'); ?>',
+                facebook_share_purchase: '<?php echo $helper->getPointsPrediction('facebook_share_purchase'); ?>',
+                twitter_tweet_purchase: '<?php echo $helper->getPointsPrediction('twitter_tweet_purchase'); ?>',
+                facebook_share_referral: '<?php echo $helper->getPointsPrediction('facebook_share_referral'); ?>',
+                twitter_tweet_referral: '<?php echo $helper->getPointsPrediction('twitter_tweet_referral'); ?>'
+            },
+            sweettooth._server.social.messages = {
+                facebook_like: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for liking this on Facebook!'); ?>',
+                facebook_share: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for sharing this on Facebook!'); ?>',
+                twitter_follow: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for following us on Twitter!'); ?>',
+                twitter_tweet: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for tweeting this on Twitter!'); ?>',
+                google_plusone: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for +1&#39;ing this on Google+!'); ?>',
+                pinterest_pin: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for pinning this on Pinterest!'); ?>',
+                facebook_share_purchase: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for sharing this purchase on Facebook!'); ?>',
+                twitter_tweet_purchase: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for tweeting about this purchase on Twitter!'); ?>',
+                facebook_share_referral: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for sharing your referral link on Facebook!'); ?>',
+                twitter_tweet_referral: '<?php echo $this->__('Earn <strong>{points_amount}</strong> for tweeting your referral link on Twitter!'); ?>'
+            };
+
+            var _oldContents = null;
+
+            sweettooth.social = {
+                registerEvent: function(action, data) {
+                    
+                    if (sweettooth._server.social.forceActionType) {
+                        action = sweettooth._server.social.forceActionType;
+                        data = sweettooth._server.social.forceActionData;
+                        
+                        sweettooth._server.social.forceActionType = false;
+                        sweettooth._server.social.forceActionData = false;
+                    }
+                    
+                    console.log('Registering ST Social Event: ' + action);
+                    
+                    if (!sweettooth._server.social.points.hasOwnProperty(action)) {
+                        return false;
+                    }
+
+                    new Ajax.Request(sweettooth._server.social.urls.registerEvent, {
+                        method: 'post',
+                        parameters: {
+                            action: action,
+                            current_page_url: sweettooth._server.social.urls.currentPageUrl,
+                            data: JSON.stringify(data)
+                        },
+                        onComplete: function(response) {
+                            var message = response.responseText;
+                            var code = response.status;
+
+                            if (code === 400 || code === 401 || code === 429) {                            
+                                setTimeout(function() {
+                                    var htmlMessage = '<ul class="messages sweettooth-messages"><li class="error-msg"><ul><li>' 
+                                        + message 
+                                        + '</li></ul></li></ul>';
+
+                                    $$('.sweettooth-messages').invoke('remove');
+                                    $$('.col-main').first().insert({top: htmlMessage});
+                                }, 3000);
+                            }
+                        }
+                    });
+                },
+                showEarningMessage: function(action, target) {
+                    target = target || '.sweettooth-social-messages';
+                    var elements = document.querySelectorAll(target);
+
+                    if (!sweettooth._server.social.points[action]) {
+                        return false;
+                    }
+
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = Element.extend(elements[i]);
+
+                        if (_oldContents === null) {
+                            _oldContents = element.innerHTML;
+                        }
+
+                        var message = sweettooth._server.social.messages[action];
+                        message = message.replace('{points_amount}', sweettooth._server.social.points[action]);
+
+                        element.update(message);
+                    }
+                },
+                clearEarningMessage: function(target) {
+                    if (_oldContents === null) {
+                        return false;
+                    }
+
+                    target = target || '.sweettooth-social-messages';
+                    var elements = document.querySelectorAll(target);
+
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = Element.extend(elements[i]);
+                        element.update(_oldContents);
+                    }
+
+                    _oldContents = null;
+                },
+                openModal: function(modal) {
+                    if (modal === 'refer-friends') {
+                        $('sweettooth-refer-friends').setStyle({visibility: 'visible'});
+                        return true;
+                    }
+
+                    return false;
+                },
+                doAction: function(action, data) {
+                    switch (action) {
+                        case ('facebook_like'):
+                            $('facebook-like-modal').removeClassName('hidden');
+                            break;
+
+                        case ('facebook_share'):
+                            var url = 'http://www.facebook.com/sharer.php?s=100&p[url]=' + '<?php echo $helper->fetchTargetUrl('facebook_share'); ?>';
+                            this.openPopup(url, 'Facebook Share');
+                            break;
+
+                        case ('twitter_follow'):
+                            var url = 'https://twitter.com/intent/user?screen_name=' + encodeURIComponent('<?php echo $helper->getTwitterUsername(); ?>');
+                            this.openPopup(url, 'Twitter Follow');
+                            break;
+
+                        case ('twitter_tweet'):
+                            var url = 'http://twitter.com/share?text=' + encodeURIComponent('<?php echo $helper->getTweetMessage(); ?>') + '&url=' + '<?php echo $helper->fetchTargetUrl('twitter_tweet'); ?>';
+                            this.openPopup(url, 'Twitter Tweet');
+                            break;
+
+                        case ('google_plusone'):
+                            var url = 'https://plus.google.com/share?url=' + '<?php echo $helper->fetchTargetUrl('google_plusone'); ?>';
+                            this.openPopup(url, 'Google Plus');
+                            break;
+
+                        case ('pinterest_pin'):
+                            var url = 'http://pinterest.com/pin/create/bookmarklet/?url=' + '<?php echo $helper->fetchTargetUrl('pinterest_pin'); ?>' + '&media=' + encodeURIComponent(data);
+                            this.openPopup(url, 'Pinterest Pin');
+                            break;
+
+                        case ('facebook_share_referral'):
+                            sweettooth._server.social.forceActionType = 'facebook_share_referral';
+                            
+                            var url = 'http://www.facebook.com/sharer.php?s=100&p[url]=' + '<?php echo $helper->fetchTargetUrl('facebook_share_referral'); ?>';
+                            this.openPopup(url, 'Facebook Share Referral');
+                            
+                            break;
+
+                        case ('twitter_tweet_referral'):
+                            sweettooth._server.social.forceActionType = 'twitter_tweet_referral';
+                            
+                            var url = 'http://twitter.com/share?text=' + encodeURIComponent('<?php echo $helper->getTweetMessage(); ?>') + '&url=' + '<?php echo $helper->fetchTargetUrl('twitter_tweet_referral'); ?>';
+                            this.openPopup(url, 'Twitter Tweet Referral');
+
+                            break;
+
+                        case ('facebook_share_purchase'):
+                            sweettooth._server.social.forceActionType = 'facebook_share_purchase';
+                            sweettooth._server.social.forceActionData = data;
+                            var self = this;
+                            var doShare = function(productUrl) {
+                                var url = 'http://www.facebook.com/sharer.php?s=100&p[url]=' + (productUrl? productUrl:'<?php echo $helper->fetchTargetUrl('facebook_share_purchase'); ?>');
+                                self.openPopup(url, 'Facebook Share Purchase');
+                            };
+
+                            if (data.product) {
+                                this.fetchProductUrl(data.product, doShare);
+                            } else {
+                                doShare(null);
+                            }
+
+                            break;
+
+                        case ('twitter_tweet_purchase'):
+                            sweettooth._server.social.forceActionType = 'twitter_tweet_purchase';
+                            sweettooth._server.social.forceActionData = data;
+                            var self = this;
+                            var doShare = function(productUrl) {
+                                var url = 'http://twitter.com/share?text=' + encodeURIComponent('<?php echo $helper->getTweetMessage(); ?>') + '&url=' + (productUrl? productUrl:'<?php echo $helper->fetchTargetUrl('twitter_tweet_purchase'); ?>');
+                                self.openPopup(url, 'Twitter Tweet Purchase');
+                            }
+
+                            if (data.product) {
+                                this.fetchProductUrl(data.product, doShare);
+                            } else {
+                                doShare(null);
+                            }
+
+                            break;
+                    }
+                },
+                openPopup: function(url, title) {
+                    var width  = 575;
+                    var height = 400;
+                    
+                    var windowWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+                    var windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+                    
+                    var left = (windowWidth - width)  / 2;
+                    var top = (windowHeight - height) / 2;
+                    var opts = 'status=1' + ',width=' + width + ',height=' + height + ',top=' + top  +',left=' + left;
+                    
+                    window.open(url, title, opts);
+                },
+                fetchProductUrl: function(productId, callback) {
+                    new Ajax.Request(sweettooth._server.social.urls.fetchProductUrl, {
+                        method: 'get',
+                        parameters: {
+                            product_id: productId
+                        },
+                        onComplete: function(response) {
+                            var productUrl = '';
+                            var body = response.responseText;
+                            var code = response.status;
+
+                            if (code === 200) {
+                                productUrl = body;
+                            }
+
+                            if (typeof callback === 'function') {
+                                callback(productUrl);
+                            }
+                        }
+                    });
+                }
+            };
+        })(window);
+    </script>
+    
+    <!-- Sweettooth Integration Script -->
+    <?php if (Mage::getStoreConfig('rewards/rewardssocial2/auto_integrate')): ?>
+        <script type="text/javascript">
+            Event.observe(document, 'dom:loaded', function() {
+                if (sweettooth._server.social.urls.socialIntegrationJs) {
+                    (function(d, t) {
+                        var g = d.createElement(t),
+                            s = d.getElementsByTagName(t)[0];
+                        g.src = sweettooth._server.social.urls.socialIntegrationJs;
+                        s.parentNode.insertBefore(g, s);
+                    }(document, 'script'));
+                }
+            });
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

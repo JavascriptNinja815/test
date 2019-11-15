@@ -1,0 +1,47 @@
+<?php if ($this->isPurchaseSharingEnabled() && !Mage::helper('rewardssocial2')->isRewardsSocialV1Enabled()): ?>
+    <div class="checkout-purchase-share">
+        <div class="page-title">
+            <h1><?php echo $this->__('Earn rewards for sharing your purchase.'); ?></h1>
+        </div>
+
+        <?php $productsToRender = $this->getProductsToRender(); ?>
+        <?php $helper = $this->helper('catalog/output'); ?>
+        <?php $collectionSize = count($productsToRender); ?>
+        <?php $columnCount = $this->getColumnCount(); ?>
+        <?php $i = 0; ?>
+        
+        <?php foreach ($productsToRender as $product): ?>
+            
+            <?php if ($i++ % $columnCount === 0): ?>
+                <ul class="products-grid">
+            <?php endif; ?>
+            
+            <li class="item<?php if (($i - 1) % $columnCount === 0): ?> first<?php elseif ( $i % $columnCount === 0): ?> last<?php endif; ?>">
+                <div class="rewardssocial-purchased-product">
+                    <a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" class="product-image">
+                        <img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($product, 'small_image'), null, true) ?>" />
+                    </a>
+                    <h2 class="product-name">
+                        <a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $this->stripTags($product->getName(), null, true) ?>">
+                            <?php echo $helper->productAttribute($product, $product->getName(), 'name') ?>
+                        </a>
+                    </h2>
+                </div>
+                <div class="actions">
+                    <?php echo $this->getSocialButtonsHtml($product); ?>
+                </div>
+            </li>
+            
+            <?php if ($i % $columnCount === 0 || $i === $collectionSize): ?>
+                </ul>
+            <?php endif ?>
+        <?php endforeach ?>
+        
+        <script type="text/javascript">
+            (function() {
+                decorateGeneric($$('ul.products-grid'), ['odd','even','first','last']);
+            })();
+        </script>
+
+    </div>
+<?php endif; ?>

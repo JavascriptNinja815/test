@@ -1,0 +1,32 @@
+<div id="dialog"  style="display: none;">
+    <form id="redemption_form" action="<?php echo Mage::helper("adminhtml")->getUrl('aw_giftcard_admin/adminhtml_giftcard/newrv') ?>">
+        <div>
+            <label><?php echo $this->__('Prefix Code') ?></label>
+            <input type="text" name="prefix_code">
+        </div>
+        <div>
+            <label><?php echo $this->__('How many?') ?></label>
+            <input type="text" name="how_many">
+        </div>
+        <div>
+            <label><?php echo $this->__('Redemption Code Cost') ?></label>
+            <input type="text" name="redemption_code_cost">
+        </div>
+        <div>
+            <label><?php echo $this->__('Purchase Price') ?></label>
+            <input type="text" name="redemption_cost" value="14.95" />
+        </div>
+    </form>
+</div>
+<style type="text/css">
+    #redemption_form > div {
+        margin-bottom: 10px;
+    }
+    #redemption_form label {
+        display: block;
+        line-height: 20px;
+    }
+    #redemption_form input {
+        width: 95%;
+    }
+</style>

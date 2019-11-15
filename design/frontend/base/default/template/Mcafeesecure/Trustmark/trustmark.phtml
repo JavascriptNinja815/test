@@ -1,0 +1,15 @@
+<?php $orderId = Mage::getSingleton('checkout/session')->getLastOrderId(); ?>
+
+<script type="text/javascript" src="https://cdn.ywxi.net/js/1.js" async></script>
+
+<script>
+if(location.pathname.endsWith("/success/")){
+  var endpoint = "https://cdn.ywxi.net";
+  var t = document.createElement('script');
+  t.setAttribute("type","text/javascript");
+  t.setAttribute("class","mcafeesecure-track-conversion");
+  t.setAttribute("data-orderid", "<?php echo $orderId; ?>");
+  t.setAttribute("src", endpoint + "/js/conversion.js");
+  document.getElementsByTagName("head")[0].appendChild(t);
+}
+</script>

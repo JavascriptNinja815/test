@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets>
+    <rewardssocial2_social_buttons type="rewardssocial2/widget_social" translate="name description">
+        <name>MageRewards Social Buttons</name>
+        <description>This widget adds MageRewards social buttons to the page.</description>
+        <parameters>
+            <social_buttons_selector translate="label">
+                <label>Social Buttons to Display</label>
+                <type>multiselect</type>
+                <visible>1</visible>
+                <required>0</required>
+                <source_model>rewardssocial2/system_config_source_homepage</source_model>
+                <value>1,2,3,4,5,6</value>
+                <helper_block>
+                    <type>rewardssocial2/adminhtml_widget_helper_notificationV1Enabled</type>
+                </helper_block>
+            </social_buttons_selector>
+            <template>
+                <required>1</required>
+                <visible>0</visible>
+                <label>MageRewards Social Button Template</label>
+                <type>text</type>
+                <value>rewardssocial2/buttons.phtml</value>
+            </template>
+        </parameters>
+    </rewardssocial2_social_buttons>
+</widgets>

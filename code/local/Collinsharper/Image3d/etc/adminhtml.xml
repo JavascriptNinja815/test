@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <report>
+            <children>
+                <chimage3d_custom translate="title" module="chimage3d">
+                    <title>Custom Reports</title>
+                    <sort_order>0</sort_order>
+                    <children>
+                        <orders>
+                            <title>Orders</title>
+                            <action>chimage3d_admin/report_sales_order</action>
+                            <sort_order>0</sort_order>
+                        </orders>
+                        <shipments>
+                            <title>Invoice Shipped Orders</title>
+                            <action>chimage3d_admin/report_sales_order_shipment</action>
+                            <sort_order>10</sort_order>
+                        </shipments>
+                        <ordered_items>
+                            <title>Ordered Items</title>
+                            <action>chimage3d_admin/report_sales_order_item</action>
+                            <sort_order>20</sort_order>
+                        </ordered_items>
+                        <shipped_items>
+                            <title>Shipped Items</title>
+                            <action>chimage3d_admin/report_sales_order_shipment_item</action>
+                            <sort_order>30</sort_order>
+                        </shipped_items>
+                        <giftcards>
+                            <title>Gift Cards</title>
+                            <action>chimage3d_admin/report_giftCard</action>
+                            <sort_order>40</sort_order>
+                        </giftcards>
+			<manage_giftcards>
+			    <title>Manage Gift Cards</title>
+			    <action>aw_giftcard_admin/adminhtml_giftcard</action>
+			    <sort_order>50</sort_order>
+			</manage_giftcards>
+                        <deposits_received>
+                            <title>Deposits Received</title>
+                            <action>chimage3d_admin/report_sales_order_payment</action>
+                            <sort_order>60</sort_order>
+                        </deposits_received>
+                    </children>
+                </chimage3d_custom>
+            </children>
+        </report>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <report>
+                        <children>
+                            <chimage3d_custom translate="title" module="chimage3d">
+                                <title>Custom</title>
+                                <children>
+                                    <orders translate="title">
+                                        <title>Orders</title>
+                                        <sort_order>0</sort_order>
+                                    </orders>
+                                    <shipments translate="title">
+                                        <title>Invoice Shipped Orders</title>
+                                        <sort_order>10</sort_order>
+                                    </shipments>
+                                    <ordered_items translate="title">
+                                        <title>Ordered Items</title>
+                                        <sort_order>20</sort_order>
+                                    </ordered_items>
+                                    <shipped_items translate="title">
+                                        <title>Shipped Items</title>
+                                        <sort_order>30</sort_order>
+                                    </shipped_items>
+                                    <giftcards translate="title">
+                                        <title>Gift Cards</title>
+                                        <sort_order>40</sort_order>
+                                    </giftcards>
+                                    <deposits_received translate="title">
+                                        <title>Deposits Received</title>
+                                        <sort_order>50</sort_order>
+                                    </deposits_received>
+                                </children>
+                            </chimage3d_custom>
+                        </children>
+                    </report>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

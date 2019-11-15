@@ -1,0 +1,117 @@
+<?php
+/**
+ * Sweet Tooth
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS
+ * License, which extends the Open Software License (OSL 3.0).
+ * The Sweet Tooth License is available at this URL:
+ *     https://www.sweettoothrewards.com/terms-of-service
+ * The Open Software License is available at this URL:
+ *      http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is
+ * not held liable for any inconsistencies or abnormalities in the
+ * behaviour of this code.
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the
+ * provided Sweet Tooth License.
+ * Upon discovery of modified code in the process of support, the Licensee
+ * is still held accountable for any and all billable time Sweet Tooth spent
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension.
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy
+ * immediately.
+ *
+ * @category   [TBT]
+ * @package    [TBT_Rewards]
+ * @copyright  Copyright (c) 2014 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+
+/**
+ * Admin Order Create Search Product View Redeem Points
+ *
+ * @category   TBT
+ * @package    TBT_Rewards
+ * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+?>
+<?php
+$ruleOptions = $this->getRedeemableOptions();
+$ruleMap = $this->getApplicableRulesMap();
+$c = Mage::helper('rewards/currency');
+$pid = $this->getProduct()->getId();
+$pid_suffix = $this->getIdSuffix();
+$show_reduced_price = true;
+$show_discount_in_uses_selector = true;
+$show_slider = true;
+?>
+<div class="divider"></div>
+<script type="text/javascript">
+    // Configurations ///////////////
+    window.show_lowest_price = <?php echo $show_reduced_price ? 'true' : 'false'; ?>;
+    window.show_discount_in_uses_selector = <?php echo $show_discount_in_uses_selector ? 'true' : 'false'; ?>;
+
+    // Other PHP content ///////////////
+
+    window.original_product_price = "<?php echo $this->getOriginalPrice(); ?>";
+    window.rule_options = <?php echo json_encode($ruleMap); ?>;
+    window.base_product_id = <?php echo $pid; ?>;
+    window.is_configurable_product = <?php echo (int) $this->getProduct()->isConfigurable(); ?>;
+    window.customer_points = <?php echo ($this->getCurrentCustomer() ? json_encode($this->getCurrentCustomer()->getUsablePoints()) : "false"); ?>;
+    window.do_hide_old_price = false;
+    window.default_guest_points = <?php echo $this->getDefaultGuestPoints(); ?>;
+    window.ruleUses = <?php echo json_encode($this->getRuleUses()) ?>;
+
+    window.new_price_dom_id = 'product-price-<?php echo $pid; ?><?php echo $pid_suffix; ?>';
+    window.old_price_dom_id = 'old-price-<?php echo $pid; ?><?php echo $pid_suffix; ?>';
+    window.new_price_excl_tax_dom_id = 'price-excluding-tax-<?php echo $pid; ?><?php echo $pid_suffix; ?>';
+    window.new_price_incl_tax_dom_id = 'price-including-tax-<?php echo $pid; ?><?php echo $pid_suffix; ?>';
+    window.old_price_excl_tax_dom_id = 'old-price-excluding-tax-<?php echo $pid; ?><?php echo $pid_suffix; ?>';
+    window.old_price_incl_tax_dom_id = 'old-price-including-tax-<?php echo $pid; ?><?php echo $pid_suffix; ?>';
+    window.slider_mode = <?php echo $show_slider ? 'true' : 'false'; ?>;
+</script>
+
+<?php   $hideDropdown = false;
+    if (((!$this->getHasMultipleRules($ruleOptions )) && $this->isSliderMode($ruleOptions)) ){
+        $hideDropdown = true;
+    }
+?>
+
+<?php if ($this->customerHasUseablePoints()):?>
+    <div class="redeem_section clear">
+        <span id="catalogRedemptionUsePoints" class="use_points rewards-caption-text">
+            <?php echo $this->__('Spend Points') . ':'; ?>
+        </span>
+        <select name="catalog_redemption_rule" id="catalogRedemptionRule"
+                class="redemption_selector validate-can_use_points validate-has_enough_points" <?php if($hideDropdown):?>style="display:none"<?php endif; ?>>
+
+            <?php /*For a single rule , select it by default */?>
+
+            <?php if ( $this->getHasMultipleRules($ruleOptions ) ) :?>
+                <option value="" selected="selected"></option>
+            <?php endif;?>
+            <?php foreach ($ruleOptions as $ruleOption): ?>
+                <?php if (isset($ruleOption['rule_id'])): ?>
+                    <option value="<?php echo $ruleOption['rule_id']; ?>" <?php echo $this->isSelectedRule($ruleOption['rule_id']) ? 'selected' : '' ?>>
+                        <?php echo $ruleOption['caption'] . " (" . $this->__('costs') . " " . $ruleOption['points'] . ")"; ?>
+                    </option>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </select>
+
+        <input type="hidden" name="catalog_redemption_rule_prev" id="catalogRedemptionRulePrev" />
+
+        <div id="catalogRedemptionRuleUsesContainer" class="redemption_uses_container" style="display:none;">
+            <?php echo $this->getChildHtml('points_slider'); ?>
+            <?php echo $this->getChildHtml('points_slider_js'); ?>
+        </div>
+    </div>
+<?php endif;?>

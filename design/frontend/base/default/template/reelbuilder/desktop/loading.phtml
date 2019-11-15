@@ -1,0 +1,496 @@
+
+<style type="text/css">
+.spin-div {
+    position: absolute;
+    top: 50%;
+    left: 0;
+	right: 0;
+	width: 100%;
+}
+#rb-loading {
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+#rb-loading .loading-bg {
+  content: " ";
+  background: rgba(102, 102, 102, 0.5) url("<?php echo IMAGE3D_CUSTOMER_SITE_PATH_PREFIX; ?>/skin/frontend/image3d/celebrate/css/images/ui-bg_diagonals-thick_20_666666_40x40.png") 50% 50% repeat; 
+  opacity: 0.5;
+  position: fixed;
+  left: 0;
+  top: 0;
+    height: 100%;
+    width: 100%;
+}
+#loading-message {
+  max-width: 400px  !important;
+  border-radius: 15px;
+  padding: 10px;
+  position: fixed;
+  margin: 15px auto;
+  top: 20%;
+  left: 0;
+  right: 0;
+  background-color: #ebe4cb !important;
+  background-image: none;
+  border: 5px solid #beb386;
+  width: 100%;
+  z-index: 1000;
+}
+#loading-message h1 {
+	text-align: center;
+	display:inline-table;
+	vertical-align: middle;
+	padding: 10px;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+	color: #333333;
+	font-size: 18px;
+}
+#rb-loading .complete-percentage {
+  max-width: 400px  !important;
+  border-radius: 15px;
+  padding: 10px;
+  position: fixed;
+  margin: 15px auto;
+  left: 0;
+  right: 0;    
+  background-color: #ebe4cb !important;
+  background-image: none;
+  border: 5px solid #beb386;
+  width: 100%;
+  z-index: 1000;
+}
+.spinner-container {
+    width: 114px;
+    height: 114px;
+    background-color: #eb702c;
+    display: block;
+    -webkit-border-radius: 60px;
+	-moz-border-radius: 60px;
+	border-radius: 60px;
+	-webkit-animation: 8s ease-out 0s normal both infinite running shutter-click;
+            animation: 8s ease-out 0s normal both infinite running shutter-click;
+			z-index: 999;
+			position: relative;
+			margin: 0 auto;
+}
+
+.spinner-shadow {
+    width: 114px;
+    height: 114px;
+    background-color: #83c3ab;
+    display: block;
+    -webkit-border-radius: 60px;
+	-moz-border-radius: 60px;
+	border-radius: 60px;
+	margin: -108px auto 0;
+}
+
+.sp-reels {
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 13px;
+}
+
+.sp-reel-frame {
+    width: 13px;
+    height: 12px;
+    background-color: #FDF9ED;
+    display: inline-block;
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.sp-center-circle {
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+    border-radius: 25px;
+    display: inline-block;
+    background-color: transparent;
+    vertical-align: middle;
+    margin: 2px;
+}
+
+.sp-reel-1.sp-reels .sp-center-circle {
+    background-color: #FDF9ED;
+}
+
+.sp-reel-2 {
+	-webkit-transform: rotate(25.7deg);
+        -ms-transform: rotate(25.7deg);
+            transform: rotate(25.7deg);
+}
+.sp-reel-3 {
+	-webkit-transform: rotate(51.4deg);
+        -ms-transform: rotate(51.4deg);
+            transform: rotate(51.4deg);
+}
+.sp-reel-4 {
+	-webkit-transform: rotate(77.1deg);
+        -ms-transform: rotate(77.1deg);
+            transform: rotate(77.1deg);
+}
+.sp-reel-5 {
+	-webkit-transform: rotate(102.8deg);
+        -ms-transform: rotate(102.8deg);
+            transform: rotate(102.8deg);
+}
+.sp-reel-6 {
+	-webkit-transform: rotate(128.3deg);
+        -ms-transform: rotate(128.5deg);
+            transform: rotate(128.5deg);
+}
+.sp-reel-7 {
+	-webkit-transform: rotate(154.2deg);
+        -ms-transform: rotate(154.2deg);
+            transform: rotate(154.2deg);
+}
+
+.sp-small-rect-1 {
+	position: absolute;
+    margin-left: 4px;
+    margin-top: 55px;
+	width: 100px;
+	-webkit-transform: rotate(41.4deg);
+        -ms-transform: rotate(41.4deg);
+            transform: rotate(41.4deg);
+}
+.sp-small-rect-2 {
+	position: absolute;
+    margin-left: 5px;
+    margin-top: 53px;
+	width: 100px;
+	-webkit-transform: rotate(92.8deg);
+        -ms-transform: rotate(92.8deg);
+            transform: rotate(92.8deg);
+}
+.sp-small-rect-3 {
+	position: absolute;
+    margin-left: 7px;
+    margin-top: 52px;
+	width: 100px;
+	-webkit-transform: rotate(144.2deg);
+        -ms-transform: rotate(144.2deg);
+            transform: rotate(144.2deg);
+}
+.sp-small-rect-4 {
+	position: absolute;
+    margin-left: 9px;
+    margin-top: 53px;
+	width: 100px;
+	-webkit-transform: rotate(195.6deg);
+        -ms-transform: rotate(195.6deg);
+            transform: rotate(195.6deg);
+}
+.sp-small-rect-5 {
+	position: absolute;
+    margin-left: 4px;
+    margin-top: 57px;
+	width: 100px;
+	-webkit-transform: rotate(240deg);
+        -ms-transform: rotate(240deg);
+            transform: rotate(240deg);
+}
+.sp-small-rect-6 {
+	position: absolute;
+    margin-left: 4px;
+    margin-top: 55px;
+	width: 100px;
+	-webkit-transform: rotate(292.4deg);
+        -ms-transform: rotate(292.4deg);
+            transform: rotate(292.4deg);
+}
+.sp-small-rect-7 {
+	position: absolute;
+    margin-left: 5px;
+    margin-top: 54px;
+	width: 100px;
+	-webkit-transform: rotate(345.8deg);
+        -ms-transform: rotate(345.8deg);
+            transform: rotate(345.8deg);
+}
+
+.sp-small-rect {
+    width: 7px;
+    height: 4px;
+    background-color: #fff;
+    display: block;
+}
+
+.sp-center-dot {
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    background-color: #eb702c;
+    -webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+    margin-top: 53.5px;
+    margin-left: 53.5px;
+    z-index: 2;
+}
+
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes shutter-click {
+	0%   {
+    	-webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+
+    5% {
+    	-webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+ 
+    14.286%   {
+    	-webkit-transform: rotate(51.428deg);
+            -ms-transform: rotate(51.428deg);
+                transform: rotate(51.428deg);
+    }
+
+    19.286% {
+    	-webkit-transform: rotate(51.428deg);
+            -ms-transform: rotate(51.428deg);
+                transform: rotate(51.428deg);
+    }
+
+    28.572%  {
+    	-webkit-transform: rotate(102.856deg);
+            -ms-transform: rotate(102.856deg);
+                transform: rotate(102.856deg);
+    }
+
+    33.572% {
+    	-webkit-transform: rotate(102.856deg);
+            -ms-transform: rotate(102.856deg);
+                transform: rotate(102.856deg);
+    }
+
+    42.858%  {   	
+    	-webkit-transform: rotate(154.284deg);
+            -ms-transform: rotate(154.285deg);
+                transform: rotate(154.284deg);
+    }
+
+    47.858%  {   	
+    	-webkit-transform: rotate(154.284deg);
+            -ms-transform: rotate(154.285deg);
+                transform: rotate(154.284deg);
+    }
+
+    57.144%  {   	
+    	-webkit-transform: rotate(205.712deg);
+            -ms-transform: rotate(205.712deg);
+                transform: rotate(205.712deg);
+    }
+
+    62.144%  {   	
+    	-webkit-transform: rotate(205.712deg);
+            -ms-transform: rotate(205.712deg);
+                transform: rotate(205.712deg);
+    }
+
+    71.43%  {
+    	
+    	-webkit-transform: rotate(257.14deg);
+            -ms-transform: rotate(257.14deg);
+                transform: rotate(257.14deg);
+    }
+
+    76.43%  {
+    	
+    	-webkit-transform: rotate(257.14deg);
+            -ms-transform: rotate(257.14deg);
+                transform: rotate(257.14deg);
+    }
+
+    85.716%  {
+    	
+    	-webkit-transform: rotate(308.568deg);
+            -ms-transform: rotate(308.568deg);
+                transform: rotate(308.568deg);
+    }
+
+    90.716%  {
+    	
+    	-webkit-transform: rotate(308.568deg);
+            -ms-transform: rotate(308.568deg);
+                transform: rotate(308.568deg);
+    }
+}
+
+@keyframes shutter-click {
+	0%   {
+    	-webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+
+    5% {
+    	-webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+ 
+    14.286%   {
+    	-webkit-transform: rotate(51.428deg);
+            -ms-transform: rotate(51.428deg);
+                transform: rotate(51.428deg);
+    }
+
+    19.286% {
+    	-webkit-transform: rotate(51.428deg);
+            -ms-transform: rotate(51.428deg);
+                transform: rotate(51.428deg);
+    }
+
+    28.572%  {
+    	-webkit-transform: rotate(102.856deg);
+            -ms-transform: rotate(102.856deg);
+                transform: rotate(102.856deg);
+    }
+
+    33.572% {
+    	-webkit-transform: rotate(102.856deg);
+            -ms-transform: rotate(102.856deg);
+                transform: rotate(102.856deg);
+    }
+
+    42.858%  {   	
+    	-webkit-transform: rotate(154.284deg);
+            -ms-transform: rotate(154.285deg);
+                transform: rotate(154.284deg);
+    }
+
+    47.858%  {   	
+    	-webkit-transform: rotate(154.284deg);
+            -ms-transform: rotate(154.285deg);
+                transform: rotate(154.284deg);
+    }
+
+    57.144%  {   	
+    	-webkit-transform: rotate(205.712deg);
+            -ms-transform: rotate(205.712deg);
+                transform: rotate(205.712deg);
+    }
+
+    62.144%  {   	
+    	-webkit-transform: rotate(205.712deg);
+            -ms-transform: rotate(205.712deg);
+                transform: rotate(205.712deg);
+    }
+
+    71.43%  {
+    	
+    	-webkit-transform: rotate(257.14deg);
+            -ms-transform: rotate(257.14deg);
+                transform: rotate(257.14deg);
+    }
+
+    76.43%  {
+    	
+    	-webkit-transform: rotate(257.14deg);
+            -ms-transform: rotate(257.14deg);
+                transform: rotate(257.14deg);
+    }
+
+    85.716%  {
+    	
+    	-webkit-transform: rotate(308.568deg);
+            -ms-transform: rotate(308.568deg);
+                transform: rotate(308.568deg);
+    }
+
+    90.716%  {
+    	
+    	-webkit-transform: rotate(308.568deg);
+            -ms-transform: rotate(308.568deg);
+                transform: rotate(308.568deg);
+    }
+}
+
+</style>
+
+<div name="loading..." border="0" style="display:none" id="rb-loading">
+<div class="spin-div">
+<div class="spinner-container">
+	<div class="sp-center-dot"></div>
+	<div class="sp-reel-1 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+	<div class="sp-reel-2 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+	<div class="sp-reel-3 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+	<div class="sp-reel-4 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+	<div class="sp-reel-5 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+	<div class="sp-reel-6 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+	<div class="sp-reel-7 sp-reels">
+		<div class="sp-left-reel sp-reel-frame"></div>
+		<div class="sp-center-circle"></div>
+		<div class="sp-right-reel sp-reel-frame"></div>
+	</div>
+
+	<div class="sp-small-rect-1">
+		<div class="sp-small-rect"></div>
+	</div>
+	<div class="sp-small-rect-2">
+		<div class="sp-small-rect"></div>
+	</div>
+	<div class="sp-small-rect-3">
+		<div class="sp-small-rect"></div>
+	</div>
+	<div class="sp-small-rect-4">
+		<div class="sp-small-rect"></div>
+	</div>
+	<div class="sp-small-rect-5">
+		<div class="sp-small-rect"></div>
+	</div>
+	<div class="sp-small-rect-6">
+		<div class="sp-small-rect"></div>
+	</div>
+	<div class="sp-small-rect-7">
+		<div class="sp-small-rect"></div>
+	</div>
+</div>
+<div class="spinner-shadow"></div>
+<div class="loading-bg"></div>
+</div>
+             <div class="complete-percentage">
+                   <p><span id="percentage">0%</span><?php echo $this->__(' - completed'); ?></p>
+             </div>
+</div>
+
+<div id="loading-message" class="complete-percentage" style="display:none;  background-color: #636363;"></div>

@@ -1,0 +1,41 @@
+<?php
+
+$_product = Mage::getModel('catalog/product')->load($this->getdata('product_id'));
+
+$orginalProduct  = false;
+
+if(Mage::registry('product')) {
+    $orginalProduct = Mage::registry('product');
+    mage::unRegister('product');
+}
+mage::Register('product', $_product);
+?>
+
+
+<div class="list-list">
+
+    <img class="list-images" src="<?php echo (string)$this->helper('catalog/image')->init($_product, 'image');?>" alt="<?php echo $_product->getName(); ?>">
+
+    <div class="pricelist-info">
+        <h2 class="pricelist-prodtitle"><?php echo $_product->getName(); ?>:</h2>
+
+        <?php
+        echo Mage::app()->getLayout()->createBlock('catalog/product_view')
+            ->setData('product', $_product)
+            ->setTemplate('catalog/product/view/tierprices.phtml')
+            ->toHtml();
+        ?>
+
+        <?php echo $_product->getPricelistDescription();?>
+        <a class="build-reel-link" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>/build-a-reel">Click here to build your reel now!</a>
+    </div>
+</div>
+
+<?php
+
+
+mage::unRegister('product');
+if($orginalProduct) {
+    mage::Register('product', $orginalProduct);
+}
+

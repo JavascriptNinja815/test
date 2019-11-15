@@ -1,0 +1,25 @@
+<?php if($this->canDisplayTemplate() AND $this->getCollectionSize() > 0): ?>
+	<?php $image_helper = $this->helper('uploadimages/image'); ?>
+	<?php $images = $this->getImages();?>
+	<div id="jFlowCredits"></div>
+    <input type="hidden" id="slider_height_hidden" value="<?php echo $this->getHeightSlider();?>"/>
+    <input type="hidden" id="slider_width_hidden" value="<?php echo $this->getWidthSlider();?>"/>
+	<div id="container" style="width:<?php echo $this->getWidthSlider();?>;height:<?php echo $this->getHeightSlider();?>;">
+		<div id="mySlides">
+			<?php $counter = 1; ?>
+			<?php foreach($images as $image): ?>
+				<div id="slide"> 
+					<img src="<?php echo $image_helper->getImageUrl($image['file']);?>" alt="Slide <?php echo $counter; ?>" />
+				</div>
+				<?php $counter++;?>
+			<?php endforeach; ?>
+		</div>
+		<div id="myController">
+			<?php foreach($images as $image): ?>
+			<span class="jFlowControl"></span>
+			<?php endforeach; ?>
+		</div>
+		<span class="jFlowPrev"><div></div></span>
+		<span class="jFlowNext"><div></div></span>
+	</div>
+<?php endif; ?>

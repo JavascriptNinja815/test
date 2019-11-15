@@ -1,0 +1,209 @@
+<?php
+$_inquiry = $this->getInquiry();
+
+$org_inquiry_info = $_inquiry->getData( 'post_data' );
+$order_data = unserialize( $org_inquiry_info );
+$orderData = new Varien_Object($order_data);
+
+$orderType = 'b2border';
+
+$billingAddressContent = '';
+?>
+<style>
+	.columns #chinquiry_form .form-list {
+		width: 100%;
+	}
+	#chinquiry_form .form-list td.label {
+		width: 10%;
+	}
+	#chinquiry_form .form-list td.label label {
+		width: 120px;
+	}
+</style>
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account"><?php echo $this->__('Billing Information') ?></h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<?php
+				$billing = new Varien_Object($orderData->getData('billing'));
+				$billingAddressContent =  Mage::getSingleton('chinquiry/source_inquirytype')->getAddressBlock($billing, '', $orderData->getData('billing_address_id'));
+				echo $billingAddressContent;
+				echo "<p>" . $this->__('Additional Invoicing Details: ') . (isset($order_data['additional_invoicing_details']) ? $order_data['additional_invoicing_details'] : "") . "</p>"; ?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="box-right">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account"><?php echo $this->__('Contact Information') ?></h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<?php
+				$ship_is_bill = $order_data['billing'];
+
+				echo "<p>" . $this->__('Contact is Billing: ') . ($ship_is_bill['use_for_shipping'] == 1 ? "Yes" : "No") . "</p>";
+				if($ship_is_bill['use_for_shipping'] == 0) {
+					echo Mage::getSingleton('chinquiry/source_inquirytype')->getAddressBlock($orderData, 'contact-', $orderData->getData('contact-_address_id'));
+				} else {
+					echo $billingAddressContent;
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">Payment Information</h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<?php
+				echo "<p>" . $this->__('Deposit Payment Method: ') . (isset($order_data['deposit_payment_method']) ? $order_data['deposit_payment_method'] : "") . "</p>";
+				echo "<p>" . $this->__('Balance Payment Method: ') . (isset($order_data['balance_payment_method']) ? $order_data['balance_payment_method'] : "") . "</p>";
+				$payment_data = $order_data['payment'];
+				if(isset($payment_data['cc_stored']) && strlen($payment_data['cc_stored'])) {
+
+					$carddetails = Mage::helper('beanstreamprofiles')->loadAccountById($payment_data['cc_stored']);
+
+					$carddetails = $carddetails[0];
+
+					//print_r($carddetails);
+
+					echo "Card Token: " . $payment_data['cc_stored'];
+					echo " Type: ";
+					echo $carddetails['cardtype'];
+
+					echo "<br />";
+					echo date('F Y',strtotime('20'.substr($carddetails['card_expiry_MMYY'],-2).'-'.substr($carddetails['card_expiry_MMYY'],0,2).'-01'));
+					echo "<br />";
+				echo $this->__('XXXX-XXXX-XXXX-');
+				echo str_pad($carddetails['cc_last4'],4,"0",STR_PAD_LEFT);
+				echo "<br />";
+
+				} else {
+				// no card details?
+				}
+
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="box-right">
+	<!--Account Information-->
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account"><?php echo Mage::helper('sales')->__('Account Information') ?></h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<table cellspacing="0" class="form-list">
+					<tr>
+						<td class="label"><label><?php echo Mage::helper('sales')->__('Customer Name') ?></label></td>
+						<td class="value">
+							<?php if (isset($order_data['customer_id'])) : ?>
+								<a href="<?php echo  $this->getUrl('*/customer/edit', array('id'=>$order_data['customer_id'])); ?>" target="_blank"><strong><?php echo $this->htmlEscape($order_data['customer_name']) ?></strong></a>
+							<?php else: ?>
+								<strong><?php echo $this->htmlEscape($order_data['customer_name']) ?></strong>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<tr>
+						<td class="label"><label><?php echo Mage::helper('sales')->__('Email') ?></label></td>
+						<td class="value"><a href="mailto:<?php echo $order_data['customer_email'] ?>"><strong><?php echo $order_data['customer_email'] ?></strong></a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account"><?php echo $this->__('Proof Information') ?></h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<?php
+				echo "<p>" . $this->__('Project Proof: ') . (isset($order_data['project_proof']) ? $order_data['project_proof'] : "") . "</p>";
+				echo "<p>" . $this->__('Proof Email: ') . ($order_data['proof-email'] != "" ? $order_data['proof-email'] : $order_data['finalorder-email']) . "</p>";
+				if($order_data['project_proof'] == "Physical Proof") {
+					echo Mage::getSingleton('chinquiry/source_inquirytype')->getAddressBlock($orderData, 'proof-', $orderData->getData('proof-_address_id'));
+
+					echo "<p>" . $this->__('Additional Proof Details: ') . (isset($order_data['additional_proof_details']) ? $order_data['additional_proof_details'] : "") . "</p>";
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="box-right">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account"><?php echo $this->__('Final Order Information') ?></h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<?php
+				echo Mage::getSingleton('chinquiry/source_inquirytype')->getAddressBlock($orderData, 'finalorder-', $orderData->getData('finalorder-_address_id'));
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="box-left">
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account"><?php echo $this->__('Quote Information') ?></h4>
+		</div>
+		<div class="fieldset">
+			<div class="hor-scroll">
+				<?php
+				echo "<p>" . $this->__('Quote ID: ') . (isset($order_data['quote_id']) ? $order_data['quote_id'] : "") . "</p>";
+				echo "<p>" . $this->__('Order Date: ') . (isset($order_data['order_date']) ? $order_data['order_date'] : "") . "</p>";
+				echo "<p>" . $this->__('Purchase Order Number: ') . (isset($order_data['purchase_order_number']) ? $order_data['purchase_order_number'] : "") . "</p>";
+				echo "<p>" . $this->__('Total Price: $') . (isset($order_data['total_price']) ? $order_data['total_price'] : "") . "</p>";
+				$company_name = $order_data['billing'];
+				echo "<p>" . $this->__('Company: ') . (isset($company_name['company']) ? $company_name['company'] : "") . "</p>";
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-account"><?php echo $this->__('International Information') ?></h4>
+	</div>
+	<div class="fieldset">
+		<div class="hor-scroll">
+			<?php
+			echo "<p>" . $this->__('International Order? ') . (isset($order_data['international_order']) ? $order_data['international_order'] : "") . "</p>";
+			echo "<p>" . $this->__('International Shipping? ') . (isset($order_data['international_shipping']) ? $order_data['international_shipping'] : "") . "</p>";
+			echo "<p>" . $this->__('International Shipping Method: ') . (isset($order_data['international_ship_method']) ? $order_data['international_ship_method'] : "") . "</p>";
+			echo "<p>" . $this->__('International Shipping Tax: ') . (isset($order_data['international_ship_tax']) ? $order_data['international_ship_tax'] : "") . "</p>";
+			echo "<p>" . $this->__('International Shipping Payment: ') . (isset($order_data['international_ship_payment']) ? $order_data['international_ship_payment'] : "") . "</p>";
+			echo "<p>" . $this->__('Additional International Details: ') . (isset($order_data['additional_international_order_details']) ? $order_data['additional_international_order_details'] : "") . "</p>";
+			echo "<p>" . $this->__('Shipping Charges Method: ') . (isset($order_data['shipping_charges_method']) ? $order_data['shipping_charges_method'] : "") . "</p>";
+			echo "<p>" . $this->__('Shipping Company: ') . (isset($order_data['shipping_company']) ? $order_data['shipping_company'] : "") . "</p>";
+			echo "<p>" . $this->__('Shipping Account Holder: ') . (isset($order_data['shipping_account_holder']) ? $order_data['shipping_account_holder'] : "") . "</p>";
+			echo "<p>" . $this->__('Shipping Account Number: ') . (isset($order_data['shipping_account_number']) ? $order_data['shipping_account_number'] : "") . "</p>";
+			echo "<p>" . $this->__('Shipping Delivery: ') . (isset($order_data['shipping_delivery']) ? $order_data['shipping_delivery'] : "") . "</p>";
+			echo "<p>" . $this->__('Additional Shipping Details: ') . (isset($order_data['additional_shipping_details']) ? $order_data['additional_shipping_details'] : "") . "</p>";
+			echo "<p>" . $this->__('In Hands Required? ') . (isset($order_data['in_hands_required']) ? $order_data['in_hands_required'] : "") . "</p>";
+			echo "<p>" . $this->__('In Hands Date: ') . (isset($order_data['in_hands_date']) ? $order_data['in_hands_date'] : "") . "</p>";
+			?>
+		</div>
+	</div>
+</div>
+

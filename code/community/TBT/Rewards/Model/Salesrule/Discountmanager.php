@@ -1,0 +1,124 @@
+<?php
+/**
+ * Sweet Tooth
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS 
+ * License, which extends the Open Software License (OSL 3.0).
+
+ * The Open Software License is available at this URL: 
+ * http://opensource.org/licenses/osl-3.0.php
+ * 
+ * DISCLAIMER
+ * 
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is 
+ * not held liable for any inconsistencies or abnormalities in the 
+ * behaviour of this code. 
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the 
+ * provided Sweet Tooth License. 
+ * Upon discovery of modified code in the process of support, the Licensee 
+ * is still held accountable for any and all billable time Sweet Tooth spent 
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension. 
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to 
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy 
+ * immediately.
+ * 
+ * @category   [TBT]
+ * @package    [TBT_Rewards]
+ * @copyright  Copyright (c) 2014 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * Shopping Cart Rule discount manager
+ *
+ * @category   TBT
+ * @package    TBT_Rewards
+ * * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+class TBT_Rewards_Model_Salesrule_Discountmanager extends Mage_Core_Model_Abstract
+{
+    protected $discount_map = array ();
+    protected $rewards_discount_map = array ();
+    protected $regular_discount_map = array ();
+    protected $rewards_spent_discount_map = array ();
+
+    public function reset()
+    {
+        $this->discount_map = array ();
+        $this->rewards_discount_map = array ();
+        $this->regular_discount_map = array ();
+        $this->rewards_spent_discount_map = array ();
+
+        return $this;
+    }
+
+    public function setDiscount($rule, $discount, $base_discount)
+    {
+        $rule_id = $rule->getId ();
+        $entry = array ('rule_id' => $rule_id, 'discount' => $discount, 'base_discount' => $base_discount );
+        $this->discount_map [$rule_id] = $entry;
+
+        if ($rule->getPointsAction ()) {
+            if ($rule->getPointsAction () == TBT_Rewards_Model_Salesrule_Actions::ACTION_DISCOUNT_BY_POINTS_SPENT) {
+                $this->rewards_spent_discount_map [$rule_id] = $entry;
+            } else {
+                $this->rewards_discount_map [$rule_id] = $entry;
+            }
+        } else {
+            $this->regular_discount_map [$rule_id] = $entry;
+        }
+
+        return $this;
+    }
+
+    public function printDiscounts() 
+    {
+        $content = "All: ";
+        foreach ( $this->discount_map as $d ) {
+            $content .= implode ( "|", $d ) . ", ";
+        }
+
+        $content .= "\n<BR />";
+        $content .= "Rew: ";
+        foreach ( $this->rewards_discount_map as $d ) {
+            $content .= implode ( "|", $d ) . ", ";
+        }
+
+        $content .= "  _+_ Spent: ";
+        foreach ( $this->rewards_spent_discount_map as $d ) {
+            $content .= implode ( "|", $d ) . ", ";
+        }
+
+        $content .= "\n<BR />";
+        $content .= "Reg: ";
+        foreach ( $this->regular_discount_map as $d ) {
+            $content .= implode ( "|", $d ) . ", ";
+        }
+
+        $content .= "\n<BR />--";
+        Mage::helper('rewards/debug')->printMessage($content);
+        return $this;
+    }
+
+    public function getTotalNonSpendingDiscount()
+    {
+        $tnsd = 0;
+
+        foreach ( $this->rewards_discount_map as $d ) {
+            $tnsd += $d ['discount'];
+        }
+
+        foreach ( $this->regular_discount_map as $d ) {
+            $tnsd += $d ['discount'];
+        }
+
+        return $tnsd;
+    }
+}
+

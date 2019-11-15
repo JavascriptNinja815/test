@@ -1,0 +1,57 @@
+ <?php if($this->canDisplayTemplate()): ?>
+	<?php $session = $this->getSession(); ?>
+	<?php $helper = $this->helper('uploadimages');?>
+	<div class="box-collateral uploadimages-container-class" id="uploadimages-container">
+		<script type="text/javascript">
+			jQwBelvg(document).ready(function(){
+				form_object 	 = $('uploadimages-form-form');
+				copy_form_object = $('uploadimages-form').innerHTML;
+			});
+		</script>
+		<iframe id="uploadimages-form-target" name="uploadimages-form-target" style="display: none; width: 600px; height: 600px;"></iframe>
+		<div class="uploadimages-container-title" id="uploadimages-title">
+			<h2><?php echo $this->__('Upload images for this product')?></h2>
+		</div>
+		<?php if($helper->hasFrontendNote()):?>
+			<div><?php echo $helper->getFrontendNote(); ?></div>
+		<?php endif;?>
+		<div id="uploadimages-form-error" style="display: none;"><span style="float:right"><a id="hide-error"><img src="<?php echo Mage::getDesign()->getSkinBaseUrl() . 'images/belvg/uploadimages/close.png'?>"/></a></span></div>
+		<div id="uploadimages-form-success" style="display: none;"><span style="float:right"><a id="hide-success"><img src="<?php echo Mage::getDesign()->getSkinBaseUrl() . 'images/belvg/uploadimages/close.png'?>"/></a></span></div>
+		<div class="uploadimages-container-link" id="uploadimages-link">
+			<!---a href="#" onclick="javascript:jQwBelvg.uploadFields('setUploadField'); return false;"><?php echo $this->__('Click here for upload');?></a-->
+            <button class="button" onclick="javascript:jQwBelvg.uploadFields('setUploadField'); return false;">
+                <span>
+                    <span>
+                        <?php echo $this->__('Click here for upload');?>
+                    </span>
+                </span>
+            </button>
+		</div>
+		<div class="uploadimages-container-form" id="uploadimages-form" style="display:none;">
+			<form method="post" action="<?php echo $this->getPostUrlForm();?>" id="uploadimages-form-form" enctype="multipart/form-data">
+				<input type="hidden" name="product_id" id="product_id" value="<?php echo $this->getProductId();?>">
+				<div class="add-data">
+					<label><?php echo $this->__('Add Image:');?></label>
+					<div class="uploadimages-input-box" id="input-box0">
+						<input type="file" class="input-file" name="image[0]" size="40"/>&nbsp;&nbsp;
+						<!--<?php echo $this->__('Title: '); ?> <input type="text" class="title input-text" name="title[0]" value="" size="30" />-->
+					</div>
+					<a href="#" onclick="javascript:jQwBelvg.uploadFields('addUploadField'); return false;"><?php echo $this->__('More');?></a><br/>
+					<?php if (!$session->isLoggedIn()):?>
+					<div class="email-box">
+						<?php echo $this->__('Email:');?><?php if ($helper->isRequireEmail()):?><?php echo "<em style='color: red;'>*</em>";?><?php endif;?>
+						<br/>
+						<input type="text" name="email" id="guest-email" class="input-text validate-email <?php if ($helper->isRequireEmail()):?><?php echo "required-entry";?><?php endif;?>" size="40" />
+						<br/>
+					</div>
+					<?php endif; ?>
+					<button type="button" onclick="javascript:jQwBelvg.uploadFields('uploadImages', form_object)" class="button upload" title="<?php echo $this->__('Upload Images'); ?>">
+						<span>
+							<span><?php echo $this->__('Upload Images'); ?></span>
+						</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+<?php endif; ?>

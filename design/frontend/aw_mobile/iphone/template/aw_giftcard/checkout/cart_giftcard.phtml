@@ -1,0 +1,59 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Giftcard
+ * @version    1.0.8
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><div class="giftcard box">
+    <div id="aw_giftcard_balance_lookup"></div>
+    <form id="aw-giftcard-form" action="<?php echo $this->getFormUrl();?>" method="post">
+        <?php if (AW_All_Helper_Versions::getPlatform() == AW_All_Helper_Versions::CE_PLATFORM && version_compare(Mage::getVersion(), '1.8.0.1', '>=')): ?>
+            <?php echo $this->getBlockHtml('formkey'); ?>
+        <?php endif;?>
+        <table align="center">
+            <tr>
+                <td valign="middle"><h4><?php echo $this->__('Gift Cards') ?></h4></td>
+                <td valign="middle">
+                    <input class="required-entry input-text" id="aw_giftcard_code" name="giftcard_code" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="middle" colspan="2">
+                    <fieldset>
+                        <div class="v-fix"></div>
+                        <button class="form-button form-button-alt giftcard" onclick="mobileCart.postAwGiftcardForm();" type="button" value="<?php echo $this->__('Add Gift Card') ?>"><span><span><?php echo $this->__('Add Gift Card') ?></span></span></button>
+                        <button class="form-button form-button-alt giftcard" onclick="new Ajax.Updater('aw_giftcard_balance_lookup', '<?php echo Mage::getUrl('awgiftcard/card/applyMobileAjax',array('_secure' => Mage::app()->getStore(true)->isCurrentlySecure()));?>', {onCreate: function() { mobileCart.setLoader(true); }, onComplete: function() { mobileCart.setLoader(false); }, parameters : {giftcard_code : $('aw_giftcard_code').value, status_flag : 1}})" type="button" value="<?php echo $this->__('Check Gift Card') ?>"><span><span><?php echo $this->__('Check Gift Card') ?></span></span></button>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr><td colspan="2" align="center" class="description"><?php echo $this->__('Enter the gift card code') ?></td></tr>
+        </table>
+    </form>
+    <script type="text/javascript">
+        //<![CDATA[
+        mobileCart.registerAwGiftcard('aw-giftcard-form', '<?php echo Mage::getUrl('awgiftcard/card/applyMobileAjax', array('_secure' => Mage::app()->getStore(true)->isCurrentlySecure(), 'status_flag' => 0));?>');
+        //]]>
+    </script>
+    <span id="gc-please-wait" class="please-wait" style="display:none;">
+        <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="" class="v-middle" /> <?php echo $this->__('Please wait, loading...') ?>
+    </span>
+</div>

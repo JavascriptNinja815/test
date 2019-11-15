@@ -1,0 +1,22 @@
+<?php
+/*
+This is a template for duplication of header's blocks for mobile layout.
+Includes newsletter and giftcard link images.
+*/
+ ?>
+<div class="footer-newsletter">
+    <a href="javascript:void(0);">
+        <img src="<?php echo $this->getSkinUrl('images/newsletter.png') ?>" class="newsletter-img" />
+        <!-- <p id="line1">Sign up for our</p>
+        <p id="line2">Newsletter</p>
+        <p id="line3">Get a <span class="dollar">$</span><span class="amount">5</span> discount</p>-->
+    </a>
+    <?php echo $this->getChildHtml('headerNewsletter') ?>
+</div>
+
+<div class="giftcard-clickhere footer">
+  <a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>giftcards">
+    <img src="<?php echo $this->getSkinUrl('images/giftcards.png') ?>" class="giftcard-img" />
+  </a>
+</div>
+

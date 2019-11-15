@@ -1,0 +1,15 @@
+<?xml version="1.0"?>   
+<layout version="0.4.5">   
+  <chupsaddressvalidation_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="chupsaddressvalidation/index" name="chupsaddressvalidation_index" template="chupsaddressvalidation/index.phtml"/>   
+    </reference>   
+  </chupsaddressvalidation_index_index>
+    <chupsaddressvalidation_address_list translate="label">
+        <block type="chupsaddressvalidation/index" name="chupsaddressvalidation_address_list" template="chupsaddressvalidation/address_list.phtml"/>
+    </chupsaddressvalidation_address_list>
+</layout>
+	

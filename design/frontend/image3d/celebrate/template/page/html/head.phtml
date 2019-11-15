@@ -1,0 +1,107 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<!-- this was for the site - messed up the RB -->
+<!-- <meta name="viewport" content="width=720, maximum-scale=1.0" />-->
+<!-- <meta name="viewport" content="height=915, initial-scale=.5" />-->
+
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<title><?php echo $this->getTitle() ?></title>
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<!-- Pinterest -->
+<meta name="p:domain_verify" content="ad87b3a9ee416c252cc58602e4a9ca2f"/>
+<link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+//]]>
+</script>
+<![endif]-->
+<script type="text/javascript">
+//<![CDATA[
+    var CUSTOMER_LOGGEDIN = <?php echo Mage::getSingleton('customer/session')->isLoggedIn() ? 'true' : 'false'; ?>;
+    var CUSTOMER_ID = <?php echo Mage::getSingleton('customer/session')->isLoggedIn() ? Mage::getSingleton('customer/session')->getCustomerId() : 0; ?>;
+    var BASE_URL = '<?php echo Mage::getBaseUrl(); ?>';
+	BASE_URL = location.protocol === 'https:' ? BASE_URL.replace('http://','https://') : BASE_URL;
+<?php /* TODO: we need to move this to the translate code  */ ?> 
+    var LOGOUT_TRANSLATION = '<?php echo $this->__('Logout'); ?>';
+    var ACCOUNT_TRANSLATION = '<?php echo $this->__('My Account'); ?>';
+//]]>
+</script>
+
+<?php // TODO this is tied to the helper - it should use it to generate the font include  ; ?>
+<link href='//fonts.googleapis.com/css?family=Fontdiner+Swanky|Architects+Daughter|Cousine|Playfair+Display|Playfair+Display+SC|Roboto|Coda+Caption:800|Allerta|Marck+Script' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript" src="/retroviewer/js/collinsharper/masonry-docs.min.js"></script>
+
+<?php echo $this->getCssJsHtml() ?>
+<?php echo $this->getChildHtml() ?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getIncludes() ?>
+<?php
+$identifier = Mage::getSingleton('cms/page')->getIdentifier();
+if($identifier=='download-retroviewer-app')
+{
+ ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/style.css" media="all" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Image3D",
+  "alternateName": "Image 3d",
+  "url": "https://www.image3d.com",
+  "logo": "https://www.image3d.com/retroviewer/skin/frontend/image3d/celebrate/images/logo.png",
+  "sameAs": [
+    "https://www.facebook.com/USA.Image3D",
+    "https://twitter.com/Image3Dusa",
+    "https://www.pinterest.com/image3d/",
+    "https://www.youtube.com/user/Image3Dusa"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Image 3d Retroviewer app",
+  "operatingSystem": "apple",
+  "applicationCategory": "https://schema.org/GameApplication",
+    "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
+<?php } ?>

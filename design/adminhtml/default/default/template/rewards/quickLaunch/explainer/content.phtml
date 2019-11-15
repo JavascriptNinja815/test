@@ -1,0 +1,132 @@
+<?php $data = $this->getAllData(); ?>
+<?php $currencySymbol = $this->getCurrencySymbol(); ?>
+<div class="sweettooth-explainer <?php echo ($this->hasColor()) ? $this->getColor() : TBT_Rewards_Block_QuickLaunch::DEFAULT_THEME; ?>">
+    <section class="program-summary">
+        <h1>Welcome to the <?php echo $data['program-name']; ?></h1>
+        <div class="program-description">
+            For our most devoted customers, we've introduced our new loyalty program to thank you for your commitment to our business.
+            Now every time you shop with us, you can earn reward points which can be exchanged for future discounts and savings.
+            But spending alone isn't the only way you'll be rewarded for your support, as you can earn extra points in simple ways such as referring friends to our
+            site.
+        </div>
+        <div class="cta-wrapper">
+            <a class="cta-button" href="<?php echo Mage::getUrl('customer/account'); ?>">Join the <?php echo $data['program-name']; ?></a>
+        </div>
+    </section>
+    
+    <section class="points-on-orders">
+        <h2>Orders</h2>
+        <div class="section-description">
+            <span class="accentuate"><?php echo $data['points-caption']; ?> Points</span> are one way we love to give back to our loyal customers. Each time you make 
+            a purchase on our website you will be rewarded with <span class="accentuate"><?php echo $data['points-caption']; ?> Points</span> which you
+            can spend on future purchases.
+        </div>
+        <div class="explainer-box left">
+            <img src="<?php echo $this->getSkinUrl('rewards/images/earn.png'); ?>" alt="Earn Points" height="50" />
+            <h3>Earn Points</h3>
+            <span><?php echo $currencySymbol; ?>1 = <?php echo $data['earnings']; ?> <?php echo $data['points-caption']; ?> Point</span>
+        </div>
+        <div class="explainer-box right">
+            <img src="<?php echo $this->getSkinUrl('rewards/images/spend.png'); ?>" alt="Spend Points" height="50" />
+            <h3>Spend Points</h3>
+            <span><?php echo $data['spendings']; ?> <?php echo $data['points-caption']; ?> Points = <?php echo $currencySymbol; ?>0.01</span>
+        </div>
+        <div class="clear"></div>
+    </section>
+    
+    <section>
+        <h2>Ways to Earn Points</h2>
+        <div class="section-description">
+            To demonstrate how much we cherish our loyal customers, you can gain reward
+            points in more ways than purchasing your favorite products.
+        </div>
+        <div class="earn-points">
+            <div class="row">
+                <?php if (!empty($data['sign-up'])): ?>
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/user.png'); ?>" alt="Sign Up" height="50" />
+                        <h3><?php echo $data['sign-up']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>For creating an account.</span>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($data['social-actions'])): ?>
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/social.png'); ?>" alt="Social media" height="50" />
+                        <h3><?php echo $data['social-actions']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>For Sharing on Social Media.</span>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($data['review'])): ?>
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/rating.png'); ?>" alt="Write a Review" height="50" />
+                        <h3><?php echo $data['review']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>For writing a review.</span>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div>
+                <?php if (!empty($data['newsletter'])): ?>
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/newsletter.png'); ?>" alt="Newsletter" height="50" />
+                        <h3><?php echo $data['newsletter']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>For signing up to our newsletter</span>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($data['birthday'])): ?>
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/birthday.png'); ?>" alt="Birthday" height="50" />
+                        <h3><?php echo $data['birthday']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>On Your Birthday</span>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($data['anniversary'])): ?>
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/membership.png'); ?>" alt="Membership" height="50" />
+                        <h3><?php echo $data['anniversary']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>For every year you have an account</span>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+    <?php if (!empty($data['referral-first-order'])): ?>
+        <section class="refer-friend">
+            <h2>Invite a Friend</h2>
+            <div class="section-description">
+                Here at our store, we firmly believe that sharing is caring.
+                So now you've discovered our plant-powered products, it's time to get social.
+                Invite your friends to our store and be instantly rewarded with reward points.
+                And if they love them just as much as you do, you will continue to be rewarded again and again!
+            </div>
+            <div class="earn-points">
+                <div class="row">
+                    <div class="explainer-box">
+                        <img src="<?php echo $this->getSkinUrl('rewards/images/refer.png'); ?>" alt="Refer a Friend" height="50" />
+                        <h3><?php echo $data['referral-first-order']; ?> <?php echo $data['points-caption']; ?> Points</h3>
+                        <span>When friend makes first purchase</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+    <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <dl>
+            <dt>How to Earn Bonus Points?</dt>
+            <dd>To earn reward points, you first need to have an account on our store. Please sign up for an account. Once you have an account you can then earn reward points by placing orders and completing any of the actions in our earning section for bonus points.</dd>
+            <dt>How to Spend Points?</dt>
+            <dd>You can spend your points on any order you place through our store. At the cart and at the checkout please adjust the slider to spend your points on that order. Please make sure you are logged in first!</dd>
+            <dt>How are Review Points Rewarded?</dt>
+            <dd>We reward you reward points for placing reviews on any of our products in our store. Once you have submitted a review please wait for us to check the review so we can approve it. Once approved you will be rewarded points. You can earn points at a rate of 1 review per week.</dd>
+            <dt>How many times can I share on Social Media?</dt>
+            <dd>You can share on social media our products or pages as many times as you would like. However we can only offer rewards for the first 10 times you share on social media.</dd>
+            <dt>How does the yearly reward work?</dt>
+            <dd>We will reward you for every 365 days you are a customer for the first three years of your account with us.</dd>
+        </dl>
+    </section>
+    
+    <div class="cta-wrapper">
+        <a class="cta-button" href="<?php echo Mage::getUrl('customer/account'); ?>">Join the <?php echo $data['program-name']; ?></a>
+    </div>
+</div>
+

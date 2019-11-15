@@ -1,0 +1,1176 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Sweet Tooth
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS
+ * License, which extends the Open Software License (OSL 3.0).
+ * The Sweet Tooth License is available at this URL:
+ *      https://www.sweettoothrewards.com/terms-of-service
+ * The Open Software License is available at this URL:
+ *      http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is
+ * not held liable for any inconsistencies or abnormalities in the
+ * behaviour of this code.
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the
+ * provided Sweet Tooth License.
+ * Upon discovery of modified code in the process of support, the Licensee
+ * is still held accountable for any and all billable time Sweet Tooth spent
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension.
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy
+ * immediately.
+ *
+ * @category   [TBT]
+ * @package    [TBT_Rewards]
+ * @copyright  Copyright (c) 2015 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+
+/**
+ * Helper Config
+ *
+ * @category   TBT
+ * @package    TBT_Rewards
+ * * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+-->
+
+<config>
+    <tabs>
+        <tbtall translate="label" module="rewards">
+            <label>MageRewards</label>
+            <sort_order>100</sort_order>
+        </tbtall>
+    </tabs>
+   <sections>
+        <rewards translate="label" module="rewards">
+            <label><![CDATA[<span class="stadmin-config_menu">MageRewards</span>]]></label>
+            <tab>tbtall</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>140</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <platform translate="label">
+                    <label>MageRewards Account Details</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <login_message>
+                            <frontend_model>rewards/system_config_platform_messageLogin</frontend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </login_message>
+                        <username translate="label">
+                            <label>Username</label>
+                            <frontend_model>rewards/system_config_platform_signup</frontend_model>
+                            <backend_model>rewards/system_config_backend_platformUsername</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </username>
+                        <password translate="label">
+                            <label>Password</label>
+                            <frontend_model>rewards/system_config_platform_signup</frontend_model>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </password>
+                        <forgot_password>
+                            <frontend_model>rewards/system_config_platform_forgotPassword</frontend_model>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </forgot_password>
+                        <dev_mode translate="label comment">
+                            <label>Developer Mode</label>
+                            <comment><![CDATA[If Yes, we will connect to your MageRewards <b>staging</b> account for testing and development.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>rewards/system_config_platform_devMode</frontend_model>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dev_mode>
+                        <connect_button>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_platform_connect</frontend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </connect_button>
+
+                        <display_details>
+                            <frontend_model>rewards/system_config_platform_details</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </display_details>
+                        <disconnect_button>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_platform_disconnect</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </disconnect_button>
+
+                        <devmode_notice>
+                            <frontend_model>rewards/system_html_devMode</frontend_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </devmode_notice>
+
+                        <notice>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>rewards/system_html</frontend_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </notice>
+                    </fields>
+                </platform>
+
+                <general translate="label">
+                    <label>General Settings</label>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <canUseRedemptionsIfNotLoggedIn translate="label comment">
+                            <label>Customer Can Spend Points Before Logging In</label>
+                            <comment><![CDATA[If enabled, customers will be able to spend points before they log-in. Recommended off.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </canUseRedemptionsIfNotLoggedIn>
+                        <shopping_cart_rule_earn_after_discount translate="label comment">
+                            <label>Give Shopping Cart Distribution Points Based on Subtotal</label>
+                            <comment><![CDATA[If set to after discounts, customers will only earn points in the shopping cart based on the subtotal after spending any points or getting any discounts.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_beforeAfterDiscounts</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shopping_cart_rule_earn_after_discount>
+                        <freeshipping_when_spending_points translate="label comment">
+                            <label>Free shipping when spending points</label>
+                            <comment><![CDATA[If enabled, MageRewards will give free shipping to customers when they are spending points.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </freeshipping_when_spending_points>
+                        <rewards_custom_email translate="label comment">
+                            <label>Sender Email</label>
+                            <comment><![CDATA[]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rewards_custom_email>
+                        <apply_rules_to_parent translate="label comment">
+                            <label>Apply rules to parent products</label>
+                            <comment><![CDATA[If Yes, we will apply shopping cart rules to parent bundle products as well.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </apply_rules_to_parent>
+                    </fields>
+                </general>
+                <display translate="label">
+                    <label>Display Settings</label>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <showCartRedemptionsWhenZero translate="label comment">
+                            <label>Always Show Cart Redemptions Row</label>
+                            <comment><![CDATA[If set to show, this will always display the points spent row in the cart even when no points are being spent.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showCartRedemptionsWhenZero>
+                        <showCartDistributionsWhenZero translate="label comment">
+                            <label>Always Show Cart Earnings Row</label>
+                            <comment><![CDATA[If set to show, this will always display the points earned row in the cart even when no points are being earned.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showCartDistributionsWhenZero>
+                        <showSidebar translate="label">
+                            <label>Show Points Sidebar</label>
+                            <comment><![CDATA[If set to show, this will display a small sidebar in some CMS pages that displays how many points a customer has.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showSidebar>
+                        <showSidebarIfNotLoggedIn translate="label">
+                            <label>Show Sidebar When Not Logged In</label>
+                            <comment><![CDATA[If set to show, this will display a small sidebar in some CMS pages that displays how many points a customer has, even if the customer isn't logged in.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showSidebarIfNotLoggedIn>
+                        <showWarningTextMessage translate="label comment">
+                            <label>Show Warning Text Message</label>
+                            <comment><![CDATA[Show a warning mesage in the cart and order review page for Guests or Not Logged In customers if they try to earn or spend points.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showWarningTextMessage>
+                        <customer_summary_msg translate="label comment">
+                            <label>Customer Account Summary Message</label>
+                            <comment><![CDATA[This message is displayed in the summary box for logged in customers. Default is no message (blank). HTML is valid here.]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_summary_msg>
+                        <showPointsSectionInCustomerAccount translate="label comment">
+                            <label>Show Points and Rewards Section in Customer Account</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_showHide</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showPointsSectionInCustomerAccount>
+                        <show_cart_discount_full_summary translate="label comment">
+                            <label>Show Rewards Cart Discounts Full Summary</label>
+                            <comment><![CDATA[If enabled the cart discount total will display an expandable full summary of the rewards cart discounts.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_cart_discount_full_summary>
+                        <show_earning_prediction_in_catalog translate="label comment">
+                            <label>Show Earning Prediction inside Catalog</label>
+                            <comment><![CDATA[Note: Earning Prediction are based on Rewards Shopping Cart Earning Rules]]></comment>
+                            <sort_order>140</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_earning_prediction_in_catalog>
+                    </fields>
+                </display>
+                <pointSummaryEmails translate="label">
+                    <label>Points Summary Emails</label>
+                    <sort_order>33</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                         <allow_points_summary_email translate="label comment">
+                            <label>Send Points Summary Email</label>
+                            <comment><![CDATA[If enabled, a monthly points summary email will be sent to customers. Customers can set their preference whether to receive the email in the their <strong>My Points & Rewards</strong> section.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allow_points_summary_email>
+                        <point_summary_email_template translate="label comment">
+                            <label>Customer Points Summary Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><allow_points_summary_email>1</allow_points_summary_email></depends>
+                        </point_summary_email_template>
+                        <send_email_with_no_points translate="label comment">
+                            <label>Send Email To Users With No Points</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><allow_points_summary_email>1</allow_points_summary_email></depends>
+                        </send_email_with_no_points>
+                        <customer_group translate="label">
+                            <label>Send Email To The Following Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>rewards/system_config_source_customer_group_multiselect</source_model>
+                            <backend_model>rewards/system_config_pointSummaryEmails_customerGroup</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><allow_points_summary_email>1</allow_points_summary_email></depends>
+                        </customer_group>
+                    </fields>
+                </pointSummaryEmails>
+                <birthday translate="label">
+                    <label>Birthday Emails</label>
+                    <sort_order>34</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <email_template translate="label comment">
+                            <label>Birthday Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_email_template</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_template>
+                     </fields>
+                </birthday>
+                <autointegration translate="label">
+                    <label>Integrated Content</label>
+                    <sort_order>35</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[
+                        <b>Please Read:</b> If 'yes' is selected, these options will <i>attempt</i> to integrate into your store view theme.
+                        If this does not work for your theme, or if you want to put the integrated
+                        content somewhere other than the default location,
+                        then set the option to 'no' and follow the manual integration
+                        instructions provided. <br />
+                        <b>There are more integrated content spots than shown here.</b>
+                        <a href="http://support.magerewards.com/article/1546-integration-guide" target="Integration_Guide">
+                        Please follow the complete integration guide to see all integrated content available.</a>
+                    ]]></comment>
+                    <fields>
+                        <header_points_balance translate="label comment">
+                            <label>Customer Points Balance Near Top Page Links</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1614-display-points-in-the-page-header" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>10</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </header_points_balance>
+
+                        <product_view_page_review_points translate="label comment">
+                            <label>Points Earned for Writing a Review in the Product Info Pages</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1556-display-points-in-the-product-info-page" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>30</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </product_view_page_review_points>
+
+                        <form_review_points translate="label comment">
+                            <label>Points Earned for Writing a Review in the Review Listing Pages</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1610-manually-integrating-product-rating-and-review-points-blocks" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>40</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </form_review_points>
+
+                        <product_view_page_tag_points translate="label comment">
+                            <label>Points Earned for Tagging a Product in the Product Info Pages</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1556-display-points-in-the-product-info-page" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>50</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </product_view_page_tag_points>
+
+                        <shopping_cart_under_coupon translate="label comment">
+                            <label>Shopping Cart Spending Rules Interface in Shopping Cart</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1550-manually-integrating-shopping-cart-points-box" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>60</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </shopping_cart_under_coupon>
+                        <customer_dashboard_summary translate="label comment">
+                            <label>Points Account Summary in the Customer Dashboard</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1579-display-points-in-the-customer-account-dashboard" target="window">
+                                Click here
+                                </a> for manual integration instructions.
+                            ]]></comment>
+                            <sort_order>70</sort_order>
+                            <frontend_type>select</frontend_type>   <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>    <show_in_website>1</show_in_website>    <show_in_store>1</show_in_store>
+                        </customer_dashboard_summary>
+                        <customer_orders_points_total_column translate="label comment">
+                            <label><![CDATA[Points Total Column in Customer Recent Orders & My Orders]]></label>
+                            <sort_order>75</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_orders_points_total_column>
+                        <predict_birthday_points translate="label comment">
+                            <label>Predict Points Earned on Birthday Occasion</label>
+                            <comment><![CDATA[
+                                <a href="http://support.magerewards.com/article/1829-predict-points-earned-on-birthday-occasion" target="window">
+                                Click here
+                                </a> for manual integration instructions
+                            ]]></comment>
+                            <sort_order>80</sort_order>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </predict_birthday_points>
+
+                    </fields>
+                </autointegration>
+                <InitialTransferStatus translate="label">
+                    <label>Initial Transfer Statuses</label>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<strong>Note: You can set points to be automatically approved in the Order Fulfillment settings below.</strong>]]></comment>
+                    <fields>
+                        <AfterOrder translate="label">
+                            <label>After Order</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterOrder>
+                        <AfterReview translate="label">
+                            <label>After Review</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterReview>
+                        <AfterPoll translate="label">
+                            <label>After Poll</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterPoll>
+                        <AfterSendFriend translate="label">
+                            <label>After Send Friend</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterSendFriend>
+                        <AfterTag translate="label">
+                            <label>After Tag</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterTag>
+                        <AfterNewsletter translate="label">
+                            <label>After Newsletter</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterNewsletter>
+                        <AfterSignup translate="label">
+                            <label>After Sign-Up</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterSignup>
+                        <AfterBirthday translate="label">
+                            <label>After Birthday</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_statuslist</source_model>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </AfterBirthday>
+                    </fields>
+                </InitialTransferStatus>
+                <orders translate="label">
+                    <label>Order Fulfillment</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <shouldRemovePointsOnCancelledOrder translate="label comment">
+                            <label>Automatically Remove Points on Failed Checkouts and Mass Order Cancellations</label>
+                            <comment><![CDATA[Automatically revoke/cancel point transfers associated with an order when it's cancelled because of a failed payment during the checkout process, or when the admin makes a mass admin order cancellation. <br />
+                                <a href="http://support.magerewards.com/article/1552-what-happens-when-i-cancel-an-order" target="window">
+                                    Click here
+                                </a> for more information on this.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shouldRemovePointsOnCancelledOrder>
+                        <shouldApprovePointsOnInvoice translate="label comment">
+                            <label>Automatically Approve Points on Invoice</label>
+                            <comment><![CDATA[Automatically approve all related point earnings and spendings when the customer pays for the order.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shouldApprovePointsOnInvoice>
+                        <shouldApprovePointsOnShipment translate="label comment">
+                            <label>Automatically Approve Points on Shipment</label>
+                            <comment><![CDATA[Automatically approve all related point earnings and spendings when the order has been shipped.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>0</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shouldApprovePointsOnShipment>
+                        <shouldApprovePointsOn translate="label comment">
+                            <label>Automatically Approve Points on</label>
+                            <comment><![CDATA[Automatically approve all related point earnings and spendings when the order has been updated to the selected stage.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_approveOrderPointsOn</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shouldApprovePointsOn>
+                    </fields>
+                </orders>
+                <transferComments translate="label">
+                    <label>Transfer Comments</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<strong>
+                    Note: These comments are what appears in the points transfer earning/spending history for customers and what appears in the points transfer history and management screens for the administrator. <br />
+                    Note: The order of each "%s" wildcard string matters.
+                    </strong>]]></comment>
+                    <fields>
+                        <orderEarned translate="label comment">
+                            <label>Points Earned from Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </orderEarned>
+                        <orderSpent translate="label comment">
+                            <label>Points Spent on Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </orderSpent>
+                        <reviewOrRatingEarned translate="label comment">
+                            <label>Points Earned for Writing a Review or Rating a Product</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reviewOrRatingEarned>
+                        <pollEarned translate="label comment">
+                            <label>Points Earned for Participating in a Poll</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pollEarned>
+                        <tellAFriendEarned translate="label comment">
+                            <label>Points Earned for Telling a Friend About a Product</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tellAFriendEarned>
+                        <tagEarned translate="label comment">
+                            <label>Points Earned for Tagging a Product</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tagEarned>
+                        <newsletterEarned translate="label comment">
+                            <label>Points Earned for Signing Up to the Newsletter</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </newsletterEarned>
+                        <signupEarned translate="label comment">
+                            <label>Points Earned for Signing Up to the Site</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </signupEarned>
+                        <revoked translate="label comment">
+                            <label>Transfer Revoked</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[First %s: Transfer comments.]]></comment>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </revoked>
+                        <expired translate="label comment">
+                            <label>Expired Points Balance Transfer</label>
+                            <frontend_type>text</frontend_type>
+                            <comment><![CDATA[First %s: Number of days since expired.]]></comment>
+                            <sort_order>115</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expired>
+                        <defaultMassTransferComment translate="label comment">
+                            <label>Default Message for Mass Transfers</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </defaultMassTransferComment>
+                    </fields>
+                </transferComments>
+                <notifications translate="label">
+                    <label><![CDATA[Admin Notifications]]></label>
+                    <sort_order>80</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <showUsageNotification translate="label comment">
+                            <label>Account Usage Notifications</label>
+                            <comment><![CDATA[If enabled, MageRewards will notify you on your Magento dashboard as you approach your usage limit.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showUsageNotification>
+                    </fields>
+                </notifications>
+                <reviews_and_tags translate="label">
+                    <label>Product Review and Product Tag Rewards Settings</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <daily_review_limit translate="label comment">
+                            <label>Daily Limit for Product Reviews</label>
+                            <comment><![CDATA[Maximum number of product reviews to reward for per day. Use 0 for unlimited.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </daily_review_limit>
+                        <weekly_review_limit translate="label comment">
+                            <label>Weekly Limit for Product Reviews</label>
+                            <comment><![CDATA[Maximum number of product reviews to reward for per week. Use 0 for unlimited.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weekly_review_limit>
+                        <daily_tag_limit translate="label comment">
+                            <label>Daily Limit for Product Tags</label>
+                            <comment><![CDATA[Maximum number of product tags to reward for per day. Use 0 for unlimited.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </daily_tag_limit>
+                        <weekly_tag_limit translate="label comment">
+                            <label>Weekly Limit for Product Tags</label>
+                            <comment><![CDATA[Maximum number of product tags to reward for per week. Use 0 for unlimited.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weekly_tag_limit>
+                        <review_approval_confirmation_email_template translate="label comment">
+                            <label>Review Approval Confirmation Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_email_template</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </review_approval_confirmation_email_template>
+                    </fields>
+                </reviews_and_tags>
+                <migration translate="label">
+                    <label>Migration Utilities</label>
+                    <sort_order>350</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<i>Please Note: You should only run these functions if you really know what you're doing or you are advised by a MageRewards representative.</i>]]></comment>
+                    <fields>
+                        <export_campaign translate="label comment">
+                            <label>Export Campaign</label>
+                            <comment><![CDATA[This will export point currencies, rules and MageRewards configuration.]]></comment>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_exportCampaign</frontend_model>
+                            <config_path>rewards/migration/export_campaign</config_path>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </export_campaign>
+                        <delete_campaign translate="label comment">
+                            <label>Delete Campaign</label>
+                            <comment><![CDATA[Deletes all MageRewards rules]]></comment>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_deleteCampaign</frontend_model>
+                            <config_path>rewards/migration/delete_campaign</config_path>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </delete_campaign>
+                        <import_campaign translate="label comment">
+                            <label>Import Campaign</label>
+                            <comment><![CDATA[<strong>WARNING:</strong> THIS WILL ALSO DELETE ALL YOUR CURRENT MAGEREWARDS RULES!<br/>Select a .stcampaign file and click 'Save Config' to import.]]></comment>
+                            <frontend_type>file</frontend_type>
+                            <backend_model>rewards/system_config_backend_import</backend_model>
+                            <config_path>rewards/migration/import_campaign</config_path>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </import_campaign>
+                        <export_settings translate="label comment">
+                            <label>Export MageRewards Settings</label>
+                            <comment><![CDATA[This will export your current MageRewards settings.]]></comment>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_exportSettings</frontend_model>
+                            <config_path>rewards/migration/export_settings</config_path>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </export_settings>
+                        <reset_settings translate="label comment">
+                            <label>Reset MageRewards Settings</label>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_resetSettings</frontend_model>
+                            <config_path>rewards/migration/reset_settings</config_path>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reset_settings>
+                        <import_settings translate="label comment">
+                            <label>Import MageRewards Settings</label>
+                            <comment><![CDATA[<strong>WARNING:</strong> THIS WILL ALSO DELETE ALL YOUR CURRENT MAGEREWARDS SETTINGS!<br/>Select a .stsettings file and click 'Save Config' to import.]]></comment>
+                            <frontend_type>file</frontend_type>
+                            <backend_model>rewards/system_config_backend_import</backend_model>
+                            <config_path>rewards/migration/import_settings</config_path>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </import_settings>
+                        <importpoints translate="label comment">
+                            <label>Import Points</label>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_pointsImport</frontend_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </importpoints>
+                    </fields>
+                </migration>
+                <help translate="label">
+                    <label><![CDATA[Diagnostics & Support Tools]]></label>
+                    <sort_order>400</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <comment><![CDATA[<i>Please Note: You should only run these functions if you really know what you're doing or you are advised by a MageRewards representative.</i>]]></comment>
+                    <fields>
+                        <reinstalldb translate="label comment">
+                            <label>Re-run Database Scripts</label>
+                            <comment><![CDATA[When clicked, this will attempt to remove Magento's memory of the MageRewards database components ever being installed. Magento will then attempt to re-install the database from scratch upon next access.  This may help resolve issues with an abnormal installation or inconsistent database migration.]]></comment>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_reinstalldb</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </reinstalldb>
+                        <rundiagnostics translate="label comment">
+                            <label><![CDATA[Run 'Test Sweet' Diagnostics]]></label>
+                            <comment><![CDATA[When clicked, this will run a diagnostics utility that will tell you information about your store and check for any common problems that may occur on your store. When contacting our software support team, you should have this report handy.]]></comment>
+                            <frontend_type>export</frontend_type>
+                            <frontend_model>rewards/system_config_rundiagnostics</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </rundiagnostics>
+                        <showDashboardStPanel translate="label comment">
+                            <label>Display MageRewards Panel In The Dashboard</label>
+                            <comment><![CDATA[If No, MageRewards will hide it's display block from the Magento administrative dashboard]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showDashboardStPanel>
+                    </fields>
+                </help>
+                <developer translate="label">
+                    <label><![CDATA[Developer]]></label>
+                    <sort_order>500</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <apiurl translate="label">
+                            <label><![CDATA[API Base URI]]></label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>rewards/system_config_developer_apiUrl</frontend_model>
+                            <backend_model>rewards/system_config_developer_apiUrl</backend_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </apiurl>
+                        <dev_mode translate="label">
+                            <label><![CDATA[Developer Mode]]></label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>rewards/system_config_developer_devMode</frontend_model>
+                            <backend_model>rewards/system_config_developer_devMode</backend_model>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dev_mode>
+                        <api_key translate="label">
+                            <label><![CDATA[API Key]]></label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>rewards/system_config_developer_apiKey</frontend_model>
+                            <backend_model>rewards/system_config_developer_apiKey</backend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </api_key>
+                        <secret_key translate="label">
+                            <label><![CDATA[Secret Key]]></label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>rewards/system_config_developer_secretKey</frontend_model>
+                            <backend_model>rewards/system_config_developer_secretKey</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </secret_key>
+                        <debug_mode translate="label">
+                            <label><![CDATA[Debug Logging Mode]]></label>
+                            <comment><![CDATA[If Enabled, we will log a lot of data, such as all API calls sent up to platform.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug_mode>
+                    </fields>
+                </developer>
+                <checkout translate="label">
+                    <label><![CDATA[Checkout]]></label>
+                    <sort_order>53</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <associate_guest_checkouts_with_account translate="label comment">
+                            <label>Create Customer Accounts for Guest Checkouts</label>
+                            <comment><![CDATA[This will allow customers who checkout as guests to earn points. This will send welcome emails to purchasers who didn't have an account already.]]></comment>
+                            <frontend_type>select</frontend_type>  
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </associate_guest_checkouts_with_account>  
+                        <enable_paypal_checkout_fee translate="label comment">
+                            <label>PayPal Standard Tax-Only Checkout Fee</label>
+                            <comment><![CDATA[If this option is enabled, a 0.01 amount (in the base currency of the store) is added to the checkout total to allow the PayPal Standard checkout to proceed when the user is discounting the product completely and only paying for the remaining tax amount. This function is needed because PayPal Standard (Website Payments Standard) does not allow checkouts to occur if the customer is only paying for the tax amount.]]></comment>
+                            <frontend_type>select</frontend_type>  
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enable_paypal_checkout_fee>
+                        <adjust_points_cancelation>
+                            <label>Adjust Points when Canceling Orders</label>
+                            <comment><![CDATA[When set to no, the points will be automatically adjusted.]]></comment>
+                            <frontend_type>select</frontend_type>  
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </adjust_points_cancelation>
+                        <no_rules_message>
+                            <label>No Rules Message</label>
+                            <comment><![CDATA[This message will be displayed if there are no applicable rules on the cart page.]]></comment>
+                            <frontend_type>text</frontend_type>  
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </no_rules_message>
+                    </fields>
+                </checkout>
+                <expire translate="label">
+                    <label>Points Balance Expiry</label>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <is_enabled translate="label comment">
+                            <label>Points Expiry</label>
+                            <comment><![CDATA[Enable or disable point expiration. If enabled, all of a customer's points will expire if they do not earn or spend points within X days.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_expire</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </is_enabled>
+                        <delay_days translate="label comment">
+                            <label>Number of Days Before Points Balance Expires</label>
+                            <comment><![CDATA[The number of days that must pass where a customer does not earn or spend any points for their points to expire.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </delay_days>
+                        <email_warning1_template translate="label">
+                            <label>Email Template for First Warning Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_email_template</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning1_template>
+                        <email_warning1_days translate="label comment">
+                            <label>Number of Days Before Points Expiry to Send First Warning Email</label>
+                            <comment>
+                                <![CDATA[
+                                    <script type="text/javascript">
+                                        (function() {
+                                            var warning1email = $('rewards_expire_email_warning1_template');
+                                            var warning1days = $('rewards_expire_email_warning1_days');
+                                            var warning1daysRow = $('row_rewards_expire_email_warning1_days');
+
+                                            if (warning1days.getValue() < 0) { 
+                                                warning1email.setValue('none'); 
+                                            }
+
+                                            if (warning1email.getValue() === 'none') { 
+                                                warning1daysRow.hide(); 
+                                            }
+                                            
+                                            Event.observe(warning1email, 'change', function() {
+                                                (warning1email.getValue() === 'none') ? warning1daysRow.hide() : warning1daysRow.show(); 
+                                            });
+                                        })();
+                                    </script>
+                                ]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning1_days>
+                        <email_warning2_template translate="label">
+                            <label>Email Template for Second Warning Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>rewards/system_config_source_email_template</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning2_template>
+                        <email_warning2_days translate="label">
+                            <label>Number of Days Before Points Expiry to Send Second Warning Email</label>
+                            <comment>
+                                <![CDATA[
+                                    <script type="text/javascript">
+                                        (function() {
+                                            var warning2email = $('rewards_expire_email_warning2_template');
+                                            var warning2days = $('rewards_expire_email_warning2_days');
+                                            var warning2daysRow = $('row_rewards_expire_email_warning2_days');
+
+                                            if (warning2days.getValue() < 0) { 
+                                                warning2email.setValue('none'); 
+                                            }
+
+                                            if (warning2email.getValue() === 'none') { 
+                                                warning2daysRow.hide(); 
+                                            }
+                                            
+                                            Event.observe(warning2email, 'change', function() {
+                                                (warning2email.getValue() === 'none') ? warning2daysRow.hide() : warning2daysRow.show(); 
+                                            });
+                                        })();
+                                    </script>
+                                ]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_warning2_days>
+                        <log_when_points_expire translate="label comment">
+                            <label>Write Expiry Actions to Log</label>
+                            <comment><![CDATA[Writes to var/log/rewards_expire.log when points expire for any customer or when an e-mail is sent]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </log_when_points_expire>
+                    </fields>
+                </expire>
+                <about translate="label">
+                    <fields>         
+                        <notice translate="label">
+                            <frontend_model>rewards/system_html_diagnostics</frontend_model>
+                        </notice>          
+                    </fields>
+                </about>
+            </groups>
+        </rewards>
+        <advanced>
+            <groups>
+                <modules_disable_output translate="label">
+                    <comment><![CDATA[<strong>Note: Disabling output will not turn off module functionality and it will only turn off the _DISPLAY_ of the module(s).</strong>]]></comment>
+                </modules_disable_output>
+            </groups>
+        </advanced>
+    </sections>
+</config>

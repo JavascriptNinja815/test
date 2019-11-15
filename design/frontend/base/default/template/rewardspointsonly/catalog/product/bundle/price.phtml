@@ -1,0 +1,35 @@
+<?php
+    $isRwdTheme = (Mage::helper('rewards/theme')->getPackageName() === "rwd");
+    $pointsMinStr = $this->getPointsOnlySimpleCostMin();
+    $pointsMaxStr = $this->getPointsOnlySimpleCostMax();
+
+    $priceIsConfigurable = ($pointsMinStr !== $pointsMaxStr);
+?>
+
+<div class="<?php echo ($isRwdTheme? "price-box":"regular-price"); ?>">
+    <?php if ($priceIsConfigurable) : ?>
+    <div class="points-price regular-price" id="points-only-estimated-price-<?php echo $this->getProduct()->getId(); ?>" data-update-msg="<?php echo $this->__('Updating Price...');?>">
+        <?php if ($this->getProduct()->getPriceView()) : ?>
+        <p class="minimal-price">
+            <span class="price-label"><?php echo $this->helper('bundle')->__('As low as') ?>:</span>
+            <span class="price"><?php echo $pointsMinStr; ?></span>
+        </p>
+        <?php else : ?>
+        <p class="price-from">
+            <span class="price-label"><?php echo $this->helper('bundle')->__('From') ?>:</span>
+            <span class="price"><?php echo $this->getPointsOnlySimpleCostMin(); ?></span>
+        </p>
+        <p class="price-to">
+            <span class="price-label"><?php echo $this->helper('bundle')->__('To') ?>:</span>
+            <span class="price"><?php echo $pointsMaxStr; ?></span>
+        </p>
+        <?php endif; ?>
+    </div>
+    <?php else : ?>
+    <div class="price-box">
+		<div class="points-price regular-price" id="points-only-price-<?php echo $this->getProduct()->getId(); ?>" data-update-msg="<?php echo $this->__('Updating Price...');?>">
+            <span class="price"><?php echo $pointsMinStr; ?></span>
+        </div>
+	</div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout version="2.0.1">
+	<social>
+		<reference name="head">
+			<action method="addCss"><stylesheet>css/vivacity_tweets.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/font-awesome.min.css</stylesheet></action>
+		</reference>
+ 		<reference name="content">
+      			<block type="tweets/tweets" template="vivacity/tweets/custom_style.phtml"/>
+    		</reference>
+		<reference name="left">
+			<block type="tweets/tweets" name="left.tweets" before="-" template="vivacity/tweets/tweets.phtml">
+				<action method="setData"><name>position</name><value>left</value></action>
+			</block>
+		</reference>
+		<reference name="right">
+			<block type="tweets/tweets" name="right.tweets" before="-" template="vivacity/tweets/tweets.phtml">
+				<action method="setData"><name>position</name><value>right</value></action>
+			</block>
+		</reference>
+	</social>
+</layout>

@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Collinsharper_Ordericons>
+            <version>0.0.5</version>
+        </Collinsharper_Ordericons>
+    </modules>
+    <global>
+        <blocks>
+            <chordericons>
+                <class>Collinsharper_Ordericons_Block</class>
+            </chordericons>
+        </blocks>
+        <helpers>
+            <chordericons>
+                <class>Collinsharper_Ordericons_Helper</class>
+            </chordericons>
+        </helpers>
+
+        <models>
+            <chordericons>
+                <class>Collinsharper_Ordericons_Model</class>
+                <resourceModel>chordericons_mysql4</resourceModel>
+            </chordericons>
+            <chordericons_mysql4>
+                <class>Collinsharper_Ordericons_Model_Mysql4</class>
+                <entities>
+                    <chicons>
+                        <table>ch_order_icon_entity</table>
+                    </chicons>
+                    <chordericons>
+                        <table>ch_sales_flat_order_icons</table>
+                    </chordericons>
+                </entities>
+            </chordericons_mysql4>
+        </models>
+        <resources>
+            <chordericons_setup>
+                <setup>
+                    <module>Collinsharper_Ordericons</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chordericons_setup>
+            <chordericons_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </chordericons_write>
+            <chordericons_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </chordericons_read>
+        </resources>
+
+	<events>
+	    <sales_order_place_after>
+		<observers>
+		    <chreel_record_order_an>
+			<type>singleton</type>
+			<class>Collinsharper_Ordericons_Model_Observer</class>
+			<method>update_tags</method>
+		    </chreel_record_order_an>
+		</observers>
+	    </sales_order_place_after>
+	</events>
+
+    </global>
+
+    <admin>
+        <routers>
+            <chordericons>
+                <use>admin</use>
+                <args>
+                    <module>Collinsharper_Ordericons</module>
+                    <frontName>chordericons_admin</frontName>
+                </args>
+            </chordericons>
+        </routers>
+    </admin>
+
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <chordericons>
+                    <file>chordericons.xml</file>
+                </chordericons>
+            </updates>
+        </layout>
+
+        <events>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <chordericons_columnadd>
+                        <type>singleton</type>
+                        <class>chordericons/observer</class>
+                        <method>beforeBlockToHtml</method>
+                    </chordericons_columnadd>
+                </observers>
+            </core_block_abstract_to_html_before>
+           <sales_order_grid_collection_load_before>
+                <observers>
+                    <chordericons_columnadd_data>
+                        <class>chordericons/observer</class>
+                        <method>beforeCollectionLoad</method>
+                    </chordericons_columnadd_data>
+                </observers>
+            </sales_order_grid_collection_load_before>
+            <sales_order_load_after>
+                <observers>
+                    <chordericons_salesorderload>
+                        <class>chordericons/observer</class>
+                        <method>salesOrderLoadAfter</method>
+                    </chordericons_salesorderload>
+                </observers>
+            </sales_order_load_after>
+
+        </events>
+    </adminhtml>
+
+</config>
+
+

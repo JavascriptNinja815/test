@@ -1,0 +1,16 @@
+<?php if ($this->getShowReferralBlock()) : ?>
+    <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/rewardsref/rewardsReferralCheckout.js') ?>"></script>
+
+    <div class="one-field" id="rewards_referral_information">
+        <input type="text" name="billing[rewards_referral]" id="rewards_referral" class="input-text" value="<?php echo $this->getCurrentAffiliate(); ?>"/>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label for="rewards_referral"><?php echo $this->getLabel(); ?></label>
+        <br />
+    </div>
+    
+    <script type="text/javascript">
+        var showReferralFieldForGuests = '<?php echo json_encode($this->getShowGuestReferralField()); ?>' === 'true';
+        $('create_account_checkbox_id').up('li').insert({before: $('rewards_referral_information').wrap('li')});
+    </script>
+<?php endif; ?>

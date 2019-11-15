@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @var $this Mage_Core_Block_Template
+ */
+
+$header = $this->getHeaderText();
+$header = ($header) ? $header : 'MageRewards Dashboard';
+$header = $this->__($header);
+?>
+
+<div class="content-header">
+    <h3 class="head-dashboard"><?php echo $header; ?></h3>
+</div>
+
+<?php echo $this->getChildHtml('rewards_platform_remote'); ?>
+<div class="support-beacon">
+    <script>
+        !function(e,o,n){window.HSCW=o,window.HS=n,n.beacon=n.beacon||{};var t=n.beacon;t.userConfig={},t.readyQueue=[],t.config=function(e){this.userConfig=e},t.ready=function(e){this.readyQueue.push(e)},o.config={docs:{enabled:!0,baseUrl:"http://support.magerewards.com/"},contact:{enabled:!0,formId:"58d6e292-e62c-11e5-a329-0ee2467769ff"}};var r=e.getElementsByTagName("script")[0],c=e.createElement("script");c.type="text/javascript",c.async=!0,c.src="https://djtflbt20bdde.cloudfront.net/",r.parentNode.insertBefore(c,r)}(document,window.HSCW||{},window.HS||{});
+        HS.beacon.config({
+            icon: 'question',
+            color: '#FFA028'
+        });
+    </script>
+</div>

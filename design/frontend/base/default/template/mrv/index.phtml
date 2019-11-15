@@ -1,0 +1,14 @@
+Demo Page
+
+<?php $this->setRetailCustomer();
+
+$retailSuffix = "?campaign=mrv";
+$registerLink = Mage::helper('customer')->getRegisterUrl() . $retailSuffix;
+$loginLink = Mage::helper('customer')->getLoginUrl() . $retailSuffix;
+
+?>
+
+<h1>Register</h1>
+<p>If you are a new visitor, click <a href="<?php echo $registerLink; ?>">Here</a> to register.</p>
+<h1>Login</h1>
+<p>If you already have an account, click <a href="<?php echo $loginLink; ?>">Here</a> to login.</p>

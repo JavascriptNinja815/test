@@ -1,0 +1,33 @@
+<?php
+$_imgSize = 100;
+$category = Mage::registry('current_category');
+$currentProduct = Mage::registry('current_product');
+if($category):
+	$products = $category
+		->getProductCollection()
+		->addAttributeToSelect('name') // add all attributes - optional
+		->addAttributeToSelect('product_url') // add all attributes - optional
+		->addAttributeToSelect('small_image') // add all attributes - optional
+		->addAttributeToFilter('status', 1) // enabled
+		->addAttributeToFilter('visibility', 4); //visibility in catalog,search
+	if($products && $products->count()):
+		?>
+		<div class="sub_nav">
+			<div class="nav_back"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);?>/wysiwyg/ps_nav_back.png" style="display: none;"></div>
+			<div id="sub_nav_content">
+				<ul>
+					<?php foreach($products as $_product): ?>
+			<?php /*
+if($currentProduct && $_product->getId() == $currentProduct->getId()) {
+continue;
+} */
+?>
+						<li><a href="<?php echo $_product->getProductUrl() ?>"><img class="category-image" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgSize); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a></li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+			<div class="nav_forw"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);?>/wysiwyg/ps_nav_forw.png"></div>
+		</div>
+
+	<?php endif; ?>
+<?php endif; ?>

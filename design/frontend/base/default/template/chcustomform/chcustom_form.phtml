@@ -1,0 +1,38 @@
+<div id="ch_custom_form">
+<?php
+$encryptMailTo = $this->getEncryptData();
+$html = $this->getContentHtml();
+echo $html;
+$staticBlockTitle = $this->getBlockTitle();
+$autoIncValue = $this->getAutoIncrementValue();
+$postUrl = $this->getUrl('chcustomform/index/postMail');
+?>
+    </div>
+<script>
+    jQuery(document).ready(function () {
+        var target_form = 'div#ch_custom_form form';
+        jQuery('<input>').attr({
+            type: 'hidden',
+            id: 'mailto',
+            name: 'mailto',
+            value: '<?php echo $encryptMailTo; ?>'
+        }).prependTo(target_form);
+
+        jQuery('<input>').attr({
+            type: 'hidden',
+            id: 'formtitle',
+            name: 'formtitle',
+            value: '<?php echo $staticBlockTitle; ?>'
+        }).appendTo(target_form);
+
+        jQuery('<input>').attr({
+            type: 'hidden',
+            id: 'autonum',
+            name: 'autonum',
+            value: '<?php echo $autoIncValue; ?>'
+        }).appendTo(target_form);
+
+        jQuery(target_form).attr('action', '<?php echo $postUrl; ?>');
+        jQuery(target_form).attr('method', 'post');
+    });
+</script>

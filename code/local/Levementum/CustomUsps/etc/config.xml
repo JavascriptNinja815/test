@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Levementum_CustomUsps>
+            <version>0.1</version>
+        </Levementum_CustomUsps>
+    </modules>
+    <global>
+        <models>
+	    <Levementum_CustomUsps>
+		<class>Levementum_CustomUsps_Model</class>
+	    </Levementum_CustomUsps>
+            <usa>
+                <rewrite>
+                    <shipping_carrier_usps>Levementum_CustomUsps_Model_Shipping_Carrier_Usps</shipping_carrier_usps>
+                </rewrite>
+            </usa>
+        </models>
+	    <sales>
+            <shipping>
+                <carriers>
+                    <usps>
+                        <class>Levementum_CustomUsps_Model_Shipping_Carrier_Usps</class>
+                    </usps>
+                </carriers>
+            </shipping>
+        </sales>
+
+    </global>
+</config>

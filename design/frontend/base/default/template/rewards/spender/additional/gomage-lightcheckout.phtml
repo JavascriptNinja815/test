@@ -1,0 +1,24 @@
+<script type="text/javascript">
+    window.sweettooth = window.sweettooth || {};
+    sweettooth.slider = sweettooth.slider || {};
+    
+    sweettooth.slider.afterAjax = function(response) {
+        var result = response.responseJSON;
+        
+        if (result.hasOwnProperty('error') && result.error === true) {
+            this.logMessage(result.message);
+        } else {
+            var fetchReviewUrl = '<?php echo $this->getUrl('rewards/cart_redeem/fetchOrderSummary', array('_forced_secure' => $this->getRequest()->isSecure())) ?>';
+
+            new Ajax.Request(fetchReviewUrl, {
+                onSuccess: function (t) {
+                    var html = t.responseText;
+                    html = html.replace('checkout-review-submit', 'st-checkout-review-submit');
+
+                    $('checkout-review-table-wrapper').replace(html);
+                    $('st-checkout-review-submit').remove();
+                }
+            });
+        }
+    };
+</script>

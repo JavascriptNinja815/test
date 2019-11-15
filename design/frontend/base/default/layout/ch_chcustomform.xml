@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem" ifconfig="chcustomform/chcustomform_group/enable_jquery_library">
+                <type>js</type>
+                <name>ch_customform/jquery-3.2.1.min.js</name>
+            </action>
+            <action method="addItem" ifconfig="chcustomform/chcustomform_group/grecaptcha_enable">
+                <type>js</type>
+                <name>ch_customform/recaptcha/api.js</name>
+            </action>
+        </reference>
+    </default>
+</layout>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<config>
+    <default>
+        <carriers>
+            <chcustomshippingmodule>
+                <active>1</active>
+                <activefe>1</activefe>
+                <allowed_methods>method0,method1,method2,method3,method4,method5,method6,method7,method8,method9,method10</allowed_methods>
+                <methods>>method0,method2,method3,method4,method5,method6,method7,method8,method9,method10</methods>
+                <sallowspecific>0</sallowspecific>
+                <model>Collinsharper_CustomShipping_Model_Carrier_ShippingMethod</model>
+                <name>Standard Shipping</name>
+                <title>Standard Shipping</title>
+                <custom_shipping_methods>USPS First Class|4.25|US|REEL:1-20
+USPS Priority|8.95|US|VIEWER:1-2
+USPS Priority|8.95|US|VIEWER:1-1;REEL:0-10</custom_shipping_methods>
+                <allow_po_ups>0</allow_po_ups>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+                <handling_type>F</handling_type>
+            </chcustomshippingmodule>
+        </carriers>
+    </default>
+    <modules>
+        <Collinsharper_CustomShipping>
+            <version>0.1.0</version>
+        </Collinsharper_CustomShipping>
+    </modules>
+
+    <global>
+        <models>
+            <chcustomshippingmodule>
+                <class>Collinsharper_CustomShipping_Model</class>
+            </chcustomshippingmodule>
+
+            <usa>
+                <rewrite>
+                    <shipping_carrier_ups>Collinsharper_CustomShipping_Model_Carrier_Ups</shipping_carrier_ups>
+                </rewrite>
+            </usa>
+            <sales>
+                <rewrite>
+                    <quote_address_rate>Collinsharper_CustomShipping_Model_Quote_Address_Rate</quote_address_rate>
+                </rewrite>
+            </sales>
+        </models>
+
+        <resources>
+            <chcustomshippingmodule_setup>
+                <setup>
+                    <module>Collinsharper_CustomShipping</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chcustomshippingmodule_setup>
+        </resources>
+    </global>
+</config>

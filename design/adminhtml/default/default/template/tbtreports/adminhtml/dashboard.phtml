@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var $this Mage_Adminhtml_Block_Template
+ */
+?>
+<?php if (Mage::helper('rewards')->storeHasRewardRules()): ?>
+<div class="tbtreports-dashboard">
+    <div class="dashboard-left">
+        <?php echo $this->getChildHtml('dashboard_metrics_container'); ?>
+    </div>
+    <div class="dashboard-right">
+        <?php echo $this->getChildHtml('right'); ?>
+    </div>
+</div>
+<?php endif; ?>

@@ -1,0 +1,9 @@
+<?php foreach ($this->getImages() as $image):?>
+    <table style="page-break-after:always;">
+        <tr>
+            <div style="position: relative">
+                <img src="<?php echo Mage::getBaseUrl('media', true) . 'giftcards/' . $image;?>"/>
+            </div>
+        </tr>
+    </table>
+<?php endforeach;?>

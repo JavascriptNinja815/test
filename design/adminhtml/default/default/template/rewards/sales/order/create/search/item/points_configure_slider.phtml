@@ -1,0 +1,97 @@
+<?php
+/**
+ * Sweet Tooth
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Sweet Tooth SWEET TOOTH POINTS AND REWARDS
+ * License, which extends the Open Software License (OSL 3.0).
+ * The Sweet Tooth License is available at this URL:
+ *     https://www.sweettoothrewards.com/terms-of-service
+ * The Open Software License is available at this URL:
+ *      http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * By adding to, editing, or in any way modifying this code, Sweet Tooth is
+ * not held liable for any inconsistencies or abnormalities in the
+ * behaviour of this code.
+ * By adding to, editing, or in any way modifying this code, the Licensee
+ * terminates any agreement of support offered by Sweet Tooth, outlined in the
+ * provided Sweet Tooth License.
+ * Upon discovery of modified code in the process of support, the Licensee
+ * is still held accountable for any and all billable time Sweet Tooth spent
+ * during the support process.
+ * Sweet Tooth does not guarantee compatibility with any other framework extension.
+ * Sweet Tooth is not responsbile for any inconsistencies or abnormalities in the
+ * behaviour of this code if caused by other framework extension.
+ * If you did not receive a copy of the license, please send an email to
+ * support@sweettoothrewards.com or call 1.855.699.9322, so we can send you a copy
+ * immediately.
+ *
+ * @category   [TBT]
+ * @package    [TBT_Rewards]
+ * @copyright  Copyright (c) 2014 Sweet Tooth Inc. (http://www.sweettoothrewards.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+
+/**
+ * Admin Order Create Search Product View Points Slider
+ *
+ * @category   TBT
+ * @package    TBT_Rewards
+ * @author     Sweet Tooth Inc. <support@sweettoothrewards.com>
+ */
+?>
+<script type="text/javascript">
+    window.currency_map  = <?php echo $this->getCurrencyMapJson(); ?>;
+</script>
+
+<div class="slider sweettooth-point-spender sweettooth-catalog-slider">
+    <table cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td style="vertical-align:middle" class="btn-slider-reduce-points-container">
+                    <img class="btn-slider-reduce-points" alt="<?php echo $this->__('Spend one point less'); ?>"
+                         src="<?php echo $this->getSkinUrl('rewards/images/slider/decr_points.gif'); ?>"
+                         id="catalogSliderDecr"
+                         style="position:relative; top:5px;" />
+                </td>
+                <td>
+                    <div class="sliderRail" id="catalogSliderRail">
+                        <a style="left: 0%;" class="sliderHandle ui-slider-handle ui-state-default" id="catalogSliderHandle"></a>
+                    </div>
+                </td>
+                <td style="vertical-align: middle" class="btn-slider-reduce-points-container">
+                    <img class="btn-slider-increase-points"
+                         alt="<?php echo $this->__('Spend one point more'); ?>"
+                         src="<?php echo $this->getSkinUrl('rewards/images/slider/incr_points.gif'); ?>"
+                         id="catalogSliderIncr"
+                         style="position:relative; top:5px;" />
+                </td>
+                <td style="width:130px;">&nbsp;</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <table style="margin-top:6px;">
+                        <tr class="catalogSliderCaptionRow">
+                            <td class="rewards-caption-text"><?php echo $this->__('Spending on this product') . ':';?></td>
+                            <td>
+                                <div id="catalogSliderCaption" class="sliderCaption catalogSliderCaption <?php echo $this->getSliderEnterpriceClass();?>" >
+                                    <?php echo ''; ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="catalogSliderCaptionRow">
+                            <td class="rewards-caption-text"><?php echo $this->__('Spending on this order') . ':';?></td>
+                            <td style="max-width:190px;"><span id="rewards-customer-balance-configured">0 Points</span></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <input type="hidden" name="catalog_redemption_uses" id="catalogRedemptionRuleUses"/>
+</div>

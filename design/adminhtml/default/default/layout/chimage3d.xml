@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_chimage3d_report_sales_sales>
+        <update handle="report_sales"/>
+        <reference name="content">
+            <block type="chimage3d/adminhtml_report_sales_sales" template="report/grid/container.phtml" name="sales.report.grid.container">
+                <block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                    <action method="setStoreVarName"><var_name>store_ids</var_name></action>
+                </block>
+                <block type="sales/adminhtml_report_filter_form_order" name="grid.filter.form">
+                    <action method="addReportTypeOption" translate="value">
+                        <key>created_at_order</key>
+                        <value>Order Created Date</value>
+                    </action>
+                    <action method="addReportTypeOption" translate="value">
+                        <key>updated_at_order</key>
+                        <value>Order Updated Date</value>
+                    </action>
+                    <action method="setFieldOption" translate="value">
+                        <field>report_type</field>
+                        <option>note</option>
+                        <value>Order Updated Date report is real-time, does not need statistics refreshing.</value>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_chimage3d_report_sales_sales>
+
+</layout>

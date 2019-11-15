@@ -1,0 +1,111 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]> <html lang="en" id="top" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" id="top" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" id="top" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" id="top" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="top" class="no-js"> <!--<![endif]-->
+
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+<div class="wrapper">
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <div class="page">
+        <?php echo $this->getLayout()->createBlock('core/template')->setTemplate('page/html/header_custom.phtml')->toHtml(); ?>
+        <div class="main-container col1-layout">
+            <div class="main">
+                <?php echo $this->getChildHtml('breadcrumbs') ?>
+                <div class="col-main">
+                    <?php echo $this->getChildHtml('global_messages') ?>
+                    <?php echo $this->getChildHtml('content') ?>
+                     <div class="contact-form wrap">
+                        <?php //echo $this->getLayout()->createBlock('core/template')->setTemplate('contacts/form.phtml')->toHtml(); ?>
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('threedprint_form')->toHtml(); ?>
+                     </div>
+                     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('threedprint_footer')->toHtml(); ?>
+                </div>
+            </div>
+        </div>
+        <?php echo $this->getChildHtml('footer_before') ?>
+        <?php echo $this->getChildHtml('footer') ?>
+    </div>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+
+
+<style>
+.desktop-logo { margin: 0 auto; width: 100%; max-width: 1278px; }
+.mobile-logo { display: none; }
+#header { background: none !important; }
+#header #nav { text-align: left; }
+.wrap { padding: 0 70px 30px; }
+.main-container,
+.col1-layout .col-main { padding: 0; }
+.hero p { line-height: 40px !important; }
+.hero .col-1 { width: 70%; }
+.hero .col-2 { width: 30%; }
+.hero h1 { font-size: 3em;line-height: 1em; }
+.hero span.small { text-transform: lowercase; }
+.hero .threedee-heading span { font-size:40px; }
+.hero span.padding { padding-left: 20px; }
+.cards { max-width: 600px; margin: 0 auto; }
+.cards .col-1,.cards .col-2 {  max-width: 260px; }
+.middle-image { max-width: 476px !important; margin: 0 auto 20px;width: 100%; }
+.bottom-logo { display: flex; align-items: center;margin: 50px 0 0; }
+.bottom-logo .first { width: 25%;float:left; }
+.bottom-logo .second { text-align: center; width: 55%;float:left; }
+.no-bottom-padding { padding-bottom: 0 !important; }
+form div.test { background: transparent !important; }
+form input[type=text],textarea{  display: block; border: 1px solid #e2e2e2; }
+.contact-form .contact-info,
+.contact-form .contact-content,
+.contact-form .threedee-heading { display: none; }
+
+@media only screen and (max-width : 768px) {
+.desktop-logo { display: none; }
+.mobile-logo { display: block; margin: 0 auto;width: 100%; padding: 30px; }
+.wrap { padding: 25px !important; }
+.cms-page-view .std { padding: 0 ; }
+div.hero .col-1, .hero .col-2, .cards .col-1, .cards .col-2, .bottom-logo .first, .bottom-logo .second { width: 100%; margin: 0 auto; }
+.bottom-logo { flex-direction: column; }
+.bottom-logo img { margin: 0 auto; }
+}
+</style>
+</body>
+</html>
+

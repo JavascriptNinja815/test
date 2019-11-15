@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <adminhtml_customer_edit>
+        <reference name="left">
+            <reference name="customer_edit_tabs">
+                <block type="rewardsref/adminhtml_customer_edit_tab_referral" name="tab_points_referral" template="rewardsref/customer/edit/tab/referral.phtml">
+                    <block type="rewardsref/adminhtml_customer_edit_tab_referral_grid" name="tab_referral_grid" />
+                </block>
+                <action method="addTab" ifconfig="rewards/general/layoutsactive">
+                    <name>referral</name>
+                    <block>tab_points_referral</block>
+                </action>
+            </reference>
+        </reference>
+        <reference name="tab_points_main">
+            <block type="rewardsref/manage_customer_edit_tab_info" name="tab_points_referral_info" />
+        </reference>
+    </adminhtml_customer_edit>
+    
+    <adminhtml_adminhtml_referrals_customer_referral>
+        <block type="rewardsref/adminhtml_customer_edit_tab_referral_grid" name="tab_referral_grid" output="toHtml" />
+    </adminhtml_adminhtml_referrals_customer_referral>
+</layout>

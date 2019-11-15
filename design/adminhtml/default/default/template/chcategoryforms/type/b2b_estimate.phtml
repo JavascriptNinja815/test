@@ -1,0 +1,212 @@
+<?php
+$_inquiry = $this->getInquiry();
+$org_inquiry_info = $_inquiry->getData( 'post_data' );
+$order_data = unserialize( $org_inquiry_info );
+$orderData = new Varien_Object($order_data);
+
+$orderType = 'b2bestimate';
+
+?>
+<style>
+        .columns #chinquiry_form .form-list {
+                width: 100%;
+        }
+        #chinquiry_form .form-list td.label {
+                width: 10%;
+        }
+        #chinquiry_form .form-list td.label label {
+                width: 120px;
+        }
+</style>
+
+
+<div class="box-left">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo $this->__('Totals Information') ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+                                <?php
+                                $new_totals = json_decode($order_data['total_details']);
+                                foreach($new_totals as $label => $total) {
+                                        $total = str_replace("$", "", $total); // removes duplicate $
+                                        if($total >= 0) { // Only print total if total is greater than 0
+                                                echo "<p>" . $label . ": $" . $total . "</p>";
+                                        }
+                                }
+                                ?>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="box-right">
+        <!--Account Information-->
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo Mage::helper('sales')->__('Account Information') ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+                                <table cellspacing="0" class="form-list">
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Customer Name') ?></label></td>
+                                                <td class="value">
+                                                        <?php if (isset($order_data['customer_id'])) : ?>
+                                                                <a href="<?php echo  $this->getUrl('*/customer/edit', array('id'=>$order_data['customer_id'])); ?>" target="_blank"><strong><?php echo $this->htmlEscape($order_data['customer_name']) ?></strong></a>
+                                                        <?php else: ?>
+                                                                <strong><?php echo $this->htmlEscape($order_data['customer_name']) ?></strong>
+                                                        <?php endif; ?>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Email') ?></label></td>
+                                                <td class="value"><a href="mailto:<?php echo $order_data['customer_email'] ?>"><strong><?php echo $order_data['customer_email'] ?></strong></a></td>
+                                        </tr>
+										
+<?php if( isset($order_data['customer_phone']) ): ?>
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Phone') ?></label></td>
+                                                <td class="value"><a href="mailto:<?php echo isset($order_data['customer_phone']) ? $order_data['customer_phone'] : '' ?>"><strong><?php echo $order_data['customer_phone'] ?></strong></a></td>
+                                        </tr>
+<?php endif; ?>
+<?php if( isset($order_data['customer_company']) ): ?>
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Company') ?></label></td>
+                                                <td class="value"><a href="mailto:<?php echo $order_data['customer_company'] ?>"><strong><?php echo $order_data['customer_company'] ?></strong></a></td>
+                                        </tr>
+<?php endif; ?>
+                                </table>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="box-left" style="clear:left;">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo $this->__('General remark with this Quote Request'); ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+						<?php if($order_data['customer']['client_request']):?>
+                                        <p><?php echo $this->__('Comment: '); ?><?php print_r($order_data['customer']['client_request']); ?></p>
+						<?php else: ?>
+							<p>No Comments</p>
+						<?php endif; ?>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="box-right">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo $this->__('Imprint Information'); ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+                                <?php if($order_data['has_imprints']): ?>
+										<?php
+											$imprint1 = $order_data['options'][19];
+											$imprint2 = $order_data['options'][15];
+											$imprint3 = $order_data['options'][17]; 
+										?>
+                                        <p><?php echo $this->__('Number of Locations: ') . $order_data['options'][19]; ?></p>
+                                        <p><?php echo $this->__('Imprint Color 1: ') . $imprint1; ?></p>
+                                        <p><?php if($imprint2 != $imprint1 || $imprint2 != $imprint3) { echo $this->__('Imprint Color 2: ') . $imprint2; } ?></p>
+                                        <p><?php if($imprint3 != $imprint2 || $imprint3 != $imprint1) { echo $this->__('Imprint Color 3: ') . $imprint3; } ?></p>
+                                        <p><?php echo $this->__('Quantity: ') . $order_data['options'][20]; ?></p>
+                                <?php else: ?>
+									<p>No Imprint Information</p>
+								<?php endif; ?>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="clear"></div>
+<div class="box-left">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo $this->__('Reel Quantities'); ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+								<?php
+									$reelQty1 = $orderData->getData('qtyinput_rpm1');
+									$reelQty2 = $orderData->getData('qtyinput_rpm2');
+									$reelQty3 = $orderData->getData('qtyinput_rpm3');
+									$reelQty4 = $orderData->getData('qtyinput_rpm4');
+									$reelQty5 = $orderData->getData('qtyinput_rpm5');
+									$reelQty6 = $orderData->getData('qtyinput_rpm6');
+								?>
+                                <p><?php echo $this->__('Reel 1 Quantity: ') . $reelQty1; ?></p>
+                                <p><?php if($reelQty2 != $reelQty1 || $reelQty2 != $reelQty3 || $reelQty2 != $reelQty4 || $reelQty2 != $reelQty5 || $reelQty2 != $reelQty6) { echo $this->__('Reel 2 Quantity: ') . $reelQty2; } ?></p>
+                                <p><?php if($reelQty3 != $reelQty1 || $reelQty3 != $reelQty2 || $reelQty3 != $reelQty4 || $reelQty3 != $reelQty5 || $reelQty3 != $reelQty6) { echo $this->__('Reel 3 Quantity: ') . $reelQty3; } ?></p>
+                                <p><?php if($reelQty4 != $reelQty1 || $reelQty4 != $reelQty2 || $reelQty4 != $reelQty3 || $reelQty4 != $reelQty5 || $reelQty4 != $reelQty6) { echo $this->__('Reel 4 Quantity: ') . $reelQty4; } ?></p>
+                                <p><?php if($reelQty5 != $reelQty1 || $reelQty5 != $reelQty2 || $reelQty5 != $reelQty3 || $reelQty5 != $reelQty4 || $reelQty5 != $reelQty6) { echo $this->__('Reel 5 Quantity: ') . $reelQty5; } ?></p>
+                                <p><?php if($reelQty6 != $reelQty1 || $reelQty6 != $reelQty2 || $reelQty6 != $reelQty3 || $reelQty6 != $reelQty4 || $reelQty6 != $reelQty5) { echo $this->__('Reel 6 Quantity: ') . $reelQty6; } ?></p>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="box-right">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo $this->__('Rush Information'); ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+                                <?php if(isset($order_data['need_rush']) && $order_data['need_rush']=='Yes'):?>
+                                        <?php if ( $order_data['bundle_option'][7] == 8 ): ?>
+                                                <p><?php echo $this->__('Rush Service with PDF proof'); ?></p>
+                                        <?php elseif ( $order_data['bundle_option'][7] == 9 ): ?>
+                                                <p><?php echo $this->__('Rush Service with physical proof'); ?></p>
+                                        <?php endif; ?>
+                                        <p><?php echo $this->__('Days to Rush: ') . $order_data[rush_qty_days]; ?></p>
+                                <?php else: ?>
+									<p>No Rush Information</p>
+								<?php endif; ?>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="clear"></div>
+<div class="entry-edit">
+        <div class="entry-edit-head">
+                <h4 class="icon-head head-account"><?php echo $this->__('Product Information') ?></h4>
+        </div>
+        <div class="fieldset">
+                <div class="hor-scroll">
+                        <?php
+                        $bundled_product = new Mage_Catalog_Model_Product();
+                        $bundled_product->load($order_data['product']);
+                        $selectionCollection = $bundled_product->getTypeInstance(true)->
+                        getSelectionsCollection(
+                            $bundled_product->getTypeInstance(true)->getOptionsIds($bundled_product), $bundled_product
+                        );
+                        $bundle_product_options = $bundled_product->getTypeInstance(true)->getOptions($bundled_product);
+                        $bundled_items = array();
+                        $option_titles = array();
+                        foreach ($selectionCollection as $option) {
+                                $bundled_items[$option->selection_id] = $option->getName();
+                        }
+                        foreach ($bundle_product_options as $option) {
+                                $option_titles[$option->getOptionId()] = $option->getDefaultTitle();
+                        }
+                        foreach ($order_data['bundle_option'] as $option_id => $option_value) {
+                                if($option_value == "" || !isset($order_data['bundle_option_qty'][$option_id]) || !$order_data['bundle_option_qty'][$option_id]) {
+                                        continue;
+                                }
+                                //echo $option_id . " ";
+
+                                echo isset($option_titles[$option_id]) ? $option_titles[$option_id] : "Unknown";
+                                echo ": ";
+                                echo isset($bundled_items[$option_value]) ? $bundled_items[$option_value] : "Unknown";
+                                echo "<br>";
+                                echo $this->__('Quantity: ') . $order_data['bundle_option_qty'][$option_id];
+                                echo "<br>";
+                        }
+                        ?>
+                </div>
+        </div>
+</div>
+

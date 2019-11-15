@@ -1,0 +1,102 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">
+
+    <default>
+
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/jqueryrotate.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/spinner.js</name></action>
+        </reference>
+    </default>
+  <reelbuilder_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>
+	
+    <reference name="head">   
+		<action method="addItem"><type>skin_js</type><name>js/jquery-ui.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/fabric.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/handlebars-v3.0.3.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/reelbuilder.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/jquery.hoverIntent.minified.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/jquery.ui.touch-punch.min.js</name><params/></action>
+		<action method="addItem"><type>skin_js</type><name>js/json2.js</name></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.css</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.structure.css</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.theme.css</name><params/></action>
+    </reference>
+	<reference name="content">   
+	  	<block type="reelbuilder/index" name="reelbuilder_edittools" template="reelbuilder/desktop/edit_tools.phtml"/>   
+      	<block type="reelbuilder/index" name="reelbuilder_editframe" template="reelbuilder/desktop/frame_edit.phtml">
+			<block type="reelbuilder/index" name="reelbuilder_editpreview_reel" template="reelbuilder/desktop/preview_page.phtml"/>
+			<block type="reelbuilder/index" name="reelbuilder_edithelp" template="reelbuilder/help_buttons.phtml"/>
+		</block>
+
+      	<block type="reelbuilder/index" name="reelbuilder_editreorder" template="reelbuilder/reorder-strip.phtml"/>
+
+      <block type="reelbuilder/index" name="reelbuilder_loading" template="reelbuilder/desktop/loading.phtml"/>
+
+      	<block type="reelbuilder/index" name="reelbuilder_footer" template="reelbuilder/builder-footer.phtml">
+	      	<block type="reelbuilder/index" name="reelbuilder_editsave" template="reelbuilder/save-exit.phtml"/>
+    	  	<block type="reelbuilder/index" name="reelbuilder_editcenterlabel" template="reelbuilder/center-label.phtml"/>
+      		<block type="reelbuilder/index" name="reelbuilder_editpreview" template="reelbuilder/preview-reel.phtml"/>
+      	</block>
+    </reference>   
+	
+  </reelbuilder_index_index>   
+  
+    <reelbuilder_index_preview>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>
+	
+    <reference name="head">    
+		<action method="addItem"><type>skin_js</type><name>js/jquery-ui.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/reelbuilder.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/jquery.ui.touch-punch.min.js</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.css</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.structure.css</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.theme.css</name><params/></action>
+    </reference>
+	<reference name="content">
+		<block type="reelbuilder/index" name="reelbuilder_preview" template="reelbuilder/desktop/preview_page.phtml"/>
+		<block type="reelbuilder/index" name="reelbuilder_currentframe" template="reelbuilder/current_frame.phtml"/>   
+      	<block type="reelbuilder/index" name="reelbuilder_footer" template="reelbuilder/builder-footer.phtml">
+	      	<block type="reelbuilder/index" name="reelbuilder_editsave" template="reelbuilder/save-exit.phtml"/>
+    	  	<block type="reelbuilder/index" name="reelbuilder_editcenterlabel" template="reelbuilder/center-label.phtml"/>
+      		<block type="reelbuilder/index" name="reelbuilder_editpreview" template="reelbuilder/preview-reel.phtml"/>
+      	</block>
+	 </reference>   
+  </reelbuilder_index_preview>  
+  
+  <reelbuilder_index_mobile>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/mobile.phtml</template></action>   
+    </reference>
+    <reference name="head">   
+		<action method="addItem"><type>skin_js</type><name>js/jquery-ui.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/fabric.min.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/handlebars-v3.0.3.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/reelbuilder.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/jquery.ui.touch-punch.min.js</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.css</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.structure.css</name><params/></action>
+		<action method="addItem"><type>skin_css</type><name>css/jquery-ui.theme.css</name><params/></action>
+    </reference>
+	<remove name="header" />
+    <reference name="content">   
+	  	<remove name="catalog.compare.sidebar" />
+<!--
+	  	<block type="core/template" name="reelbuilder_edithead" template="reelbuilder/mobile/edit_header.phtml"/>   
+	  	<block type="reelbuilder/index" name="reelbuilder_edittools" template="reelbuilder/mobile/edit_tools.phtml"/>   
+      		<block type="reelbuilder/index" name="reelbuilder_editframe" template="reelbuilder/mobile/frame_edit.phtml"/>   
+-->
+		<block type="reelbuilder/index" name="reelbuilder_content" template="reelbuilder/mobile/content.phtml"/>
+		<block type="reelbuilder/index" name="reelbuilder_editpreview_reel" template="reelbuilder/mobile/preview_page.phtml"/>
+      		<block type="reelbuilder/index" name="reelbuilder_loading" template="reelbuilder/desktop/loading.phtml"/>
+    </reference>   
+	<remove name="footer" />
+  </reelbuilder_index_mobile>  
+  
+</layout>   
+	

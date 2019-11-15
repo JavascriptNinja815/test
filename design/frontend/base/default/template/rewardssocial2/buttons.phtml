@@ -1,0 +1,81 @@
+<?php $defaultTheme = $this->getTheme(); ?>
+<?php if ($this->areButtonsEnabled() && $this->getAvailableSocialButtons()): ?>
+    <div class="sweettooth-social-buttons sweettooth-default-theme">
+        <?php if ($this->isButtonEnabled('facebook_like')): ?>
+            <!--Facebook Like-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/facebook-like.phtml")
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+    
+        <?php if ($this->isButtonEnabled('facebook_share')): ?>
+            <!--Facebook Share-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/facebook-share.phtml")
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+    
+        <?php if ($this->isButtonEnabled('twitter_tweet')): ?>
+            <!--Twitter Tweet-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/twitter-tweet.phtml")
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+    
+        <?php if ($this->isButtonEnabled('pinterest_pin')): ?>
+            <!--Pinterest Pin-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/pinterest-pin.phtml")
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+    
+        <?php if ($this->isButtonEnabled('google_plusone')): ?>
+            <!--Google +1-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/google-plusone.phtml")
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>   
+            
+        <?php if ($this->isButtonEnabled('twitter_follow')): ?>
+            <!--Twitter Follow-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/twitter-follow.phtml")
+                ->toHtml(); 
+            ?>
+        <?php endif; ?>
+            
+        <?php if ($this->isButtonEnabled('refer_friends')): ?>
+            <!--Refer Friends-->
+            <?php echo $this->getLayout()
+                ->createBlock('core/template')
+                ->setTemplate("rewardssocial2/themes/{$defaultTheme}/refer-friends.phtml")
+                ->toHtml();
+            ?>
+        <?php endif; ?>
+                     
+        <div class="sweettooth-social-messages">
+            <?php if (Mage::getStoreConfig('rewards/rewardssocial2/auto_integrate')): ?>
+                <?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                    <?php echo $this->__("Earn points for sharing."); ?>
+                <?php else: ?>
+                    <?php echo $this->__(
+                        '%sLogin or create an account%s to earn points.',
+                        '<a href="' . Mage::getUrl('customer/account/login') . '" title="Account">',
+                        '</a>'
+                    ); ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

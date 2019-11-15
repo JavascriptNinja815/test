@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Chcustomform>
+            <version>0.3.0</version>
+        </Collinsharper_Chcustomform>
+    </modules>
+    <global>
+        <models>
+            <chcustomform>
+                <class>Collinsharper_Chcustomform_Model</class>
+                <resourceModel>chcustomform_mysql4</resourceModel>
+            </chcustomform>
+        </models>
+        <helpers>
+            <chcustomform>
+                <class>Collinsharper_Chcustomform_Helper</class>
+            </chcustomform>
+	    </helpers>
+
+        <blocks>
+            <chcustomform>
+                <class>Collinsharper_Chcustomform_Block</class>
+            </chcustomform>
+        </blocks>
+
+        <resources>
+            <chcustomform_setup>
+                <setup>
+                    <module>Collinsharper_Chcustomform</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chcustomform_setup>
+        </resources>
+    </global>
+
+    <frontend>
+        <routers>
+            <chcustomform>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Chcustomform</module>
+                    <frontName>collinsharper_chcustomform</frontName>
+                </args>
+            </chcustomform>
+        </routers>
+
+        <layout>
+            <updates>
+                <Collinsharper_Chcustomform module="chcustomform">
+                    <file>ch_chcustomform.xml</file>
+                </Collinsharper_Chcustomform>
+            </updates>
+        </layout>
+    </frontend>
+</config>

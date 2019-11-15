@@ -1,0 +1,372 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <default>
+        <reference name="head">
+            <action method="addCss"><name>rewards/css/skin.css</name></action>
+            <action method="addJs"><script>tbt/rewards/namespace.js</script></action>
+        </reference>
+    </default>
+    <adminhtml_manage_transfer_index>
+        <reference name="content">
+            <block type="rewards/manage_transfer" name="transfer" />
+        </reference>
+    </adminhtml_manage_transfer_index>
+
+    <adminhtml_manage_currency_index>
+        <reference name="content">
+            <block type="rewards/manage_currency" name="currency" template= "rewards/currency.phtml"/>
+        </reference>
+    </adminhtml_manage_currency_index>
+
+    <adminhtml_manage_special_index>
+        <reference name="content">
+            <block type="rewards/manage_special" name="special" />
+        </reference>
+    </adminhtml_manage_special_index>
+    
+    <adminhtml_sales_order_view>
+        <reference name="left">
+            <reference name="sales_order_tabs">
+                <action method="addTab" ifconfig="rewards/general/layoutsactive">
+                    <name>points</name>
+                    <block>rewards/adminhtml_sales_order_view_tab_points</block>
+                </action>
+            </reference>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="rewards/sales_order_print_points" name="order_points" as="order_points" template="rewards/sales/order/print/points.phtml" >
+                <action method="setColSpan">
+                    <value>1</value>
+                </action>
+            </block>
+
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_print>
+        <reference name="order_totals">
+            <block type="rewards/sales_order_print_points" name="order_points" as="order_points" template="rewards/sales/order/print/points.phtml" >
+                <action method="setColSpan">
+                    <value>1</value>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_print>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="rewards/sales_order_invoice_points" name="invoice_points_discount" as="invoice_points_discount"
+                    template="rewards/sales/order/invoice/points.phtml" >
+                <action method="setColSpan">
+                    <value>1</value>
+                </action>
+            </block>
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="rewards/sales_order_invoice_points" name="invoice_points_discount" as="invoice_points_discount"
+                    template="rewards/sales/order/invoice/points.phtml" >
+                <action method="setColSpan">
+                    <value>1</value>
+                </action>
+            </block>
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+
+    <adminhtml_sales_order_invoice_print>
+        <reference name="invoice_totals">
+            <block type="rewards/sales_order_invoice_points" name="invoice_points_discount" as="invoice_points_discount"
+                    template="rewards/sales/order/invoice/points.phtml" >
+                <action method="setColSpan">
+                    <value>1</value>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_print>
+    
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+    
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+    
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="discount" template="rewards/checkout/total/renderer/order-discount-expandable.phtml">
+                <action method="setCode">
+                    <code>discount</code>
+                </action>
+            </block>
+            <action method="unsetChild">
+                <child helper="rewards/removeDiscountRenderer"/>
+            </action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <block type="core/template" name="tbtcommon.admin.msg" output="toHtml" template="rewards/config/message.phtml" />
+        </reference>
+    </adminhtml_system_config_edit>
+
+    <adminhtml_dashboard_index>
+        <reference name="dashboard">
+            <block type="rewards/manage_dashboard_widget" name="rewards_dashboard_widget" as="rewards_dashboard_widget" template="rewards/dashboard/widget/dashboard.phtml">
+                <action method="setCacheLifetime" /> <!-- disable caching -->
+                <block type="rewards/manage_dashboard_widget_quickLaunch" name="rewards_dashboard_widget_quick_launch" as="dashboardQuickLaunch" before="rewards_dashboard_notifications"></block>
+                <block type="rewards/manage_dashboard_widget_notifications" name="rewards_dashboard_widget_notifications" as="notifications" template="rewards/dashboard/widget/notifications.phtml"></block>
+                <block type="rewards/manage_dashboard_widget_remote" name="rewards_dashboard_widget_remote" as="remote"></block>
+            </block>
+        </reference>
+    </adminhtml_dashboard_index>
+
+    <rewards_charts_head>
+        <reference name="head">
+            <action method="addCss"><name>rewards/css/nv.d3.css</name></action>
+            <action method="addCss"><name>rewards/css/metrics.css</name></action>
+            <!-- <action method="addItem"><type>skin_js</type><name>rewards/js/d3.v3.js</name></action> -->
+            <action method="addItem"><type>skin_js</type><name>rewards/js/d3.v3.min.js</name></action>
+            <!-- <action method="addItem"><type>skin_js</type><name>rewards/js/nv.d3.js</name></action> -->
+            <action method="addItem"><type>skin_js</type><name>rewards/js/nv.d3.min.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/tooltip.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/utils.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/legend.js</name></action>
+        </reference>
+    </rewards_charts_head>
+    <rewards_charts_pie_head>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/pie.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/pieChart.js</name></action>
+        </reference>
+    </rewards_charts_pie_head>
+    <rewards_charts_line_head>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/axis.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/scatter.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/line.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>rewards/js/models/lineWithFocusChart.js</name></action>
+        </reference>
+    </rewards_charts_line_head>
+    <adminhtml_manage_metrics_numberofmembers>
+        <update handle="rewards_charts_head" />
+        <update handle="rewards_charts_line_head" />
+
+        <reference name="content">
+            <block type="rewards/manage_metrics_numberOfMembers" template="rewards/metrics/grid/container.phtml" name="rewards.metrics.grid.container">
+                <block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                    <action method="setStoreVarName"><var_name>store_ids</var_name></action>
+                </block>
+                <block type="rewards/manage_metrics_filter_form" name="grid.filter.form">
+                    <action method="setFieldVisibility">
+                        <field>report_type</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>show_transfer_statuses</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>transfer_statuses</field>
+                        <visibility>0</visibility>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_manage_metrics_numberofmembers>
+
+    <adminhtml_manage_metrics_revenue>
+        <update handle="rewards_charts_head" />
+        <update handle="rewards_charts_line_head" />
+
+        <reference name="content">
+            <block type="rewards/manage_metrics_revenue" template="rewards/metrics/grid/container.phtml" name="rewards.metrics.grid.container">
+                <block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                    <action method="setStoreVarName"><var_name>store_ids</var_name></action>
+                </block>
+                <block type="rewards/manage_metrics_filter_form" name="grid.filter.form">
+                    <action method="setFieldVisibility">
+                        <field>report_type</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>show_transfer_statuses</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>transfer_statuses</field>
+                        <visibility>0</visibility>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_manage_metrics_revenue>
+
+    <adminhtml_manage_metrics_redemptionrate>
+        <update handle="rewards_charts_head" />
+        <update handle="rewards_charts_line_head" />
+
+        <reference name="content">
+            <block type="rewards/manage_metrics_redemptionRate" template="rewards/metrics/grid/container.phtml" name="rewards.metrics.grid.container">
+                <block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                    <action method="setStoreVarName"><var_name>store_ids</var_name></action>
+                </block>
+                <block type="rewards/manage_metrics_filter_form" name="grid.filter.form">
+                    <action method="setFieldVisibility">
+                        <field>report_type</field>
+                        <visibility>0</visibility>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_manage_metrics_redemptionrate>
+
+    <adminhtml_manage_metrics_earnings>
+        <update handle="rewards_charts_head" />
+        <update handle="rewards_charts_pie_head" />
+
+        <reference name="content">
+            <block type="rewards/manage_metrics_earnings" template="rewards/metrics/grid/container.phtml" name="rewards.metrics.grid.container">
+                <block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                    <action method="setStoreVarName"><var_name>store_ids</var_name></action>
+                </block>
+                <block type="rewards/manage_metrics_filter_form" name="grid.filter.form">
+                    <action method="setFieldVisibility">
+                        <field>report_type</field>
+                        <visibility>0</visibility>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_manage_metrics_earnings>
+    
+    <adminhtml_quicklaunch_index>
+        <update handle="opentip_js"/>
+        <reference name="head">
+            <block type="core/text" name="fonts-block">
+                <action method="setText">
+                    <text><![CDATA[<link rel="stylesheet" type="text/css" href="://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:400,700|Lato:400,700">]]></text>
+                </action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="rewards_dashboard"  template="rewards/dashboard.phtml">
+                <block type="rewards/quickLaunch" name="quickLaunch" />
+            </block>
+        </reference>
+    </adminhtml_quicklaunch_index>
+    
+    <adminhtml_quicklaunch_success>
+        <reference name="content">
+            <block type="core/template" name="quickLaunchSuccess" template="rewards/quickLaunch/success.phtml" />
+        </reference>
+    </adminhtml_quicklaunch_success>
+    
+    <adminhtml_quicklaunch_explainer>
+        <reference name="head">
+            <block type="core/text" name="render-async-content" output="toHtml">
+                <action method="setText">
+                    <text>
+                        <![CDATA[<script type="text/javascript">
+                            (function() {
+                                var firstTag = document.getElementsByTagName('script')[0];
+                                var links = [
+                                    "https://fonts.googleapis.com/css?family=Lato",
+                                    "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                                ];
+
+                                links.forEach(function(url) {
+                                    var externalCss = document.createElement('link'); 
+                                    externalCss.rel = 'stylesheet';
+                                    externalCss.href = url;
+                                    firstTag.parentNode.insertBefore(externalCss, firstTag);
+                                });
+                            })();
+                        </script>]]>
+                    </text>
+                </action>
+            </block>
+            <action method="addCss"><stylesheet>rewards/css/explainer.css</stylesheet></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" name="loyalty.explainer" template="rewards/quickLaunch/explainer/create.phtml">
+                <block type="rewards/quickLaunch" name="preview" template="rewards/quickLaunch/explainer/content.phtml" />
+            </block>
+        </reference>
+    </adminhtml_quicklaunch_explainer>
+    
+    <adminhtml_rewardsdashboard_index>
+        <reference name="content">
+            <block type="core/template" name="rewards_dashboard"  template="rewards/dashboard.phtml">
+                <block type="core/template" name="rewards_header" template="rewards/dashboard/header.phtml" />
+                <block type="rewards/manage_dashboard_remote" name="rewards_dashboard_remote" template="rewards/dashboard/remote.phtml"/>
+                <block type="rewards/quickLaunch_notice" name="quick-launch-notice" />
+            </block>
+        </reference> 
+    </adminhtml_rewardsdashboard_index>
+    
+</layout>

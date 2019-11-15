@@ -1,0 +1,14 @@
+<?php
+    $isRwdTheme = (Mage::helper('rewards/theme')->getPackageName() === "rwd");
+?>
+
+<div class="<?php echo ($isRwdTheme? "price-box":"regular-price"); ?>">
+	<div class="price-box">
+		<div class="points-price regular-price" id="points-only-price-<?php echo $this->getProduct()->getId(); ?>" data-update-msg="<?php echo $this->__('Updating Price...');?>">
+            <?php if ($this->hasPreCustomLabel()) : ?>
+            <span class="price-label"><?php echo $this->getPreCustomLabel(); ?></span>
+            <?php endif; ?>
+            <span class="price"><?php echo $this->getPointsOnlySimpleCost(); ?></span>
+        </div>
+	</div>
+</div>

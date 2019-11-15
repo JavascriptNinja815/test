@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Collinsharper_Frames>
+            <version>0.1.0</version>
+        </Collinsharper_Frames>
+    </modules>
+
+    <global>
+        <models>
+            <chframes>
+                <class>Collinsharper_Frames_Model</class>
+                <resourceModel>chframes_resource</resourceModel>
+            </chframes>
+
+            <chframes_resource>
+                <class>Collinsharper_Frames_Model_Mysql4</class>
+                <entities>
+                    <frames>
+                        <table>ch_frames</table>
+                    </frames>
+                </entities>
+            </chframes_resource>
+        </models>
+
+        <resources>
+            <chframes_setup>
+                <setup>
+                    <module>Collinsharper_Frames</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </chframes_setup>
+            <chframes_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </chframes_write>
+            <chframes_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </chframes_read>
+        </resources>
+
+        <blocks>
+            <chframes>
+                <class>Collinsharper_Frames_Block</class>
+            </chframes>
+        </blocks>
+
+
+        <helpers>
+            <chframes>
+                <class>Collinsharper_Frames_Helper</class>
+            </chframes>
+        </helpers>
+    </global>
+
+    <frontend>
+        <routers>
+            <chframes>
+                <use>standard</use>
+                <args>
+                    <module>Collinsharper_Frames</module>
+                    <frontName>chframes</frontName>
+                </args>
+            </chframes>
+        </routers>
+        <layout>
+            <updates>
+                <chframes>
+                    <file>chframes.xml</file>
+                </chframes>
+            </updates>
+        </layout>
+    </frontend>
+
+    <admin>
+        <routers>
+            <chframes>
+                <use>admin</use>
+                <args>
+                    <module>Collinsharper_Frames</module>
+                    <frontName>chframes_admin</frontName>
+                </args>
+            </chframes>
+        </routers>
+    </admin>
+
+    <adminhtml>
+            <layout>
+                <updates>
+                    <chframes>
+                        <file>chframes.xml</file>
+                    </chframes>
+                </updates>
+            </layout>
+    </adminhtml>
+
+
+
+</config>

@@ -1,0 +1,53 @@
+<?php
+
+$host = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+$assets = "";
+$mediaUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'Mcafeesecure/Trustmark/';
+$jsUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'Mcafeesecure/Trustmark/';
+$adminJsUrl = $jsUrl . 'admin.js';
+$jqueryUrl = $jsUrl . 'jquery-2.1.4.min.js';
+$affiliate = "234318";
+$partner = "magento";
+$user = Mage::getSingleton('admin/session');
+$email = $user->getUser()->getEmail();;
+$source = "magento";
+$endpoint = "https://www.mcafeesecure.com";
+
+?>
+
+<div id="iframe-container">
+
+</div>
+
+<script src="<?php echo $jqueryUrl; ?>"></script>
+
+<script>
+	var $j = jQuery.noConflict();
+
+	$j(document).ready(function () {
+		loadPage();
+	});
+
+	function loadPage() {
+		var $iframeContainer = $j('#iframe-container');
+
+		var $iframe = $j("<iframe></iframe>");
+		$iframe.attr({
+			"width": "100%",
+			"height": "700px",
+			"seamless": true,
+			"scrolling": "no",
+      "frameborder": "0"
+		});
+
+    $iframe.css({ 
+      "text-align": "center",
+      "border": "solid 1px #e6e7e8"
+    })
+
+
+		$iframe.attr("src", "<?php echo $endpoint; ?>/app/partner2/dashboard?form=login&aff=<?php echo $affiliate; ?>&platform=6&source=<?php echo $partner; ?>&partner=<?php echo $partner; ?>&email=<?php echo $email; ?>&host=<?php echo $host; ?>");
+		$iframeContainer.html($iframe);
+	}
+
+</script>

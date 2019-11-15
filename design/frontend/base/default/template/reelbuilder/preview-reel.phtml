@@ -1,0 +1,15 @@
+<div class="previewreel-container">
+	<h2 class="step">Step 3</h2>
+	<a href="javascript:void(0);" id="preview-reel-link">
+		<img src="<?php echo $this->getSkinUrl('images/preview_your_reel.jpg') ?>" alt="Preview Your Reel">
+		Click here to continue
+	</a>
+</div>
+
+<div id="review_container">
+    <?php echo $this->getLayout()->createBlock('review/form')->setBlockId('reviewform')->toHtml();?>
+</div>
+
+
+<?php $helper = Mage::helper('reelbuilder/tools'); ?>
+

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+	  <sections>
+		<bronto_reminder  translate="label" module="brontonotification">            
+					<groups>
+				      <notification translate="label"> 
+					  <label>Notification</label>
+					  <frontend_type>text</frontend_type>
+					  <sort_order>0</sort_order>
+					  <show_in_default>1</show_in_default>
+					  <show_in_website>1</show_in_website>
+					  <show_in_store>1</show_in_store>
+				       <fields>
+                          <no_action_period translate="label">
+                            <label>No action period before sending notification, days</label>
+							<frontend_type>text</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                          </no_action_period>
+					   </fields>
+					   </notification>
+					</groups>
+		</bronto_reminder>
+	  </sections>
+</config>

@@ -1,0 +1,16 @@
+<?php
+/**
+ * Udevix
+ *
+ * @author     UdevixTeam <udevix@gmail.com>
+ * @copyright  Copyright (c) 2015-2016 Udevix
+ */
+?>
+
+<?php
+$helper = Mage::helper('udevix_google_tag_manager');
+if ($helper->isActive() && $helper->isActiveTransaction()): ?>
+    <script type="text/javascript">
+        dataLayer = [<?php echo $this->getTransactionsData() ?>];
+    </script>
+<?php endif; ?>

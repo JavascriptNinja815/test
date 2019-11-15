@@ -1,0 +1,182 @@
+<?php
+$_inquiry = $this->getInquiry();
+$org_inquiry_info = $_inquiry->getData( 'post_data' );
+$order_data = unserialize( $org_inquiry_info );
+$orderData = new Varien_Object($order_data);
+
+$orderType = 'b2bestimate';
+
+?>
+<style>
+        .columns #chinquiry_form .form-list {
+                width: 100%;
+        }
+        #chinquiry_form .form-list td.label {
+                width: 10%;
+        }
+        #chinquiry_form .form-list td.label label {
+                width: 120px;
+        }
+</style>
+
+
+<div class="box-left">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account" style="margin-top: 0;"><?php echo $this->__('Totals Information') ?></h4>
+						<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('b2b_estimate_totals_info')->toHtml(); ?> 
+                </div><br/>
+                <div class="fieldset">
+                        <div class="hor-scroll" style="max-width: 400px;">
+                                <?php
+                                $new_totals = json_decode($order_data['total_details']);
+                                foreach($new_totals as $label => $total) {
+                                        $total = str_replace("$", "", $total); // removes duplicate $
+                                        if($total >= 0) { // Only print total if total is greater than 0
+                                                echo "<p style='margin: 0;'>" . $label . ": <span style='float:right;'>$" . $total . "</span></p>";
+                                        }
+                                }
+                                ?>
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="box-right">
+        <!--Account Information-->
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo Mage::helper('sales')->__('Account Information') ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+                                <table cellspacing="0" class="form-list">
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Customer Name: ') ?></label></td>
+                                                <td class="value">
+                                                        <?php if (isset($order_data['customer_id'])) : ?>
+                                                                <a href="<?php echo  $this->getUrl('*/customer/edit', array('id'=>$order_data['customer_id'])); ?>" target="_blank"><strong><?php echo  $this->htmlEscape($order_data['customer']['firstname']) . ' ' .  $this->htmlEscape($order_data['customer']['lastname']) ?></strong></a>
+                                                        <?php else: ?>
+                                                                <strong><?php echo  $this->htmlEscape($order_data['customer']['firstname']) . ' ' .  $this->htmlEscape($order_data['customer']['lastname']) ?></strong>
+                                                        <?php endif; ?>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Email: ') ?></label></td>
+                                                <td class="value"><a href="mailto:<?php echo $order_data['customer']['email'] ?>"><strong><?php echo $order_data['customer']['email'] ?></strong></a></td>
+                                        </tr>
+										
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Phone: ') ?></label></td>
+                                                <td class="value"><strong><?php echo $order_data['customer']['telephone']?></strong></td>
+                                        </tr>
+										<?php if ($order_data['customer']['company'] != ''): ?>
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Company: ') ?></label></td>
+                                                <td class="value"><strong><?php echo $order_data['customer']['company'] ?></strong></td>
+                                        </tr>
+										<?php endif; ?>
+										<?php if ($order_data['customer']['client_request'] != ''): ?>
+                                        <tr>
+                                                <td class="label"><label><?php echo Mage::helper('sales')->__('Comment: ') ?></label></td>
+                                                <td class="value"><strong><?php echo $order_data['customer']['client_request']?></strong></td>
+                                        </tr>
+										<?php endif; ?>
+                                </table>
+                        </div>
+                </div>
+        </div>
+</div>
+
+<?php if(isset($order_data['need_rush']) && $order_data['need_rush'] =='Yes'):?>
+<div class="box-right">
+        <div class="entry-edit">
+                <div class="entry-edit-head">
+                        <h4 class="icon-head head-account"><?php echo $this->__('Rush Information'); ?></h4>
+                </div>
+                <div class="fieldset">
+                        <div class="hor-scroll">
+                                <?php if($order_data['need_rush']=='Yes'):?>
+                                        <?php if ( $order_data['bundle_option'][7] == 8 ): ?>
+                                                <p><?php echo $this->__('Rush Service with PDF proof'); ?></p>
+                                        <?php elseif ( $order_data['bundle_option'][7] == 9 ): ?>
+                                                <p><?php echo $this->__('Rush Service with physical proof'); ?></p>
+                                        <?php endif; ?>
+                                        <p><?php echo $this->__('Days to Rush: ') . $order_data[rush_qty_days]; ?></p>
+                                <?php endif; ?>
+                        </div>
+                </div>
+        </div>
+</div>
+ <?php endif; ?>
+
+<div class="clear"></div>
+
+<div class="entry-edit">
+        <div class="entry-edit-head">
+                <h4 class="icon-head head-account"><?php echo $this->__('Product Information') ?></h4>
+        </div>
+        <div class="fieldset">
+                <div class="hor-scroll" style="max-width: 400px;">
+                        <?php
+                        $bundled_product = new Mage_Catalog_Model_Product();
+                        $bundled_product->load($order_data['product']);
+                        $selectionCollection = $bundled_product->getTypeInstance(true)->
+                        getSelectionsCollection(
+                            $bundled_product->getTypeInstance(true)->getOptionsIds($bundled_product), $bundled_product
+                        );
+                        $bundle_product_options = $bundled_product->getTypeInstance(true)->getOptions($bundled_product);
+                        $bundled_items = array();
+                        $option_titles = array();
+                        foreach ($selectionCollection as $option) {
+                                $bundled_items[$option->selection_id] = $option->getName();
+                        }
+                        foreach ($bundle_product_options as $option) {
+                                $option_titles[$option->getOptionId()] = $option->getDefaultTitle();
+                        }
+                        foreach ($order_data['bundle_option'] as $option_id => $option_value) {
+						
+                                if($option_value == "" || !isset($order_data['bundle_option_qty'][$option_id]) || !$order_data['bundle_option_qty'][$option_id]) {
+                                        continue;
+                                }
+								
+                                //echo $option_id . " ";
+                                echo isset($option_titles[$option_id]) ? $option_titles[$option_id] : "Unknown";
+                                echo ": ";
+                                echo isset($bundled_items[$option_value]) ? $bundled_items[$option_value] : "Unknown";
+                                echo "<br>";
+                                echo $this->__('Quantity: ') . $order_data['bundle_option_qty'][$option_id];
+								//Need individual prices here
+								//echo '<span style="float:right;">' . $this->__('$') . 'price' . '</span><br/>'; 
+                                echo "<br>"; ?>
+								
+								<?php if($option_titles[$option_id] == "Imprint Color Setup") { ?>
+									<?php if($order_data['has_imprints']): ?>
+									<div class="box-right">
+										<div class="entry-edit">
+											<div class="fieldset">
+												<div class="hor-scroll">
+													<?php if($order_data['has_imprints']): ?>
+															<?php
+																$imprint1 = $order_data['options'][13];
+																$imprint2 = $order_data['options'][15];
+																$imprint3 = $order_data['options'][17]; 
+															?>
+															<?php echo $this->__('Number of Locations: ') . $order_data['options'][19] . '<br/>'; ?>
+															<?php echo $this->__('Imprint Color 1: ') . $imprint1 . '<br/>'; ?>
+															<?php if($imprint2) { if($imprint2 != $imprint1 && $imprint2 != $imprint3) { echo $this->__('Imprint Color 2: ') . $imprint2. '<br/>'; } } ?>
+															<?php if($imprint3) { if($imprint3 != $imprint2 && $imprint3 != $imprint1) { echo $this->__('Imprint Color 3: ') . $imprint3. '<br/>'; } }?>
+															<?php echo $this->__('Quantity: ') . $order_data['options'][20]; ?>
+													<?php endif; ?>
+												</div>
+											</div>
+										</div>
+									</div>
+									<?php endif; 
+								}
+						} ?>
+						<?php //echo $this->__('Total: ') . '<span style="float:right;">' . '0'. '</span>';  ?>
+						
+                </div>
+        </div>
+</div>
+

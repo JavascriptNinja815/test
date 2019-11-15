@@ -1,0 +1,261 @@
+<?php
+    $migrationHelper = Mage::helper('rewardssocial2/migration');
+?>
+<div class="sweettooth-migration">
+    <div class="content-header">
+        <table cellspacing="0">
+            <tr>
+                <td>
+                    <h3 class="head-dashboard"><?php echo $this->__('MageRewards Social 2.0'); ?></h3>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="sweettooth-social-migration">
+        <?php if (!Mage::helper('rewardssocial2')->isRewardsSocialV1Enabled()): ?>
+            <p>
+                You're currently using the latest Social component of MageRewards. 
+                <a href="http://support.magerewards.com/article/1651-introducing-rewards-social-2-0" title="Rewards Social v2.0" target="_blank">Learn More</a>
+            </p>
+            <br />
+            <p>Don't forget to review the new simplified configurations.</p>
+            <a class="cta" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/system_config/edit/section/rewards/'); ?>" title="Migrate Now">
+                <button type="button">MageRewards Social Configurations</button>
+            </a>
+        <?php else: ?>
+            <div class="intro">
+                <p>
+                    We've rebuilt MageRewards's Social features from the ground up to allow
+                    for richer customer-facing customizations and integration capabilities
+                    with other popular social modules.
+                    <a href="http://support.magerewards.com/article/1651-introducing-rewards-social-2-0" title="Rewards Social v2.0" target="_blank">Learn More</a>
+                </p>
+                <br />
+                <p>
+                    Your store is still using the old component but we can help you
+                    automatically migrate to the new system.
+                </p>
+                <br/>
+                <div class="notes">
+                    <strong>Notes:</strong> <br/><br/>
+                    <ul>
+                        <li>Migration could take several minutes to complete.</li>
+                        <li>You may continue migration at a later time, once you start.</li>
+                        <li>We recommend migrating during off-peak hours.</li>
+                    </ul>
+
+                </div>
+                <a id="start-migration" class="cta" title="Migrate Now">
+                    <button type="button">
+                        <?php if ($migrationHelper->hasMigrationStarted()): ?>
+                            Continue Migration
+                        <?php else: ?>
+                            Start Migration
+                        <?php endif; ?>
+                    </button>
+                </a>
+            </div>
+
+            <div class="explanation file-permissions" style="display: none;">
+                <h3>Unable to disable MageRewards Social 1.0.</h3>
+                <p>
+                    Data migration was successful but your hosting provider is not permitting us
+                    to disable MageRewards Social 1.0.
+
+                    You'll have to perform this step manually. Here's how:
+                </p>
+                <ol>
+                    <li>Use FTP or SSH to access Magento files on the server.</li>
+                    <li>Navigate to <code>app/etc/modules</code> directory path.</li>
+                    <li>Rename <code>TBT_Rewardssocial.xml</code> to <code>TBT_Rewardssocial.xml.disabled</code></li>
+                    <li>Rename <code>Evolved_Like.xml</code> to <code>Evolved_Like.xml.disabled</code></li>
+                    <li>Clear Magento cache.</li>
+                </ol>
+                <br />
+                <p>
+                    <strong>Note:</strong>
+                    <br />
+                    Until steps above have been completed, you will not have access to the new changes.
+                    If you're doing this later, be sure to run this migration process again.
+                </p>
+            </div>
+
+            <?php $actionsCountMap = $migrationHelper->fetchEntriesCountMap(); ?>
+            <ul class="messages" style="display: none;">
+                <li class="notice-msg">
+                    <ul>
+                        <li>
+                            <span>Migration will be paused if you navigate away from this page.</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <br />
+            <div id="migration-checklist" class="migration-checklist" style="display: none;">
+                <ul class="to-do">
+                    <?php foreach ($actionsCountMap as $action => $count): ?>
+                        <?php if ($count): ?>
+                            <li data-action="<?php echo $action; ?>" class="scheduled">
+                                <div class="status">
+                                    <i></i>
+                                </div>
+                                <div class="content">
+                                    <div class="title">
+                                        <?php $actionLabel = ucwords(str_replace('_', ' ', $action)); ?>
+                                        <?php echo $actionLabel; ?> History <span class="count"><?php echo $count; ?> records</span>
+                                    </div>
+                                    <div class="remaining">
+                                        Scheduled
+                                    </div>
+                                    <div class="progress" style="display: none;">
+                                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%">
+                                            <span class="progress-remaining"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                        
+                    <li data-action="clean_up" class="scheduled">
+                        <div class="status">
+                            <i></i>
+                        </div>
+                        <div class="content">
+                            <div class="title">
+                                Clean up
+                            </div>
+                            <div class="remaining">Scheduled</div>
+                        <div class="content">
+                    </li>
+                </ul>
+            </div>
+
+            <script type="text/javascript">
+                (function() {
+                    var step = <?php echo TBT_RewardsSocial2_Helper_Migration::LIMIT; ?>;
+                    var actionsCountMap = <?php echo json_encode($actionsCountMap); ?>
+                    
+                    var ajaxStack = [];
+                    var occupied = false;
+                    
+                    for (var action in actionsCountMap) {
+                        var entriesCount = actionsCountMap[action];
+                        var pagesCount = Math.ceil(entriesCount / step);
+                        
+                        for (var page = 1; page <= pagesCount; page++) {
+                            ajaxStack.push({action: action, page: page});
+                        }
+                    }
+                    
+                    function executeCalls() {
+                        if (occupied) {
+                            setTimeout(executeCalls, 1000);
+                        } else {
+                            occupied = true;
+                            
+                            if (ajaxStack.length === 0) {
+                                return startCleanUp();
+                            }
+                            
+                            var data = ajaxStack.shift();
+                            var count = actionsCountMap[data.action];
+                            var pages = Math.ceil(count / step);
+                            
+                            if (data.page === 1) {
+                                var element = $$('li[data-action="' + data.action +'"]').first();
+                                element.addClassName('in-progress');
+                                var message = '<span class="counter">Migrating ' + count + ' records...</span><span class="other-messages"></span>';
+                                element.select('.remaining').first().update(message);
+                            }
+                            
+                            new Ajax.Request('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/adminhtml_social/doMigrate'); ?>', {
+                                method: 'post',
+                                parameters: {
+                                    action: data.action,
+                                    page: data.page
+                                },
+                                onComplete: function(response) {
+                                    var element = $$('li[data-action="' + data.action +'"]').first();
+
+                                    if (data.page < pages) {
+                                        // Show a progress bar instead.
+                                        var percent = Math.round(Math.min(100, Math.max(0, (step * data.page * 100 / count))));
+                                        element.select('.remaining').first().hide();
+                                        element.select('.progress').first().show();
+                                        element.select('.progress .progress-bar').first().setStyle({width: percent + '%'});
+                                        element.select('.progress .progress-remaining').first().update('<strong>' + percent + '%</strong>');
+
+                                    } else {
+                                        element.addClassName('done');
+                                        element.removeClassName('in-progress');
+                                        element.select('.remaining').first().show();
+                                        element.select('.progress').first().hide();
+                                        element.select('.counter').first().update('Done!');
+                                    }
+
+                                    if (response.responseText) {
+                                        element.addClassName('note');
+                                        element.select('.progress').first().hide();
+                                        element.select('.other-messages').first().update(response.responseText);
+                                    }
+                                    
+                                    occupied = false;
+                                    executeCalls();
+                                }
+                            });
+                        }
+                    }
+                    
+                    function startCleanUp() {
+                        var element = $$('li[data-action="clean_up"]').first();
+                        element.addClassName('in-progress');
+                        element.select('.remaining').first().update('Almost finished!');
+
+                        new Ajax.Request('<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/adminhtml_social/cleanUp'); ?>', {
+                            method: 'post',
+                            onComplete: function(response) {
+                                var errorMessage = "Cleanup Failed";
+                                if (response.responseText) {
+                                    var responseData = JSON.parse(response.responseText);
+                                    if (responseData.success) {
+                                        element.addClassName('done');
+                                        element.select('.remaining').first().update('All done.');
+                                        window.setTimeout(function() {
+                                            window.location = "<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/adminhtml_social/migration'); ?>";
+                                        }, 3000);
+
+                                        return;
+                                    }
+
+                                    errorMessage = responseData.message;
+                                    if (responseData.error_code == 'file_permissions') {
+                                        $$('.explanation.file-permissions').invoke('show');
+                                        $$('.sweettooth-social-migration .messages').invoke('hide');
+                                    }
+                                }
+
+                                element.addClassName('note');
+                                element.select('.remaining').first().update(errorMessage);
+                            }
+                        });
+                    }
+                    
+                    $$('#start-migration button').first().observe('click', function() {
+                        $('migration-checklist').show();
+                        $$('.sweettooth-social-migration .intro').invoke('hide');
+                        $$('.sweettooth-social-migration .messages').invoke('show');
+
+                        // Disable Magento's Please Wait dialog
+                        if (window.varienLoaderHandler && varienLoaderHandler.handler) {
+                            Ajax.Responders.unregister(varienLoaderHandler.handler);
+                        }
+
+                        executeCalls();
+                    });
+                })();
+            </script>
+            
+        <?php endif; ?>
+    </div>
+</div>

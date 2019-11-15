@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <customer_logged_in>
+        <reference name="head">
+            <action method="addCss"><name>css/aw_giftcard/styles.css</name></action>
+        </reference>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label">
+                <name>aw_giftcard</name>
+                <path>aw_giftcard/card/index</path>
+                <label>Gift Card</label>
+                <urlParams><_secure>true</_secure></urlParams>
+            </action>
+        </reference>
+    </customer_logged_in>
+
+    <aw_giftcard_card_index translate="label">
+        <label>Customer My Account Gift Cards</label>
+        <reference name="breadcrumbs">
+            <action method="setTemplate"><template>customer/account/top.phtml</template></action>
+            <action method="setTitle"><title>Gift Card</title></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="aw_giftcard/frontend_customer_giftcard" name="aw_giftcard.frontend.customer.giftcard" as="aw_giftcard_frontend_customer._giftcard" template="aw_giftcard/customer/giftcard.phtml"/>
+        </reference>
+    </aw_giftcard_card_index>
+
+    <PRODUCT_TYPE_aw_giftcard translate="label" module="aw_giftcard">
+        <label>Catalog Product View (Gift Card)</label>
+        <reference name="head">
+            <action method="addCss"><name>css/aw_giftcard/styles.css</name></action>
+        </reference>
+        <reference name="product.info">
+            <block type="aw_giftcard/frontend_catalog_product_view_type_giftcard" name="product.info.aw.giftcard" as="product_type_data" template="aw_giftcard/catalog/product_view_type_giftcard.phtml">
+                <action method="addPriceBlockType">
+                    <type>aw_giftcard</type>
+                    <block>aw_giftcard/frontend_catalog_product_price</block>
+                    <template>aw_giftcard/catalog/product_price.phtml</template>
+                </action>
+                <block type="cataloginventory/stockqty_default" name="product.info.aw.giftcard.extra" as="product_type_data_extra" template="cataloginventory/stockqty/default.phtml"/>
+            </block>
+            <reference name="product.info.options.wrapper">
+                <block type="aw_giftcard/frontend_catalog_product_view_type_giftcard" name="product.type.options" as="product_type_options" template="aw_giftcard/catalog/product_view_type_option.phtml"/>
+            </reference>
+        </reference>
+    </PRODUCT_TYPE_aw_giftcard>
+
+    <catalog_category_default>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_default>
+
+    <catalog_category_view>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_view>
+
+    <catalog_category_layered>
+        <reference name="product_list">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </catalog_category_layered>
+
+    <catalog_product_compare_index>
+        <reference name="catalog.compare.list">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_compare_index>
+
+    <catalogsearch_result_index>
+        <reference name="search_result_list">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <default>
+        <reference name="catalog_product_price_template">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </default>
+
+    <catalog_product_view>
+        <reference name="catalog.product.related">
+            <action method="addPriceBlockType">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_catalog_product_price</block>
+                <template>aw_giftcard/catalog/product_price.phtml</template>
+            </action>
+        </reference>
+    </catalog_product_view>
+
+    <default>
+        <reference name="head">
+            <action method="addCss"><name>css/aw_giftcard/styles.css</name></action>
+        </reference>
+        <reference name="checkout.cart">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_checkout_cart_item_renderer</block>
+                <template>checkout/cart/item/default.phtml</template>
+            </action>
+        </reference>
+    </default>
+
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addCss"><name>css/aw_giftcard/styles.css</name></action>
+        </reference>
+    </checkout_onepage_index>
+
+    <checkout_onepage_review>
+        <reference name="root">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_checkout_cart_item_renderer</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </checkout_onepage_review>
+
+    <paypal_express_review>
+        <reference name="head">
+            <action method="addCss"><name>css/aw_giftcard/styles.css</name></action>
+        </reference>
+        <reference name="paypal.express.review.details">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_checkout_cart_item_renderer</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </paypal_express_review>
+    <paypal_express_review_details>
+        <reference name="root">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_checkout_cart_item_renderer</block>
+                <template>checkout/onepage/review/item.phtml</template>
+            </action>
+        </reference>
+    </paypal_express_review_details>
+
+    <sales_order_view>
+        <reference name="order_items">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_sales_order_item_renderer</block>
+                <template>sales/order/items/renderer/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="order_totals">
+            <block type="aw_giftcard/frontend_sales_order_totals_giftcard" name="aw_giftcard.order.totals"/>
+        </reference>
+    </sales_order_view>
+
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_sales_order_item_renderer_print</block>
+                <template>email/order/items/order/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="order_totals">
+            <block type="aw_giftcard/frontend_sales_order_totals_giftcard" name="aw_giftcard.order.totals"/>
+        </reference>
+    </sales_email_order_items>
+
+    <sales_email_order_invoice_items>
+        <reference name="items">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_sales_order_item_renderer_print</block>
+                <template>email/order/items/invoice/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="invoice_totals">
+            <block type="aw_giftcard/frontend_sales_order_totals_giftcard" name="aw_giftcard.order.totals"/>
+        </reference>
+    </sales_email_order_invoice_items>
+
+    <sales_email_order_shipment_items>
+        <reference name="items">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_sales_order_item_renderer_print</block>
+                <template>email/order/items/shipment/default.phtml</template>
+            </action>
+        </reference>
+    </sales_email_order_shipment_items>
+
+    <sales_email_order_creditmemo_items>
+        <reference name="items">
+            <action method="addItemRender">
+                <type>aw_giftcard</type>
+                <block>aw_giftcard/frontend_sales_order_item_renderer_print</block>
+                <template>email/order/items/creditmemo/default.phtml</template>
+            </action>
+        </reference>
+        <reference name="creditmemo_totals">
+            <block type="aw_giftcard/frontend_sales_order_totals_giftcard" name="aw_giftcard.order.totals"/>
+        </reference>
+    </sales_email_order_creditmemo_items>
+</layout>
